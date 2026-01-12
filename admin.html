@@ -579,6 +579,19 @@
 
             if (this !== draggedItem && this.classList.contains('gallery-item')) {
                 this.classList.add('drag-over');
+
+                // 실시간으로 위치 변경 애니메이션
+                const draggedIndex = parseInt(draggedItem.dataset.index);
+                const targetIndex = parseInt(this.dataset.index);
+
+                if (draggedIndex !== targetIndex) {
+                    const items = galleryData[currentYear];
+                    const draggedData = items[draggedIndex];
+                    items.splice(draggedIndex, 1);
+                    items.splice(targetIndex, 0, draggedData);
+
+                    renderGallery();
+                }
             }
         }
 
@@ -591,16 +604,7 @@
             this.classList.remove('drag-over');
 
             if (draggedItem !== this && this.classList.contains('gallery-item')) {
-                const draggedIndex = parseInt(draggedItem.dataset.index);
-                const targetIndex = parseInt(this.dataset.index);
-
-                const items = galleryData[currentYear];
-                const draggedData = items[draggedIndex];
-                items.splice(draggedIndex, 1);
-                items.splice(targetIndex, 0, draggedData);
-
                 markChanged();
-                renderGallery();
             }
         }
 
