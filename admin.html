@@ -150,16 +150,28 @@
             border-radius: 12px;
             overflow: hidden;
             cursor: move;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .gallery-item:hover {
             transform: translateY(-5px);
             border-color: var(--blue);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
         }
 
         .gallery-item.dragging {
-            opacity: 0.5;
+            opacity: 0.4;
+            transform: scale(0.95) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+            z-index: 1000;
+        }
+
+        .gallery-item.drag-over {
+            border-color: var(--orange);
+            background: rgba(249, 115, 22, 0.1);
+            transform: scale(1.05);
+            transition: all 0.2s ease;
         }
 
         .item-image {
@@ -542,6 +554,7 @@
             document.querySelectorAll('.gallery-item').forEach(item => {
                 item.addEventListener('dragstart', handleDragStart);
                 item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('dragleave', handleDragLeave);
                 item.addEventListener('drop', handleDrop);
                 item.addEventListener('dragend', handleDragEnd);
             });
@@ -550,15 +563,34 @@
         function handleDragStart(e) {
             draggedItem = this;
             this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+
+            // 드래그 이미지 커스텀
+            const ghost = this.cloneNode(true);
+            ghost.style.opacity = '0.8';
+            document.body.appendChild(ghost);
+            e.dataTransfer.setDragImage(ghost, 0, 0);
+            setTimeout(() => document.body.removeChild(ghost), 0);
         }
 
         function handleDragOver(e) {
             e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+
+            if (this !== draggedItem && this.classList.contains('gallery-item')) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
         }
 
         function handleDrop(e) {
             e.preventDefault();
-            if (draggedItem !== this) {
+            this.classList.remove('drag-over');
+
+            if (draggedItem !== this && this.classList.contains('gallery-item')) {
                 const draggedIndex = parseInt(draggedItem.dataset.index);
                 const targetIndex = parseInt(this.dataset.index);
 
@@ -574,6 +606,9 @@
 
         function handleDragEnd() {
             this.classList.remove('dragging');
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('drag-over');
+            });
         }
 
         // 모달
