@@ -506,12 +506,14 @@
             const container = document.getElementById('galleryContainer');
             const items = galleryData[currentYear];
 
+            console.log('Rendering year:', currentYear, 'Items:', items); // 디버깅
+
             container.innerHTML = `
                 <div class="gallery-grid">
                     ${items.map((item, index) => `
                         <div class="gallery-item" draggable="true" data-index="${index}">
-                            ${item.hasImage
-                                ? `<img src="${item.img}" class="item-image" alt="${item.title}">`
+                            ${item.img && item.img !== ''
+                                ? `<img src="${item.img}" class="item-image" alt="${item.title}" onerror="this.parentElement.innerHTML='<div class=\\'item-placeholder\\'>📷</div>'">`
                                 : `<div class="item-placeholder">📷</div>`
                             }
                             <div class="item-info">
