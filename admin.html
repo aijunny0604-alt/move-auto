@@ -428,6 +428,16 @@
         let hasChanges = false;
         let draggedItem = null;
 
+        // 페이지 로드 시 저장된 토큰 불러오기 및 자동 로드
+        window.addEventListener('load', () => {
+            const savedToken = localStorage.getItem('githubToken');
+            if (savedToken) {
+                document.getElementById('tokenInput').value = savedToken;
+                // 자동으로 갤러리 불러오기
+                loadGallery();
+            }
+        });
+
         // 연도 탭
         document.querySelectorAll('.year-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -447,6 +457,9 @@
             }
 
             try {
+                // 토큰 저장
+                localStorage.setItem('githubToken', token);
+
                 const content = await getFileFromGitHub(token, 'aijunny0604-alt/move-auto', 'gallery.html');
                 parseGallery(content);
                 renderGallery();
