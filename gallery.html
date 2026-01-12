@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무브 오토모티브 - 사진 전시관</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 헤더 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 900;
+        }
+        .logo span {
+            color: #3b82f6;
+        }
+
+        .back-btn {
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 메인 콘텐츠 */
+        main {
+            padding-top: 100px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .page-title h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .page-title p {
+            font-size: 1.2rem;
+            color: #999;
+        }
+
+        /* 연도별 섹션 */
+        .year-section {
+            margin-bottom: 5rem;
+        }
+
+        .year-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .year-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #3b82f6;
+            margin-right: 1.5rem;
+        }
+
+        .year-header p {
+            font-size: 1.1rem;
+            color: #aaa;
+        }
+
+        /* 갤러리 그리드 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-card {
+            background: #111;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .gallery-card-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(39, 39, 42, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-card:hover .gallery-card-image img {
+            transform: scale(1.1);
+        }
+
+        .image-placeholder {
+            font-size: 4rem;
+            color: rgba(59, 130, 246, 0.3);
+        }
+
+        .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .gallery-card:hover .zoom-icon {
+            opacity: 1;
+        }
+
+        .zoom-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: #fff;
+        }
+
+        .gallery-card-info {
+            padding: 1.5rem;
+        }
+
+        .event-date {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .event-desc {
+            color: #999;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* 라이트박스 */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-info {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .lightbox-desc {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: rgba(59, 130, 246, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10000;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #3b82f6;
+        }
+
+        .lightbox-close svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(59, 130, 246, 0.7);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .lightbox-nav:hover {
+            background: #3b82f6;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-nav.prev {
+            left: 2rem;
+        }
+
+        .lightbox-nav.next {
+            right: 2rem;
+        }
+
+        .lightbox-nav svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .page-title h1 {
+                font-size: 2rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .year-header h2 {
+                font-size: 2rem;
+            }
+
+            .lightbox-content {
+                max-width: 95%;
+            }
+
+            .lightbox-nav {
+                width: 40px;
+                height: 40px;
+            }
+
+            .lightbox-nav.prev {
+                left: 1rem;
+            }
+
+            .lightbox-nav.next {
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">MOVE <span>MOTORS</span></div>
+            <a href="index.html" class="back-btn">← 메인으로</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-title">
+            <h1>📸 PHOTO GALLERY</h1>
+            <p>무브 오토모티브의 여정을 사진으로 만나보세요</p>
+        </div>
+
+        <!-- 2026년 -->
+        <section class="year-section">
+            <div class="year-header">
+                <h2>2026</h2>
+                <p>D1 LIGHTS 시즌 | 국내외 주요 대회</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-card" onclick="openLightbox(0)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2026.03.15</span>
+                        <h3 class="event-title">D1 LIGHTS 개막전 준비</h3>
+                        <p class="event-desc">2026 시즌을 위한 파왕쿱의 완벽한 세팅과 최종 테스트. 드리프트의 파왕, 진태욱 선수의 열정이 담긴 순간.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(1)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2026.04.20</span>
+                        <h3 class="event-title">서킷 트레이닝 DAY</h3>
+                        <p class="event-desc">경기 전 집중 훈련. 타이어 연기 속에서 완벽한 드리프트 라인을 찾아가는 과정.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(2)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2026.05.10</span>
+                        <h3 class="event-title">팬 미팅 & 사인회</h3>
+                        <p class="event-desc">팬들과 함께한 특별한 시간. 무브 오토모티브의 특별 굿즈 공개 및 팬 사인회.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2025년 -->
+        <section class="year-section">
+            <div class="year-header">
+                <h2>2025</h2>
+                <p>일본 진출 | 국내 대회 우승</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-card" onclick="openLightbox(3)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2025.07.15</span>
+                        <h3 class="event-title">일본 D1 LIGHTS 첫 출전</h3>
+                        <p class="event-desc">세계 드리프트의 본고장 일본 진출. 한국 드리프트의 위상을 높인 역사적인 순간.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(4)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2025.08.22</span>
+                        <h3 class="event-title">부산 국제 모터쇼 전시</h3>
+                        <p class="event-desc">파왕쿱 V2 공개. 수천 명의 관람객이 찾은 메인 부스에서 특별 전시.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(5)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2025.09.30</span>
+                        <h3 class="event-title">KDGP 챔피언십 우승</h3>
+                        <p class="event-desc">2025 시즌 국내 최고 권위의 드리프트 대회 우승. 진태욱 선수의 완벽한 드리프트.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(6)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2025.11.05</span>
+                        <h3 class="event-title">유튜브 10만 구독자 달성</h3>
+                        <p class="event-desc">팬들과 함께 이룬 10만 구독자 기념 특별 이벤트. 감사 인사와 함께한 특별한 날.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2024년 -->
+        <section class="year-section">
+            <div class="year-header">
+                <h2>2024</h2>
+                <p>무브 오토모티브의 시작</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-card" onclick="openLightbox(7)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2024.03.20</span>
+                        <h3 class="event-title">파왕쿱 V1 첫 공개</h3>
+                        <p class="event-desc">무브 오토모티브의 시작. 파왕쿱 V1의 첫 모습과 함께 드리프트의 새로운 역사가 시작되었습니다.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(8)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2024.05.15</span>
+                        <h3 class="event-title">AMF 국제 모터 페스티벌</h3>
+                        <p class="event-desc">첫 대회 출전. 드리프트 챌린지에서 당당히 2위 입상하며 실력을 입증했습니다.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(9)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2024.08.10</span>
+                        <h3 class="event-title">첫 스폰서 계약 체결</h3>
+                        <p class="event-desc">꿈의 시작. 첫 스폰서와의 계약 체결식. 무브 오토모티브의 성장을 함께할 파트너.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(10)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2024.10.25</span>
+                        <h3 class="event-title">오토살롱 튜닝 페스티벌</h3>
+                        <p class="event-desc">파왕쿱 V1 특별 전시. 튜닝 애호가들의 뜨거운 관심과 응원 속에서.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card" onclick="openLightbox(11)">
+                    <div class="gallery-card-image">
+                        <span class="image-placeholder">📷</span>
+                        <div class="zoom-icon">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </div>
+                    </div>
+                    <div class="gallery-card-info">
+                        <span class="event-date">2024.12.15</span>
+                        <h3 class="event-title">연말 감사 팬미팅</h3>
+                        <p class="event-desc">2024년을 함께해준 팬들에게 감사의 마음을 전하는 특별한 시간. 한 해의 마무리.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 라이트박스 -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="lightbox-close" onclick="closeLightbox(event)">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+        <button class="lightbox-nav prev" onclick="prevImage(event)">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <button class="lightbox-nav next" onclick="nextImage(event)">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </button>
+        <div class="lightbox-content">
+            <img id="lightbox-image" class="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 class="lightbox-title" id="lightbox-title"></h3>
+                <p class="lightbox-desc" id="lightbox-desc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const galleryData = [
+            // 2026
+            { title: "D1 LIGHTS 개막전 준비", desc: "2026 시즌을 위한 파왕쿱의 완벽한 세팅과 최종 테스트. 드리프트의 파왕, 진태욱 선수의 열정이 담긴 순간.", img: "" },
+            { title: "서킷 트레이닝 DAY", desc: "경기 전 집중 훈련. 타이어 연기 속에서 완벽한 드리프트 라인을 찾아가는 과정.", img: "" },
+            { title: "팬 미팅 & 사인회", desc: "팬들과 함께한 특별한 시간. 무브 오토모티브의 특별 굿즈 공개 및 팬 사인회.", img: "" },
+            // 2025
+            { title: "일본 D1 LIGHTS 첫 출전", desc: "세계 드리프트의 본고장 일본 진출. 한국 드리프트의 위상을 높인 역사적인 순간.", img: "" },
+            { title: "부산 국제 모터쇼 전시", desc: "파왕쿱 V2 공개. 수천 명의 관람객이 찾은 메인 부스에서 특별 전시.", img: "" },
+            { title: "KDGP 챔피언십 우승", desc: "2025 시즌 국내 최고 권위의 드리프트 대회 우승. 진태욱 선수의 완벽한 드리프트.", img: "" },
+            { title: "유튜브 10만 구독자 달성", desc: "팬들과 함께 이룬 10만 구독자 기념 특별 이벤트. 감사 인사와 함께한 특별한 날.", img: "" },
+            // 2024
+            { title: "파왕쿱 V1 첫 공개", desc: "무브 오토모티브의 시작. 파왕쿱 V1의 첫 모습과 함께 드리프트의 새로운 역사가 시작되었습니다.", img: "" },
+            { title: "AMF 국제 모터 페스티벌", desc: "첫 대회 출전. 드리프트 챌린지에서 당당히 2위 입상하며 실력을 입증했습니다.", img: "" },
+            { title: "첫 스폰서 계약 체결", desc: "꿈의 시작. 첫 스폰서와의 계약 체결식. 무브 오토모티브의 성장을 함께할 파트너.", img: "" },
+            { title: "오토살롱 튜닝 페스티벌", desc: "파왕쿱 V1 특별 전시. 튜닝 애호가들의 뜨거운 관심과 응원 속에서.", img: "" },
+            { title: "연말 감사 팬미팅", desc: "2024년을 함께해준 팬들에게 감사의 마음을 전하는 특별한 시간. 한 해의 마무리.", img: "" }
+        ];
+
+        let currentImageIndex = 0;
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const data = galleryData[index];
+            document.getElementById('lightbox-title').textContent = data.title;
+            document.getElementById('lightbox-desc').textContent = data.desc;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox(event) {
+            if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = '';
+                event.stopPropagation();
+            }
+        }
+
+        function nextImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+            openLightbox(currentImageIndex);
+        }
+
+        function prevImage(event) {
+            event.stopPropagation();
+            currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+            openLightbox(currentImageIndex);
+        }
+
+        // ESC 키로 라이트박스 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('lightbox').classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // 화살표 키로 이미지 전환
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextImage(e);
+                if (e.key === 'ArrowLeft') prevImage(e);
+            }
+        });
+    </script>
+</body>
+</html>
