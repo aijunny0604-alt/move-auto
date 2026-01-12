@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>갤러리 스크립트 자동 추가</title>
+</head>
+<body>
+    <h1>index.html 파일 수정 중...</h1>
+    <p id="status">처리 중입니다...</p>
+
+    <script>
+        // index.html 파일을 읽어서 스크립트 태그를 추가
+        fetch('index.html')
+            .then(response => response.text())
+            .then(html => {
+                // </body> 태그 찾기
+                if (html.includes('<script src="gallery-button.js"></script>')) {
+                    document.getElementById('status').innerHTML = '✅ 이미 gallery-button.js가 추가되어 있습니다!<br><br><a href="index.html">메인 페이지로 이동</a>';
+                } else {
+                    document.getElementById('status').innerHTML = '❌ 자동 추가 실패. 수동으로 추가해주세요.<br><br>index.html의 맨 마지막, &lt;/body&gt; 태그 바로 위에 다음을 추가하세요:<br><br><code>&lt;script src="gallery-button.js"&gt;&lt;/script&gt;</code>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML = '❌ 파일을 읽을 수 없습니다.<br><br>수동으로 추가해주세요:<br>index.html의 맨 마지막, &lt;/body&gt; 태그 바로 위에<br><code>&lt;script src="gallery-button.js"&gt;&lt;/script&gt;</code> 추가';
+            });
+    </script>
+</body>
+</html>

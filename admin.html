@@ -726,8 +726,16 @@
                 if (parts.length < 2) return;
 
                 const beforeYear = parts[0];
-                const afterSection = parts[1].split('</section>').slice(1).join('</section>');
-                const sectionHeader = parts[1].split('<div class="gallery-grid">')[0];
+
+                // 다음 연도 코멘트까지의 내용을 가져옴
+                const nextYearComments = ['<!-- 2025년 -->', '<!-- 2024년 -->', '</section>\n    </main>'];
+                let afterSection = '';
+                for (const nextComment of nextYearComments) {
+                    if (parts[1].includes(nextComment)) {
+                        afterSection = parts[1].substring(parts[1].indexOf(nextComment));
+                        break;
+                    }
+                }
 
                 const cardsHTML = items.map((item, idx) => {
                     const allItems = [...galleryData['2026'], ...galleryData['2025'], ...galleryData['2024']];
@@ -753,7 +761,22 @@
                 `;
                 }).join('');
 
-                content = beforeYear + yearComment + '\n        <section class="year-section">\n' + sectionHeader + '<div class="gallery-grid">\n                ' + cardsHTML + '</div>\n        </section>' + afterSection;
+                const yearTitle = year === '2026' ? 'D1 LIGHTS 시즌 | 국내외 주요 대회' :
+                                 year === '2025' ? '일본 진출 | 국내 대회 우승' : '무브 오토모티브의 시작';
+
+                const sectionHTML = `        <!-- ${year}년 -->
+        <section class="year-section">
+            <div class="year-header">
+                <h2>${year}</h2>
+                <p>${yearTitle}</p>
+            </div>
+            <div class="gallery-grid">
+                ${cardsHTML}</div>
+        </section>
+
+        `;
+
+                content = beforeYear + sectionHTML + afterSection;
             });
 
             // galleryData 업데이트
