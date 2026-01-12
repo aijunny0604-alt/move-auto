@@ -234,9 +234,10 @@
             <h3>⚙️ 설정 필요</h3>
             <p>GitHub Personal Access Token이 필요합니다:</p>
             <ol>
-                <li>GitHub 로그인 → Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
-                <li>"Generate new token (classic)" 클릭</li>
-                <li>권한 선택: <code>repo</code> (전체 체크)</li>
+                <li>https://github.com/settings/tokens/new 접속</li>
+                <li>Note: <code>move-auto-admin</code></li>
+                <li>Expiration: <code>90 days</code></li>
+                <li>권한: <code>repo</code> 체크 ✅</li>
                 <li>생성된 토큰을 복사해서 아래에 입력</li>
             </ol>
         </div>
@@ -261,9 +262,9 @@
 
             <label for="year">연도</label>
             <select id="year">
-                <option value="2024">2024년</option>
-                <option value="2025">2025년</option>
                 <option value="2026" selected>2026년</option>
+                <option value="2025">2025년</option>
+                <option value="2024">2024년</option>
             </select>
 
             <label for="date">날짜</label>
@@ -338,8 +339,11 @@
                 // 2. gallery.html 파일 가져오기
                 const galleryContent = await getFileFromGitHub(token, repo, 'gallery.html');
 
-                // 3. 새 사진 카드 HTML 생성 (gallery.html 구조에 맞춰서)
-                const newPhotoCard = `<div class="gallery-card" onclick="openLightbox(0)">
+                // 3. lightbox 인덱스 계산 (기존 카드 개수)
+                const totalCards = (galleryContent.match(/gallery-card/g) || []).length;
+
+                // 4. 새 사진 카드 HTML 생성
+                const newPhotoCard = `<div class="gallery-card" onclick="openLightbox(${totalCards})">
                     <div class="gallery-card-image">
                         <img src="${photoPath}" alt="${title}">
                         <div class="zoom-icon">
@@ -355,22 +359,28 @@
 
                 `;
 
-                // 4. 2026년 섹션의 gallery-grid에 카드 추가
-                const yearPattern = year === '2026'
-                    ? /(<div class="gallery-grid">)/
-                    : year === '2025'
-                    ? /(<!-- 2025년 -->[\s\S]*?<div class="gallery-grid">)/
-                    : /(<!-- 2024년 -->[\s\S]*?<div class="gallery-grid">)/;
+                // 5. 해당 연도 섹션의 gallery-grid 맨 앞에 추가
+                const yearComment = `<!-- ${year}년 -->`;
+                const pattern = new RegExp(`(${yearComment}[\\s\\S]*?<div class="gallery-grid">)`, 'm');
 
                 const updatedContent = galleryContent.replace(
-                    yearPattern,
+                    pattern,
                     `$1\n                ${newPhotoCard}`
                 );
 
-                // 5. gallery.html 업데이트
-                await updateFileOnGitHub(token, repo, 'gallery.html', updatedContent);
+                // 6. galleryData에도 추가 (lightbox용)
+                const galleryDataPattern = /const galleryData = \[/;
+                const newGalleryItem = `\n            { title: "${title}", desc: "${description}", img: "${photoPath}" },`;
 
-                showAlert('success', '✅ 사진이 성공적으로 추가되었습니다! 갤러리를 확인하세요.');
+                const finalContent = updatedContent.replace(
+                    galleryDataPattern,
+                    `const galleryData = [${newGalleryItem}`
+                );
+
+                // 7. gallery.html 업데이트
+                await updateFileOnGitHub(token, repo, 'gallery.html', finalContent);
+
+                showAlert('success', '✅ 사진이 성공적으로 추가되었습니다! 잠시 후 갤러리를 확인하세요.');
 
                 // 폼 초기화
                 document.getElementById('photo').value = '';
@@ -411,7 +421,8 @@
             });
 
             if (!response.ok) {
-                throw new Error(`GitHub API 오류: ${response.statusText}`);
+                const errorData = await response.json();
+                throw new Error(`GitHub API 오류: ${errorData.message || response.statusText}`);
             }
 
             return response.json();
@@ -429,7 +440,7 @@
             }
 
             const data = await response.json();
-            // UTF-8 디코딩을 위해 TextDecoder 사용
+            // UTF-8 디코딩
             const binaryString = atob(data.content);
             const bytes = new Uint8Array(binaryString.length);
             for (let i = 0; i < binaryString.length; i++) {
@@ -449,6 +460,15 @@
             const fileData = await getResponse.json();
             const sha = fileData.sha;
 
+            // UTF-8 인코딩
+            const encoder = new TextEncoder();
+            const uint8array = encoder.encode(content);
+            let binaryString = '';
+            for (let i = 0; i < uint8array.length; i++) {
+                binaryString += String.fromCharCode(uint8array[i]);
+            }
+            const base64Content = btoa(binaryString);
+
             // 파일 업데이트
             const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
                 method: 'PUT',
@@ -458,13 +478,14 @@
                 },
                 body: JSON.stringify({
                     message: 'Update gallery with new photo',
-                    content: btoa(unescape(encodeURIComponent(content))),
+                    content: base64Content,
                     sha: sha
                 })
             });
 
             if (!response.ok) {
-                throw new Error(`파일 업데이트 실패: ${response.statusText}`);
+                const errorData = await response.json();
+                throw new Error(`파일 업데이트 실패: ${errorData.message || response.statusText}`);
             }
 
             return response.json();
@@ -477,7 +498,7 @@
 
             setTimeout(() => {
                 alert.className = 'alert';
-            }, 5000);
+            }, 10000);
         }
     </script>
 </body>
