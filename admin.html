@@ -731,7 +731,7 @@
 
                     return `<div class="gallery-card" onclick="openLightbox(${globalIdx})">
                     <div class="gallery-card-image">
-                        ${item.hasImage
+                        ${item.img && item.img !== ''
                             ? `<img src="${item.img}" alt="${item.title}">`
                             : `<span class="image-placeholder">📷</span>`
                         }
