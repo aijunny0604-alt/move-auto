@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ë¬´ë¸ ì¤í ëª¨í°ë¸ - ì¬ì§ ì ìê´</title>
+    <title>무브 오토모티브 - 사진 전시관</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* í¤ë */
+        /* 헤더 */
         header {
             position: fixed;
             top: 0;
@@ -72,7 +72,7 @@
             box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
         }
 
-        /* ë©ì¸ ì½íì¸  */
+        /* 메인 콘텐츠 */
         main {
             padding-top: 100px;
             max-width: 1400px;
@@ -102,7 +102,7 @@
             color: #999;
         }
 
-        /* ì°ëë³ ì¹ì */
+        /* 연도별 섹션 */
         .year-section {
             margin-bottom: 5rem;
         }
@@ -128,7 +128,7 @@
             color: #aaa;
         }
 
-        /* ê°¤ë¬ë¦¬ ê·¸ë¦¬ë */
+        /* 갤러리 그리드 */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -234,7 +234,7 @@
             line-height: 1.6;
         }
 
-        /* ë¼ì´í¸ë°ì¤ */
+        /* 라이트박스 */
         .lightbox {
             display: none;
             position: fixed;
@@ -360,7 +360,7 @@
             fill: #fff;
         }
 
-        /* ë°ìí */
+        /* 반응형 */
         @media (max-width: 768px) {
             .page-title h1 {
                 font-size: 2rem;
@@ -398,213 +398,213 @@
     <header>
         <div class="header-content">
             <div class="logo"><img src="data:image/png;base64,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
-            <a href="index.html" class="back-btn">â ë©ì¸ì¼ë¡</a>
+            <a href="index.html" class="back-btn">← 메인으로</a>
         </div>
     </header>
 
     <main>
         <div class="page-title">
-            <h1>ð¸ PHOTO GALLERY</h1>
-            <p>ë¬´ë¸ ì¤í ëª¨í°ë¸ì ì¬ì ì ì¬ì§ì¼ë¡ ë§ëë³´ì¸ì</p>
+            <h1>📸 PHOTO GALLERY</h1>
+            <p>무브 오토모티브의 여정을 사진으로 만나보세요</p>
         </div>
 
-        <!-- 2026ë -->
+        <!-- 2026년 -->
         <section class="year-section">
             <div class="year-header">
                 <h2>2026</h2>
-                <p>D1 LIGHTS ìì¦ | êµ­ë´ì¸ ì£¼ì ëí</p>
+                <p>D1 LIGHTS 시즌 | 국내외 주요 대회</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(0)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2026.03.15</span>
-                        <h3 class="event-title">D1 LIGHTS ê°ë§ì  ì¤ë¹</h3>
-                        <p class="event-desc">2026 ìì¦ì ìí íìì¿±ì ìë²½í ì¸íê³¼ ìµì¢ íì¤í¸. ëë¦¬íí¸ì íì, ì§íì± ì ìì ì´ì ì´ ë´ê¸´ ìê°.</p>
+                        <h3 class="event-title">D1 LIGHTS 개막전 준비</h3>
+                        <p class="event-desc">2026 시즌을 위한 파왕쿱의 완벽한 세팅과 최종 테스트. 드리프트의 파왕, 진태욱 선수의 열정이 담긴 순간.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(1)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2026.04.20</span>
-                        <h3 class="event-title">ìí· í¸ë ì´ë DAY</h3>
-                        <p class="event-desc">ê²½ê¸° ì  ì§ì¤ íë ¨. íì´ì´ ì°ê¸° ììì ìë²½í ëë¦¬íí¸ ë¼ì¸ì ì°¾ìê°ë ê³¼ì .</p>
+                        <h3 class="event-title">서킷 트레이닝 DAY</h3>
+                        <p class="event-desc">경기 전 집중 훈련. 타이어 연기 속에서 완벽한 드리프트 라인을 찾아가는 과정.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(2)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2026.05.10</span>
-                        <h3 class="event-title">í¬ ë¯¸í & ì¬ì¸í</h3>
-                        <p class="event-desc">í¬ë¤ê³¼ í¨ê»í í¹ë³í ìê°. ë¬´ë¸ ì¤í ëª¨í°ë¸ì í¹ë³ êµ¿ì¦ ê³µê° ë° í¬ ì¬ì¸í.</p>
+                        <h3 class="event-title">팬 미팅 & 사인회</h3>
+                        <p class="event-desc">팬들과 함께한 특별한 시간. 무브 오토모티브의 특별 굿즈 공개 및 팬 사인회.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2025ë -->
+        <!-- 2025년 -->
         <section class="year-section">
             <div class="year-header">
                 <h2>2025</h2>
-                <p>ì¼ë³¸ ì§ì¶ | êµ­ë´ ëí ì°ì¹</p>
+                <p>일본 진출 | 국내 대회 우승</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(3)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2025.07.15</span>
-                        <h3 class="event-title">ì¼ë³¸ D1 LIGHTS ì²« ì¶ì </h3>
-                        <p class="event-desc">ì¸ê³ ëë¦¬íí¸ì ë³¸ê³ ì¥ ì¼ë³¸ ì§ì¶. íêµ­ ëë¦¬íí¸ì ììì ëì¸ ì­ì¬ì ì¸ ìê°.</p>
+                        <h3 class="event-title">일본 D1 LIGHTS 첫 출전</h3>
+                        <p class="event-desc">세계 드리프트의 본고장 일본 진출. 한국 드리프트의 위상을 높인 역사적인 순간.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(4)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2025.08.22</span>
-                        <h3 class="event-title">ë¶ì° êµ­ì  ëª¨í°ì¼ ì ì</h3>
-                        <p class="event-desc">íìì¿± V2 ê³µê°. ìì² ëªì ê´ëê°ì´ ì°¾ì ë©ì¸ ë¶ì¤ìì í¹ë³ ì ì.</p>
+                        <h3 class="event-title">부산 국제 모터쇼 전시</h3>
+                        <p class="event-desc">파왕쿱 V2 공개. 수천 명의 관람객이 찾은 메인 부스에서 특별 전시.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(5)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2025.09.30</span>
-                        <h3 class="event-title">KDGP ì±í¼ì¸ì­ ì°ì¹</h3>
-                        <p class="event-desc">2025 ìì¦ êµ­ë´ ìµê³  ê¶ìì ëë¦¬íí¸ ëí ì°ì¹. ì§íì± ì ìì ìë²½í ëë¦¬íí¸.</p>
+                        <h3 class="event-title">KDGP 챔피언십 우승</h3>
+                        <p class="event-desc">2025 시즌 국내 최고 권위의 드리프트 대회 우승. 진태욱 선수의 완벽한 드리프트.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(6)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2025.11.05</span>
-                        <h3 class="event-title">ì íë¸ 10ë§ êµ¬ëì ë¬ì±</h3>
-                        <p class="event-desc">í¬ë¤ê³¼ í¨ê» ì´ë£¬ 10ë§ êµ¬ëì ê¸°ë í¹ë³ ì´ë²¤í¸. ê°ì¬ ì¸ì¬ì í¨ê»í í¹ë³í ë .</p>
+                        <h3 class="event-title">유튜브 10만 구독자 달성</h3>
+                        <p class="event-desc">팬들과 함께 이룬 10만 구독자 기념 특별 이벤트. 감사 인사와 함께한 특별한 날.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2024ë -->
+        <!-- 2024년 -->
         <section class="year-section">
             <div class="year-header">
                 <h2>2024</h2>
-                <p>ë¬´ë¸ ì¤í ëª¨í°ë¸ì ìì</p>
+                <p>무브 오토모티브의 시작</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(7)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2024.03.20</span>
-                        <h3 class="event-title">íìì¿± V1 ì²« ê³µê°</h3>
-                        <p class="event-desc">ë¬´ë¸ ì¤í ëª¨í°ë¸ì ìì. íìì¿± V1ì ì²« ëª¨ìµê³¼ í¨ê» ëë¦¬íí¸ì ìë¡ì´ ì­ì¬ê° ììëììµëë¤.</p>
+                        <h3 class="event-title">파왕쿱 V1 첫 공개</h3>
+                        <p class="event-desc">무브 오토모티브의 시작. 파왕쿱 V1의 첫 모습과 함께 드리프트의 새로운 역사가 시작되었습니다.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(8)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2024.05.15</span>
-                        <h3 class="event-title">AMF êµ­ì  ëª¨í° íì¤í°ë²</h3>
-                        <p class="event-desc">ì²« ëí ì¶ì . ëë¦¬íí¸ ì±ë¦°ì§ìì ë¹ë¹í 2ì ììíë©° ì¤ë ¥ì ìì¦íìµëë¤.</p>
+                        <h3 class="event-title">AMF 국제 모터 페스티벌</h3>
+                        <p class="event-desc">첫 대회 출전. 드리프트 챌린지에서 당당히 2위 입상하며 실력을 입증했습니다.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(9)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2024.08.10</span>
-                        <h3 class="event-title">ì²« ì¤í°ì ê³ì½ ì²´ê²°</h3>
-                        <p class="event-desc">ê¿ì ìì. ì²« ì¤í°ììì ê³ì½ ì²´ê²°ì. ë¬´ë¸ ì¤í ëª¨í°ë¸ì ì±ì¥ì í¨ê»í  íí¸ë.</p>
+                        <h3 class="event-title">첫 스폰서 계약 체결</h3>
+                        <p class="event-desc">꿈의 시작. 첫 스폰서와의 계약 체결식. 무브 오토모티브의 성장을 함께할 파트너.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(10)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2024.10.25</span>
-                        <h3 class="event-title">ì¤í ì´ë¡± íë íì¤í°ë²</h3>
-                        <p class="event-desc">íìì¿± V1 í¹ë³ ì ì. íë ì í¸ê°ë¤ì ë¨ê±°ì´ ê´ì¬ê³¼ ìì ììì.</p>
+                        <h3 class="event-title">오토살롱 튜닝 페스티벌</h3>
+                        <p class="event-desc">파왕쿱 V1 특별 전시. 튜닝 애호가들의 뜨거운 관심과 응원 속에서.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card" onclick="openLightbox(11)">
                     <div class="gallery-card-image">
-                        <span class="image-placeholder">ð·</span>
+                        <span class="image-placeholder">📷</span>
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
                         <span class="event-date">2024.12.15</span>
-                        <h3 class="event-title">ì°ë§ ê°ì¬ í¬ë¯¸í</h3>
-                        <p class="event-desc">2024ëì í¨ê»í´ì¤ í¬ë¤ìê² ê°ì¬ì ë§ìì ì íë í¹ë³í ìê°. í í´ì ë§ë¬´ë¦¬.</p>
+                        <h3 class="event-title">연말 감사 팬미팅</h3>
+                        <p class="event-desc">2024년을 함께해준 팬들에게 감사의 마음을 전하는 특별한 시간. 한 해의 마무리.</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- ë¼ì´í¸ë°ì¤ -->
+    <!-- 라이트박스 -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
         <button class="lightbox-close" onclick="closeLightbox(event)">
             <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -627,20 +627,20 @@
     <script>
         const galleryData = [
             // 2026
-            { title: "D1 LIGHTS ê°ë§ì  ì¤ë¹", desc: "2026 ìì¦ì ìí íìì¿±ì ìë²½í ì¸íê³¼ ìµì¢ íì¤í¸. ëë¦¬íí¸ì íì, ì§íì± ì ìì ì´ì ì´ ë´ê¸´ ìê°.", img: "" },
-            { title: "ìí· í¸ë ì´ë DAY", desc: "ê²½ê¸° ì  ì§ì¤ íë ¨. íì´ì´ ì°ê¸° ììì ìë²½í ëë¦¬íí¸ ë¼ì¸ì ì°¾ìê°ë ê³¼ì .", img: "" },
-            { title: "í¬ ë¯¸í & ì¬ì¸í", desc: "í¬ë¤ê³¼ í¨ê»í í¹ë³í ìê°. ë¬´ë¸ ì¤í ëª¨í°ë¸ì í¹ë³ êµ¿ì¦ ê³µê° ë° í¬ ì¬ì¸í.", img: "" },
+            { title: "D1 LIGHTS 개막전 준비", desc: "2026 시즌을 위한 파왕쿱의 완벽한 세팅과 최종 테스트. 드리프트의 파왕, 진태욱 선수의 열정이 담긴 순간.", img: "" },
+            { title: "서킷 트레이닝 DAY", desc: "경기 전 집중 훈련. 타이어 연기 속에서 완벽한 드리프트 라인을 찾아가는 과정.", img: "" },
+            { title: "팬 미팅 & 사인회", desc: "팬들과 함께한 특별한 시간. 무브 오토모티브의 특별 굿즈 공개 및 팬 사인회.", img: "" },
             // 2025
-            { title: "ì¼ë³¸ D1 LIGHTS ì²« ì¶ì ", desc: "ì¸ê³ ëë¦¬íí¸ì ë³¸ê³ ì¥ ì¼ë³¸ ì§ì¶. íêµ­ ëë¦¬íí¸ì ììì ëì¸ ì­ì¬ì ì¸ ìê°.", img: "" },
-            { title: "ë¶ì° êµ­ì  ëª¨í°ì¼ ì ì", desc: "íìì¿± V2 ê³µê°. ìì² ëªì ê´ëê°ì´ ì°¾ì ë©ì¸ ë¶ì¤ìì í¹ë³ ì ì.", img: "" },
-            { title: "KDGP ì±í¼ì¸ì­ ì°ì¹", desc: "2025 ìì¦ êµ­ë´ ìµê³  ê¶ìì ëë¦¬íí¸ ëí ì°ì¹. ì§íì± ì ìì ìë²½í ëë¦¬íí¸.", img: "" },
-            { title: "ì íë¸ 10ë§ êµ¬ëì ë¬ì±", desc: "í¬ë¤ê³¼ í¨ê» ì´ë£¬ 10ë§ êµ¬ëì ê¸°ë í¹ë³ ì´ë²¤í¸. ê°ì¬ ì¸ì¬ì í¨ê»í í¹ë³í ë .", img: "" },
+            { title: "일본 D1 LIGHTS 첫 출전", desc: "세계 드리프트의 본고장 일본 진출. 한국 드리프트의 위상을 높인 역사적인 순간.", img: "" },
+            { title: "부산 국제 모터쇼 전시", desc: "파왕쿱 V2 공개. 수천 명의 관람객이 찾은 메인 부스에서 특별 전시.", img: "" },
+            { title: "KDGP 챔피언십 우승", desc: "2025 시즌 국내 최고 권위의 드리프트 대회 우승. 진태욱 선수의 완벽한 드리프트.", img: "" },
+            { title: "유튜브 10만 구독자 달성", desc: "팬들과 함께 이룬 10만 구독자 기념 특별 이벤트. 감사 인사와 함께한 특별한 날.", img: "" },
             // 2024
-            { title: "íìì¿± V1 ì²« ê³µê°", desc: "ë¬´ë¸ ì¤í ëª¨í°ë¸ì ìì. íìì¿± V1ì ì²« ëª¨ìµê³¼ í¨ê» ëë¦¬íí¸ì ìë¡ì´ ì­ì¬ê° ììëììµëë¤.", img: "" },
-            { title: "AMF êµ­ì  ëª¨í° íì¤í°ë²", desc: "ì²« ëí ì¶ì . ëë¦¬íí¸ ì±ë¦°ì§ìì ë¹ë¹í 2ì ììíë©° ì¤ë ¥ì ìì¦íìµëë¤.", img: "" },
-            { title: "ì²« ì¤í°ì ê³ì½ ì²´ê²°", desc: "ê¿ì ìì. ì²« ì¤í°ììì ê³ì½ ì²´ê²°ì. ë¬´ë¸ ì¤í ëª¨í°ë¸ì ì±ì¥ì í¨ê»í  íí¸ë.", img: "" },
-            { title: "ì¤í ì´ë¡± íë íì¤í°ë²", desc: "íìì¿± V1 í¹ë³ ì ì. íë ì í¸ê°ë¤ì ë¨ê±°ì´ ê´ì¬ê³¼ ìì ììì.", img: "" },
-            { title: "ì°ë§ ê°ì¬ í¬ë¯¸í", desc: "2024ëì í¨ê»í´ì¤ í¬ë¤ìê² ê°ì¬ì ë§ìì ì íë í¹ë³í ìê°. í í´ì ë§ë¬´ë¦¬.", img: "" }
+            { title: "파왕쿱 V1 첫 공개", desc: "무브 오토모티브의 시작. 파왕쿱 V1의 첫 모습과 함께 드리프트의 새로운 역사가 시작되었습니다.", img: "" },
+            { title: "AMF 국제 모터 페스티벌", desc: "첫 대회 출전. 드리프트 챌린지에서 당당히 2위 입상하며 실력을 입증했습니다.", img: "" },
+            { title: "첫 스폰서 계약 체결", desc: "꿈의 시작. 첫 스폰서와의 계약 체결식. 무브 오토모티브의 성장을 함께할 파트너.", img: "" },
+            { title: "오토살롱 튜닝 페스티벌", desc: "파왕쿱 V1 특별 전시. 튜닝 애호가들의 뜨거운 관심과 응원 속에서.", img: "" },
+            { title: "연말 감사 팬미팅", desc: "2024년을 함께해준 팬들에게 감사의 마음을 전하는 특별한 시간. 한 해의 마무리.", img: "" }
         ];
 
         let currentImageIndex = 0;
@@ -674,7 +674,7 @@
             openLightbox(currentImageIndex);
         }
 
-        // ESC í¤ë¡ ë¼ì´í¸ë°ì¤ ë«ê¸°
+        // ESC 키로 라이트박스 닫기
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 document.getElementById('lightbox').classList.remove('active');
@@ -682,7 +682,7 @@
             }
         });
 
-        // íì´í í¤ë¡ ì´ë¯¸ì§ ì í
+        // 화살표 키로 이미지 전환
         document.addEventListener('keydown', function(e) {
             if (document.getElementById('lightbox').classList.contains('active')) {
                 if (e.key === 'ArrowRight') nextImage(e);

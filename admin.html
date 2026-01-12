@@ -418,7 +418,13 @@
             }
 
             const data = await response.json();
-            return atob(data.content);
+            // UTF-8 디코딩을 위해 TextDecoder 사용
+            const binaryString = atob(data.content);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return new TextDecoder('utf-8').decode(bytes);
         }
 
         async function updateFileOnGitHub(token, repo, path, content) {
