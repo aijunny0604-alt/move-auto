@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지 - MOVE MOTORS Gallery</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <title>Gallery Admin - MOVE MOTORS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,391 +14,765 @@
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #000;
+            color: #fff;
             min-height: 100vh;
-            padding: 2rem;
         }
 
-        .container {
-            max-width: 800px;
+        /* 헤더 */
+        header {
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
             margin: 0 auto;
-            background: #fff;
-            border-radius: 20px;
-            padding: 3rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
-            font-size: 2.5rem;
-            font-weight: 900;
-        }
-
-        .subtitle {
-            color: #666;
-            margin-bottom: 2rem;
-            font-size: 0.95rem;
-        }
-
-        .step {
-            background: #f8f9ff;
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-            border-left: 5px solid #667eea;
-        }
-
-        .step h2 {
-            color: #667eea;
-            margin-bottom: 1rem;
-            font-size: 1.3rem;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 0.5rem;
         }
 
-        .step-number {
-            background: #667eea;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 700;
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        input[type="text"],
-        input[type="file"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e0e0e0;
+        .auth-section {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .auth-section input {
+            padding: 0.5rem 1rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
             border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            transition: border 0.3s;
-        }
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 600;
+            color: #fff;
             font-size: 0.9rem;
         }
 
-        button {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .auth-section input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .btn {
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
             border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            font-family: inherit;
+            transition: transform 0.2s;
         }
 
-        button:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        button:disabled {
+        .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
         }
 
-        .preview {
-            margin-top: 1rem;
-            border-radius: 10px;
-            overflow: hidden;
-            max-width: 100%;
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(59, 130, 246, 0.5);
         }
 
-        .preview img {
-            width: 100%;
-            height: auto;
-            display: block;
+        /* 메인 컨테이너 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
         }
 
-        .alert {
+        .page-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-title p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 툴바 */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
             padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            display: none;
+            background: rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
         }
 
-        .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
+        .year-tabs {
+            display: flex;
+            gap: 1rem;
         }
 
-        .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
+        .year-tab {
+            padding: 0.5rem 1.5rem;
+            background: transparent;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .info-box {
-            background: #fff3cd;
-            border: 1px solid #ffeaa7;
-            padding: 1.5rem;
-            border-radius: 10px;
+        .year-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* 갤러리 그리드 */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
             margin-bottom: 2rem;
         }
 
-        .info-box h3 {
-            color: #856404;
+        .gallery-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: move;
+        }
+
+        .gallery-item.dragging {
+            opacity: 0.5;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .item-placeholder {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .item-info {
+            padding: 1rem;
+        }
+
+        .item-date {
+            font-size: 0.85rem;
+            color: #3b82f6;
             margin-bottom: 0.5rem;
+        }
+
+        .item-title {
             font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .info-box p {
-            color: #856404;
+        .item-desc {
             font-size: 0.9rem;
-            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1rem;
+            line-height: 1.5;
         }
 
-        .info-box ol {
-            margin-left: 1.5rem;
-            color: #856404;
-            font-size: 0.9rem;
-            line-height: 1.8;
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
         }
 
-        .back-link {
-            display: inline-block;
-            margin-top: 2rem;
-            color: #667eea;
-            text-decoration: none;
+        .btn-small {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+
+        /* 추가 버튼 */
+        .add-card {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 340px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-card:hover {
+            background: rgba(59, 130, 246, 0.15);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .add-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 모달 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            font-size: 2rem;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 600;
         }
 
-        .back-link:hover {
-            text-decoration: underline;
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
         }
 
-        code {
-            background: #f4f4f4;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.85rem;
-            color: #c7254e;
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .preview-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        /* 알림 */
+        .alert {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            display: none;
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .alert.active {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .loading {
-            display: none;
             text-align: center;
-            padding: 1rem;
-            color: #667eea;
-            font-weight: 600;
-        }
-
-        .loading.active {
-            display: block;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.6);
         }
     </style>
 </head>
 <body>
+    <header>
+        <div class="header-content">
+            <div class="logo">MOVE MOTORS ADMIN</div>
+            <div class="auth-section">
+                <input type="text" id="tokenInput" placeholder="GitHub Token" style="width: 300px;">
+                <button class="btn" onclick="loadGallery()">🔄 불러오기</button>
+                <button class="btn" onclick="saveChanges()" id="saveBtn" disabled>💾 저장</button>
+                <a href="gallery.html" class="btn btn-outline">← 갤러리</a>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
-        <h1>🎨 갤러리 관리자</h1>
-        <p class="subtitle">새로운 사진을 갤러리에 추가하세요</p>
-
-        <div class="info-box">
-            <h3>⚙️ 설정 필요</h3>
-            <p>GitHub Personal Access Token이 필요합니다:</p>
-            <ol>
-                <li>https://github.com/settings/tokens/new 접속</li>
-                <li>Note: <code>move-auto-admin</code></li>
-                <li>Expiration: <code>90 days</code></li>
-                <li>권한: <code>repo</code> 체크 ✅</li>
-                <li>생성된 토큰을 복사해서 아래에 입력</li>
-            </ol>
+        <div class="page-title">
+            <h1>📸 Gallery Manager</h1>
+            <p>드래그하여 순서 변경 | 클릭하여 편집 | 삭제 가능</p>
         </div>
 
-        <div class="step">
-            <h2><span class="step-number">1</span> GitHub 인증</h2>
-            <label for="token">Personal Access Token</label>
-            <input type="text" id="token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-            <label for="repo">Repository</label>
-            <input type="text" id="repo" value="aijunny0604-alt/move-auto" readonly>
+        <div class="toolbar">
+            <div class="year-tabs">
+                <button class="year-tab active" data-year="2026">2026년</button>
+                <button class="year-tab" data-year="2025">2025년</button>
+                <button class="year-tab" data-year="2024">2024년</button>
+            </div>
+            <button class="btn" onclick="openAddModal()">➕ 사진 추가</button>
         </div>
 
-        <div class="step">
-            <h2><span class="step-number">2</span> 사진 업로드</h2>
-            <label for="photo">사진 선택</label>
-            <input type="file" id="photo" accept="image/*">
-            <div id="preview" class="preview"></div>
+        <div id="galleryContainer">
+            <div class="loading">토큰을 입력하고 "불러오기"를 클릭하세요</div>
         </div>
-
-        <div class="step">
-            <h2><span class="step-number">3</span> 정보 입력</h2>
-
-            <label for="year">연도</label>
-            <select id="year">
-                <option value="2026" selected>2026년</option>
-                <option value="2025">2025년</option>
-                <option value="2024">2024년</option>
-            </select>
-
-            <label for="date">날짜</label>
-            <input type="text" id="date" placeholder="2026.01.15">
-
-            <label for="title">제목</label>
-            <input type="text" id="title" placeholder="예: 신년 자동차 전시회">
-
-            <label for="description">설명</label>
-            <textarea id="description" placeholder="사진에 대한 간단한 설명을 입력하세요"></textarea>
-        </div>
-
-        <div id="alert" class="alert"></div>
-        <div id="loading" class="loading">🔄 업로드 중...</div>
-
-        <button id="uploadBtn" onclick="uploadPhoto()">📸 갤러리에 추가</button>
-
-        <a href="gallery.html" class="back-link">← 갤러리로 돌아가기</a>
     </div>
 
+    <!-- 추가/편집 모달 -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">사진 추가</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="photoForm">
+                <div class="form-group">
+                    <label>사진</label>
+                    <input type="file" id="photoInput" accept="image/*">
+                    <img id="previewImg" class="preview-image" style="display:none;">
+                </div>
+                <div class="form-group">
+                    <label>날짜</label>
+                    <input type="text" id="dateInput" placeholder="2026.01.15">
+                </div>
+                <div class="form-group">
+                    <label>제목</label>
+                    <input type="text" id="titleInput" placeholder="예: 신년 자동차 전시회">
+                </div>
+                <div class="form-group">
+                    <label>설명</label>
+                    <textarea id="descInput" placeholder="사진에 대한 간단한 설명"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width:100%;">저장</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="alert" id="alert"></div>
+
     <script>
+        let galleryData = {};
+        let currentYear = '2026';
+        let hasChanges = false;
+        let draggedItem = null;
+
+        // 연도 탭 전환
+        document.querySelectorAll('.year-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.year-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentYear = tab.dataset.year;
+                renderGallery();
+            });
+        });
+
+        // 갤러리 불러오기
+        async function loadGallery() {
+            const token = document.getElementById('tokenInput').value.trim();
+            if (!token) {
+                showAlert('토큰을 입력하세요', 'error');
+                return;
+            }
+
+            try {
+                const content = await getFileFromGitHub(token, 'aijunny0604-alt/move-auto', 'gallery.html');
+                parseGalleryContent(content);
+                renderGallery();
+                showAlert('갤러리를 불러왔습니다');
+            } catch (error) {
+                showAlert('불러오기 실패: ' + error.message, 'error');
+            }
+        }
+
+        // gallery.html 파싱
+        function parseGalleryContent(content) {
+            galleryData = { '2026': [], '2025': [], '2024': [] };
+
+            ['2026', '2025', '2024'].forEach(year => {
+                const yearComment = `<!-- ${year}년 -->`;
+                const yearSection = content.split(yearComment)[1];
+                if (!yearSection) return;
+
+                const gridSection = yearSection.split('</section>')[0];
+                const cardMatches = gridSection.matchAll(/<div class="gallery-card"[^>]*>([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>/g);
+
+                for (const match of cardMatches) {
+                    const cardHtml = match[0];
+                    const imgMatch = cardHtml.match(/src="([^"]+)"/);
+                    const placeholderMatch = cardHtml.match(/image-placeholder/);
+                    const dateMatch = cardHtml.match(/event-date">([^<]+)</);
+                    const titleMatch = cardHtml.match(/event-title">([^<]+)</);
+                    const descMatch = cardHtml.match(/event-desc">([^<]+)</);
+                    const indexMatch = cardHtml.match(/openLightbox\((\d+)\)/);
+
+                    galleryData[year].push({
+                        img: imgMatch ? imgMatch[1] : '',
+                        hasImage: !!imgMatch,
+                        date: dateMatch ? dateMatch[1] : '',
+                        title: titleMatch ? titleMatch[1] : '',
+                        desc: descMatch ? descMatch[1] : '',
+                        lightboxIndex: indexMatch ? parseInt(indexMatch[1]) : 0,
+                        originalHtml: cardHtml
+                    });
+                }
+            });
+        }
+
+        // 갤러리 렌더링
+        function renderGallery() {
+            const container = document.getElementById('galleryContainer');
+            const items = galleryData[currentYear] || [];
+
+            container.innerHTML = `
+                <div class="gallery-grid">
+                    ${items.map((item, index) => `
+                        <div class="gallery-item" draggable="true" data-index="${index}">
+                            ${item.hasImage
+                                ? `<img src="${item.img}" class="item-image" alt="${item.title}">`
+                                : `<div class="item-placeholder">📷</div>`
+                            }
+                            <div class="item-info">
+                                <div class="item-date">${item.date}</div>
+                                <div class="item-title">${item.title}</div>
+                                <div class="item-desc">${item.desc}</div>
+                                <div class="item-actions">
+                                    <button class="btn btn-small" onclick="editItem(${index})">✏️ 편집</button>
+                                    <button class="btn btn-small btn-danger" onclick="deleteItem(${index})">🗑️ 삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <div class="add-card" onclick="openAddModal()">
+                        <div class="add-card-icon">➕</div>
+                        <div>새 사진 추가</div>
+                    </div>
+                </div>
+            `;
+
+            initDragAndDrop();
+        }
+
+        // 드래그 앤 드롭
+        function initDragAndDrop() {
+            const items = document.querySelectorAll('.gallery-item');
+
+            items.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('drop', handleDrop);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+        }
+
+        function handleDragStart(e) {
+            draggedItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            if (draggedItem !== this) {
+                const draggedIndex = parseInt(draggedItem.dataset.index);
+                const targetIndex = parseInt(this.dataset.index);
+
+                const items = galleryData[currentYear];
+                const draggedData = items[draggedIndex];
+                items.splice(draggedIndex, 1);
+                items.splice(targetIndex, 0, draggedData);
+
+                markAsChanged();
+                renderGallery();
+            }
+            return false;
+        }
+
+        function handleDragEnd() {
+            this.classList.remove('dragging');
+        }
+
+        // 사진 추가 모달
+        function openAddModal() {
+            document.getElementById('modalTitle').textContent = '사진 추가';
+            document.getElementById('photoForm').reset();
+            document.getElementById('previewImg').style.display = 'none';
+            document.getElementById('addModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('addModal').classList.remove('active');
+        }
+
         // 사진 미리보기
-        document.getElementById('photo').addEventListener('change', function(e) {
+        document.getElementById('photoInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('preview').innerHTML =
-                        `<img src="${e.target.result}" alt="미리보기">`;
+                    const preview = document.getElementById('previewImg');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        async function uploadPhoto() {
-            const token = document.getElementById('token').value.trim();
-            const repo = document.getElementById('repo').value;
-            const photoFile = document.getElementById('photo').files[0];
-            const year = document.getElementById('year').value;
-            const date = document.getElementById('date').value.trim();
-            const title = document.getElementById('title').value.trim();
-            const description = document.getElementById('description').value.trim();
+        // 사진 추가/편집 폼 제출
+        document.getElementById('photoForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-            // 유효성 검사
-            if (!token) {
-                showAlert('error', 'GitHub Token을 입력해주세요');
+            const token = document.getElementById('tokenInput').value.trim();
+            const photoFile = document.getElementById('photoInput').files[0];
+            const date = document.getElementById('dateInput').value;
+            const title = document.getElementById('titleInput').value;
+            const desc = document.getElementById('descInput').value;
+
+            if (!date || !title || !desc) {
+                showAlert('모든 정보를 입력하세요', 'error');
                 return;
             }
-
-            if (!photoFile) {
-                showAlert('error', '사진을 선택해주세요');
-                return;
-            }
-
-            if (!date || !title || !description) {
-                showAlert('error', '모든 정보를 입력해주세요');
-                return;
-            }
-
-            const uploadBtn = document.getElementById('uploadBtn');
-            const loading = document.getElementById('loading');
-            uploadBtn.disabled = true;
-            loading.classList.add('active');
 
             try {
-                // 1. 사진 파일을 images/ 폴더에 업로드
-                const photoPath = `images/${Date.now()}_${photoFile.name}`;
-                const photoContent = await fileToBase64(photoFile);
+                let imgPath = '';
 
-                await uploadToGitHub(token, repo, photoPath, photoContent.split(',')[1]);
+                if (photoFile) {
+                    // 사진 업로드
+                    imgPath = `images/${Date.now()}_${photoFile.name}`;
+                    const photoContent = await fileToBase64(photoFile);
+                    await uploadToGitHub(token, 'aijunny0604-alt/move-auto', imgPath, photoContent.split(',')[1]);
+                }
 
-                // 2. gallery.html 파일 가져오기
-                const galleryContent = await getFileFromGitHub(token, repo, 'gallery.html');
+                // 갤러리에 추가
+                galleryData[currentYear].unshift({
+                    img: imgPath,
+                    hasImage: !!photoFile,
+                    date: date,
+                    title: title,
+                    desc: desc,
+                    lightboxIndex: 0
+                });
 
-                // 3. lightbox 인덱스 계산 (해당 연도 이전 카드 개수 세기)
+                markAsChanged();
+                renderGallery();
+                closeModal();
+                showAlert('사진이 추가되었습니다. "저장" 버튼을 클릭하세요.');
+            } catch (error) {
+                showAlert('오류: ' + error.message, 'error');
+            }
+        });
+
+        // 삭제
+        function deleteItem(index) {
+            if (confirm('정말 삭제하시겠습니까?')) {
+                galleryData[currentYear].splice(index, 1);
+                markAsChanged();
+                renderGallery();
+                showAlert('삭제되었습니다. "저장" 버튼을 클릭하세요.');
+            }
+        }
+
+        // 변경사항 표시
+        function markAsChanged() {
+            hasChanges = true;
+            document.getElementById('saveBtn').disabled = false;
+        }
+
+        // 저장
+        async function saveChanges() {
+            const token = document.getElementById('tokenInput').value.trim();
+            if (!token) {
+                showAlert('토큰을 입력하세요', 'error');
+                return;
+            }
+
+            try {
+                const content = await getFileFromGitHub(token, 'aijunny0604-alt/move-auto', 'gallery.html');
+                const updatedContent = buildGalleryHTML(content);
+                await updateFileOnGitHub(token, 'aijunny0604-alt/move-auto', 'gallery.html', updatedContent);
+
+                hasChanges = false;
+                document.getElementById('saveBtn').disabled = true;
+                showAlert('✅ 저장 완료! 잠시 후 갤러리에서 확인하세요.');
+            } catch (error) {
+                showAlert('저장 실패: ' + error.message, 'error');
+            }
+        }
+
+        // gallery.html 재구성
+        function buildGalleryHTML(originalContent) {
+            let content = originalContent;
+
+            ['2026', '2025', '2024'].forEach(year => {
+                const items = galleryData[year];
                 const yearComment = `<!-- ${year}년 -->`;
-                const beforeYearContent = galleryContent.split(yearComment)[0];
-                const cardsBeforeYear = (beforeYearContent.match(/gallery-card/g) || []).length;
+                const beforeYear = content.split(yearComment)[0];
+                const afterYearSection = content.split(yearComment)[1].split('</section>');
+                const afterSection = '</section>' + afterYearSection.slice(1).join('</section>');
 
-                // 4. 새 사진 카드 HTML 생성
-                const newPhotoCard = `<div class="gallery-card" onclick="openLightbox(${cardsBeforeYear})">
+                // 카드 HTML 생성
+                const cardsHTML = items.map((item, index) => {
+                    const globalIndex = Object.keys(galleryData)
+                        .filter(y => parseInt(y) >= parseInt(year))
+                        .reduce((sum, y) => {
+                            if (parseInt(y) > parseInt(year)) return sum + galleryData[y].length;
+                            return sum + index;
+                        }, 0);
+
+                    return `<div class="gallery-card" onclick="openLightbox(${globalIndex})">
                     <div class="gallery-card-image">
-                        <img src="${photoPath}" alt="${title}">
+                        ${item.hasImage
+                            ? `<img src="${item.img}" alt="${item.title}">`
+                            : `<span class="image-placeholder">📷</span>`
+                        }
                         <div class="zoom-icon">
                             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
                         </div>
                     </div>
                     <div class="gallery-card-info">
-                        <span class="event-date">${date}</span>
-                        <h3 class="event-title">${title}</h3>
-                        <p class="event-desc">${description}</p>
+                        <span class="event-date">${item.date}</span>
+                        <h3 class="event-title">${item.title}</h3>
+                        <p class="event-desc">${item.desc}</p>
                     </div>
                 </div>
 
                 `;
+                }).join('');
 
-                // 5. 해당 연도 섹션의 gallery-grid 맨 앞에 추가
-                const pattern = new RegExp(`(${yearComment}[\\s\\S]*?<div class="gallery-grid">)`, 'm');
+                // 해당 연도 섹션 재구성
+                const yearSectionHeader = afterYearSection[0].split('<div class="gallery-grid">')[0];
+                const newYearSection = `${yearComment}
+        <section class="year-section">
+${yearSectionHeader}<div class="gallery-grid">
+                ${cardsHTML}</div>
+        </section>`;
 
-                const updatedContent = galleryContent.replace(
-                    pattern,
-                    `$1\n                ${newPhotoCard}`
-                );
+                content = beforeYear + newYearSection + afterSection;
+            });
 
-                // 6. galleryData에도 추가 (lightbox용)
-                const galleryDataPattern = /const galleryData = \[/;
-                const newGalleryItem = `\n            { title: "${title}", desc: "${description}", img: "${photoPath}" },`;
+            // galleryData 배열도 업데이트
+            const allItems = [
+                ...galleryData['2026'],
+                ...galleryData['2025'],
+                ...galleryData['2024']
+            ];
 
-                const finalContent = updatedContent.replace(
-                    galleryDataPattern,
-                    `const galleryData = [${newGalleryItem}`
-                );
+            const galleryDataJS = allItems.map(item =>
+                `{ title: "${item.title}", desc: "${item.desc}", img: "${item.img}" }`
+            ).join(',\n            ');
 
-                // 7. gallery.html 업데이트
-                await updateFileOnGitHub(token, repo, 'gallery.html', finalContent);
+            content = content.replace(
+                /const galleryData = \[[\s\S]*?\];/,
+                `const galleryData = [\n            ${galleryDataJS}\n        ];`
+            );
 
-                showAlert('success', '✅ 사진이 성공적으로 추가되었습니다! 잠시 후 갤러리를 확인하세요.');
-
-                // 폼 초기화
-                document.getElementById('photo').value = '';
-                document.getElementById('date').value = '';
-                document.getElementById('title').value = '';
-                document.getElementById('description').value = '';
-                document.getElementById('preview').innerHTML = '';
-
-            } catch (error) {
-                showAlert('error', '❌ 업로드 실패: ' + error.message);
-                console.error(error);
-            } finally {
-                uploadBtn.disabled = false;
-                loading.classList.remove('active');
-            }
+            return content;
         }
 
+        // 유틸리티 함수들
         function fileToBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
@@ -416,14 +790,14 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    message: `Add new photo: ${path}`,
+                    message: `Add photo: ${path}`,
                     content: content
                 })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`GitHub API 오류: ${errorData.message || response.statusText}`);
+                throw new Error(errorData.message || response.statusText);
             }
 
             return response.json();
@@ -431,17 +805,12 @@
 
         async function getFileFromGitHub(token, repo, path) {
             const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                headers: {
-                    'Authorization': `token ${token}`,
-                }
+                headers: { 'Authorization': `token ${token}` }
             });
 
-            if (!response.ok) {
-                throw new Error(`파일 가져오기 실패: ${response.statusText}`);
-            }
+            if (!response.ok) throw new Error('파일 가져오기 실패');
 
             const data = await response.json();
-            // UTF-8 디코딩
             const binaryString = atob(data.content);
             const bytes = new Uint8Array(binaryString.length);
             for (let i = 0; i < binaryString.length; i++) {
@@ -451,26 +820,18 @@
         }
 
         async function updateFileOnGitHub(token, repo, path, content) {
-            // 먼저 파일의 현재 SHA 가져오기
             const getResponse = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
-                headers: {
-                    'Authorization': `token ${token}`,
-                }
+                headers: { 'Authorization': `token ${token}` }
             });
 
             const fileData = await getResponse.json();
-            const sha = fileData.sha;
-
-            // UTF-8 인코딩
             const encoder = new TextEncoder();
             const uint8array = encoder.encode(content);
             let binaryString = '';
             for (let i = 0; i < uint8array.length; i++) {
                 binaryString += String.fromCharCode(uint8array[i]);
             }
-            const base64Content = btoa(binaryString);
 
-            // 파일 업데이트
             const response = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
                 method: 'PUT',
                 headers: {
@@ -478,28 +839,27 @@
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    message: 'Update gallery with new photo',
-                    content: base64Content,
-                    sha: sha
+                    message: 'Update gallery from admin panel',
+                    content: btoa(binaryString),
+                    sha: fileData.sha
                 })
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(`파일 업데이트 실패: ${errorData.message || response.statusText}`);
+                throw new Error(errorData.message || response.statusText);
             }
 
             return response.json();
         }
 
-        function showAlert(type, message) {
+        function showAlert(message, type = 'success') {
             const alert = document.getElementById('alert');
-            alert.className = `alert ${type}`;
             alert.textContent = message;
-
+            alert.className = `alert ${type} active`;
             setTimeout(() => {
                 alert.className = 'alert';
-            }, 10000);
+            }, 5000);
         }
     </script>
 </body>
