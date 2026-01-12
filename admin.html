@@ -339,11 +339,13 @@
                 // 2. gallery.html 파일 가져오기
                 const galleryContent = await getFileFromGitHub(token, repo, 'gallery.html');
 
-                // 3. lightbox 인덱스 계산 (기존 카드 개수)
-                const totalCards = (galleryContent.match(/gallery-card/g) || []).length;
+                // 3. lightbox 인덱스 계산 (해당 연도 이전 카드 개수 세기)
+                const yearComment = `<!-- ${year}년 -->`;
+                const beforeYearContent = galleryContent.split(yearComment)[0];
+                const cardsBeforeYear = (beforeYearContent.match(/gallery-card/g) || []).length;
 
                 // 4. 새 사진 카드 HTML 생성
-                const newPhotoCard = `<div class="gallery-card" onclick="openLightbox(${totalCards})">
+                const newPhotoCard = `<div class="gallery-card" onclick="openLightbox(${cardsBeforeYear})">
                     <div class="gallery-card-image">
                         <img src="${photoPath}" alt="${title}">
                         <div class="zoom-icon">
@@ -360,7 +362,6 @@
                 `;
 
                 // 5. 해당 연도 섹션의 gallery-grid 맨 앞에 추가
-                const yearComment = `<!-- ${year}년 -->`;
                 const pattern = new RegExp(`(${yearComment}[\\s\\S]*?<div class="gallery-grid">)`, 'm');
 
                 const updatedContent = galleryContent.replace(
