@@ -161,17 +161,24 @@
         }
 
         .gallery-item.dragging {
-            opacity: 0.4;
-            transform: scale(0.95) rotate(2deg);
-            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
+            opacity: 0.6;
+            transform: scale(1.05) rotate(-3deg);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.6);
             z-index: 1000;
+            cursor: grabbing;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .gallery-item.drag-over {
             border-color: var(--orange);
-            background: rgba(249, 115, 22, 0.1);
-            transform: scale(1.05);
-            transition: all 0.2s ease;
+            background: rgba(249, 115, 22, 0.15);
+            transform: scale(0.95) translateY(10px);
+            box-shadow: 0 5px 20px rgba(249, 115, 22, 0.4);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gallery-item.shifting {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .item-image {
@@ -554,11 +561,16 @@
             initDrag();
         }
 
-        // 드래그 앤 드롭
+        // 드래그 앤 드롭 (고급 애니메이션)
+        let lastTarget = null;
+        let dragTimeout = null;
+
         function initDrag() {
             document.querySelectorAll('.gallery-item').forEach(item => {
+                item.style.cursor = 'grab';
                 item.addEventListener('dragstart', handleDragStart);
                 item.addEventListener('dragover', handleDragOver);
+                item.addEventListener('dragenter', handleDragEnter);
                 item.addEventListener('dragleave', handleDragLeave);
                 item.addEventListener('drop', handleDrop);
                 item.addEventListener('dragend', handleDragEnd);
@@ -567,15 +579,21 @@
 
         function handleDragStart(e) {
             draggedItem = this;
-            this.classList.add('dragging');
+            setTimeout(() => this.classList.add('dragging'), 0);
             e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
 
-            // 드래그 이미지 커스텀
-            const ghost = this.cloneNode(true);
-            ghost.style.opacity = '0.8';
-            document.body.appendChild(ghost);
-            e.dataTransfer.setDragImage(ghost, 0, 0);
-            setTimeout(() => document.body.removeChild(ghost), 0);
+            // 모든 아이템에 shifting 클래스 추가 (부드러운 전환)
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                if (item !== this) item.classList.add('shifting');
+            });
+        }
+
+        function handleDragEnter(e) {
+            if (this === draggedItem || !this.classList.contains('gallery-item')) return;
+
+            lastTarget = this;
+            this.classList.add('drag-over');
         }
 
         function handleDragOver(e) {
@@ -583,29 +601,38 @@
             e.dataTransfer.dropEffect = 'move';
 
             if (this !== draggedItem && this.classList.contains('gallery-item')) {
-                this.classList.add('drag-over');
+                // 디바운스로 부드러운 위치 변경
+                if (dragTimeout) clearTimeout(dragTimeout);
 
-                // 실시간으로 위치 변경 애니메이션
-                const draggedIndex = parseInt(draggedItem.dataset.index);
-                const targetIndex = parseInt(this.dataset.index);
+                dragTimeout = setTimeout(() => {
+                    const draggedIndex = parseInt(draggedItem.dataset.index);
+                    const targetIndex = parseInt(this.dataset.index);
 
-                if (draggedIndex !== targetIndex) {
-                    const items = galleryData[currentYear];
-                    const draggedData = items[draggedIndex];
-                    items.splice(draggedIndex, 1);
-                    items.splice(targetIndex, 0, draggedData);
+                    if (!isNaN(draggedIndex) && !isNaN(targetIndex) && draggedIndex !== targetIndex) {
+                        const items = galleryData[currentYear];
+                        const draggedData = items[draggedIndex];
 
-                    renderGallery();
-                }
+                        // 부드러운 배열 재정렬
+                        items.splice(draggedIndex, 1);
+                        items.splice(targetIndex, 0, draggedData);
+
+                        renderGallery();
+                    }
+                }, 50); // 50ms 디바운스로 부드러운 애니메이션
             }
         }
 
         function handleDragLeave(e) {
-            this.classList.remove('drag-over');
+            if (e.target === this) {
+                this.classList.remove('drag-over');
+            }
         }
 
         function handleDrop(e) {
             e.preventDefault();
+            e.stopPropagation();
+
+            if (dragTimeout) clearTimeout(dragTimeout);
             this.classList.remove('drag-over');
 
             if (draggedItem !== this && this.classList.contains('gallery-item')) {
@@ -613,11 +640,18 @@
             }
         }
 
-        function handleDragEnd() {
+        function handleDragEnd(e) {
+            if (dragTimeout) clearTimeout(dragTimeout);
+
             this.classList.remove('dragging');
+
+            // 모든 드래그 관련 클래스 제거
             document.querySelectorAll('.gallery-item').forEach(item => {
-                item.classList.remove('drag-over');
+                item.classList.remove('drag-over', 'shifting');
+                item.style.cursor = 'grab';
             });
+
+            lastTarget = null;
         }
 
         // 모달
