@@ -492,16 +492,14 @@
 
                 const yearSection = parts[1].split('</section>')[0];
 
-                // gallery-card로 시작하는 모든 div 찾기
-                const regex = /<div class="gallery-card"[^>]*>[\s\S]*?<div class="gallery-card-info">[\s\S]*?<\/div>\s*<\/div>/g;
-                const cardMatches = yearSection.matchAll(regex);
+                // event-date, event-title, event-desc 기준으로 파싱
+                const cards = yearSection.split('<div class="gallery-card"').slice(1);
 
-                for (const match of cardMatches) {
-                    const cardHtml = match[0];
+                cards.forEach(cardHtml => {
                     const imgMatch = cardHtml.match(/<img src="([^"]+)"/);
-                    const dateMatch = cardHtml.match(/event-date">([^<]+)/);
-                    const titleMatch = cardHtml.match(/event-title">([^<]+)/);
-                    const descMatch = cardHtml.match(/event-desc">([^<]+)/);
+                    const dateMatch = cardHtml.match(/event-date">([^<]+)</);
+                    const titleMatch = cardHtml.match(/event-title">([^<]+)</);
+                    const descMatch = cardHtml.match(/event-desc">([^<]+)</);
 
                     if (dateMatch && titleMatch && descMatch) {
                         galleryData[year].push({
@@ -512,7 +510,7 @@
                             desc: descMatch[1]
                         });
                     }
-                }
+                });
 
                 console.log(`${year}년:`, galleryData[year].length, '개 사진');
             });
