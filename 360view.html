@@ -3,178 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>360° View - Move Automotive</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
+    <title>360° Car View - Move Automotive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: #0a0a0a;
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%);
             color: white;
             min-height: 100vh;
+            overflow: hidden;
         }
+
         .header {
-            padding: 1rem 2rem;
+            padding: 1.5rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.8);
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 100;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
         }
         .header h1 {
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
         }
         .back-btn {
-            padding: 0.5rem 1rem;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.6rem 1.2rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             color: white;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 25px;
+            font-size: 0.85rem;
             transition: all 0.3s;
         }
         .back-btn:hover {
-            background: rgba(255,255,255,0.1);
-            border-color: rgba(255,255,255,0.6);
+            background: rgba(255,255,255,0.2);
         }
+
         .viewer-container {
-            padding-top: 60px;
             height: 100vh;
-        }
-        #panorama {
-            width: 100%;
-            height: calc(100vh - 60px);
-        }
-        .thumbnail-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            padding: 10px;
-            background: rgba(0,0,0,0.7);
-            border-radius: 10px;
-            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            user-select: none;
+            position: relative;
         }
-        .thumbnail {
-            width: 80px;
-            height: 50px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-            object-fit: cover;
-            opacity: 0.6;
+        .viewer-container:active {
+            cursor: grabbing;
         }
-        .thumbnail:hover {
+
+        .car-viewer {
+            position: relative;
+            width: 90vw;
+            max-width: 1000px;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .car-image {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity 0.15s ease;
+            pointer-events: none;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+        }
+        .car-image.active {
             opacity: 1;
         }
-        .thumbnail.active {
-            border-color: #3b82f6;
-            opacity: 1;
-        }
-        .scene-title {
+
+        .drag-hint {
             position: fixed;
             bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
-            padding: 0.5rem 1.5rem;
-            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.6);
             font-size: 0.9rem;
-            z-index: 100;
+            animation: pulse 2s ease-in-out infinite;
         }
-        .controls-hint {
+        .drag-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: dragAnim 2s ease-in-out infinite;
+        }
+        .drag-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: rgba(255,255,255,0.6);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        @keyframes dragAnim {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .progress-dots {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+
+        .angle-indicator {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 0.1em;
+        }
+
+        /* 자동 회전 힌트 */
+        .auto-rotate-hint {
             position: fixed;
             top: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4);
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.8rem;
-            color: rgba(255,255,255,0.7);
-            z-index: 100;
-            animation: fadeOut 3s forwards 2s;
+            color: #93c5fd;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        @keyframes fadeOut {
-            to { opacity: 0; pointer-events: none; }
+        .auto-rotate-hint.visible {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>360° Interior View</h1>
-        <a href="index.html" class="back-btn">← Back</a>
+        <h1>360° VIEW</h1>
+        <a href="index.html" class="back-btn">← Back to Main</a>
     </div>
 
-    <div class="controls-hint">Drag to look around / Scroll to zoom</div>
-    <div class="scene-title" id="sceneTitle">Scene 1</div>
+    <div class="auto-rotate-hint" id="autoRotateHint">Auto-rotating...</div>
 
-    <div class="viewer-container">
-        <div id="panorama"></div>
+    <div class="viewer-container" id="viewer">
+        <div class="car-viewer">
+            <img src="images/360/1.png" class="car-image active" data-index="0" alt="Car View 1">
+            <img src="images/360/2.png" class="car-image" data-index="1" alt="Car View 2">
+            <img src="images/360/3.png" class="car-image" data-index="2" alt="Car View 3">
+            <img src="images/360/4.png" class="car-image" data-index="3" alt="Car View 4">
+        </div>
     </div>
 
-    <div class="thumbnail-nav">
-        <img src="images/360/1.png" class="thumbnail active" onclick="loadScene(0)" alt="Scene 1">
-        <img src="images/360/2.png" class="thumbnail" onclick="loadScene(1)" alt="Scene 2">
-        <img src="images/360/3.png" class="thumbnail" onclick="loadScene(2)" alt="Scene 3">
-        <img src="images/360/4.png" class="thumbnail" onclick="loadScene(3)" alt="Scene 4">
+    <div class="drag-hint" id="dragHint">
+        <div class="drag-icon">
+            <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+        </div>
+        <span>Drag to rotate</span>
+    </div>
+
+    <div class="angle-indicator" id="angleIndicator">0°</div>
+
+    <div class="progress-dots">
+        <div class="dot active" data-index="0"></div>
+        <div class="dot" data-index="1"></div>
+        <div class="dot" data-index="2"></div>
+        <div class="dot" data-index="3"></div>
     </div>
 
     <script>
-        const scenes = [
-            { image: 'images/360/1.png', title: 'View 1' },
-            { image: 'images/360/2.png', title: 'View 2' },
-            { image: 'images/360/3.png', title: 'View 3' },
-            { image: 'images/360/4.png', title: 'View 4' }
-        ];
+        const viewer = document.getElementById('viewer');
+        const images = document.querySelectorAll('.car-image');
+        const dots = document.querySelectorAll('.dot');
+        const dragHint = document.getElementById('dragHint');
+        const angleIndicator = document.getElementById('angleIndicator');
+        const autoRotateHint = document.getElementById('autoRotateHint');
 
-        let viewer;
-        let currentScene = 0;
+        let currentIndex = 0;
+        let isDragging = false;
+        let startX = 0;
+        let lastX = 0;
+        let autoRotateInterval;
+        let hasInteracted = false;
 
-        function initViewer() {
-            viewer = pannellum.viewer('panorama', {
-                type: 'equirectangular',
-                panorama: scenes[0].image,
-                autoLoad: true,
-                autoRotate: -2,
-                compass: false,
-                showControls: true,
-                mouseZoom: true,
-                hfov: 100,
-                minHfov: 50,
-                maxHfov: 120
+        const totalImages = images.length;
+        const anglePerImage = 360 / totalImages;
+
+        function showImage(index) {
+            index = ((index % totalImages) + totalImages) % totalImages;
+            currentIndex = index;
+
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
             });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            // Update angle indicator
+            const angle = index * anglePerImage;
+            angleIndicator.textContent = angle + '°';
         }
 
-        function loadScene(index) {
-            currentScene = index;
-            viewer.loadScene(undefined, undefined, undefined, undefined, {
-                type: 'equirectangular',
-                panorama: scenes[index].image,
-                autoLoad: true,
-                autoRotate: -2
-            });
+        // Mouse events
+        viewer.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            lastX = e.clientX;
+            stopAutoRotate();
+            hideHint();
+        });
 
-            // Update thumbnails
-            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-                thumb.classList.toggle('active', i === index);
-            });
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
 
-            // Update title
-            document.getElementById('sceneTitle').textContent = scenes[index].title;
+            const deltaX = e.clientX - lastX;
+            const sensitivity = 50; // pixels per image
+
+            if (Math.abs(e.clientX - startX) > sensitivity) {
+                const direction = deltaX > 0 ? 1 : -1;
+                showImage(currentIndex + direction);
+                startX = e.clientX;
+            }
+            lastX = e.clientX;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Touch events
+        viewer.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            lastX = e.touches[0].clientX;
+            stopAutoRotate();
+            hideHint();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+
+            const deltaX = e.touches[0].clientX - lastX;
+            const sensitivity = 40;
+
+            if (Math.abs(e.touches[0].clientX - startX) > sensitivity) {
+                const direction = deltaX > 0 ? 1 : -1;
+                showImage(currentIndex + direction);
+                startX = e.touches[0].clientX;
+            }
+            lastX = e.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        // Auto rotate
+        function startAutoRotate() {
+            autoRotateHint.classList.add('visible');
+            autoRotateInterval = setInterval(() => {
+                showImage(currentIndex + 1);
+            }, 1500);
         }
 
-        // Initialize on load
-        window.onload = initViewer;
+        function stopAutoRotate() {
+            hasInteracted = true;
+            autoRotateHint.classList.remove('visible');
+            if (autoRotateInterval) {
+                clearInterval(autoRotateInterval);
+                autoRotateInterval = null;
+            }
+        }
+
+        function hideHint() {
+            dragHint.style.opacity = '0';
+            setTimeout(() => {
+                dragHint.style.display = 'none';
+            }, 300);
+        }
+
+        // Click on dots
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                showImage(i);
+                stopAutoRotate();
+                hideHint();
+            });
+        });
+
+        // Start auto-rotate after 2 seconds
+        setTimeout(() => {
+            if (!hasInteracted) {
+                startAutoRotate();
+            }
+        }, 2000);
     </script>
 </body>
 </html>
