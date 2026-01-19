@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>360° View - Move Automotive</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            min-height: 100vh;
+        }
+        .header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        .header h1 {
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+        .back-btn {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .back-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.6);
+        }
+        .viewer-container {
+            padding-top: 60px;
+            height: 100vh;
+        }
+        #panorama {
+            width: 100%;
+            height: calc(100vh - 60px);
+        }
+        .thumbnail-nav {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            z-index: 100;
+        }
+        .thumbnail {
+            width: 80px;
+            height: 50px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+        .thumbnail:hover {
+            opacity: 1;
+        }
+        .thumbnail.active {
+            border-color: #3b82f6;
+            opacity: 1;
+        }
+        .scene-title {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 100;
+        }
+        .controls-hint {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+            z-index: 100;
+            animation: fadeOut 3s forwards 2s;
+        }
+        @keyframes fadeOut {
+            to { opacity: 0; pointer-events: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>360° Interior View</h1>
+        <a href="index.html" class="back-btn">← Back</a>
+    </div>
+
+    <div class="controls-hint">Drag to look around / Scroll to zoom</div>
+    <div class="scene-title" id="sceneTitle">Scene 1</div>
+
+    <div class="viewer-container">
+        <div id="panorama"></div>
+    </div>
+
+    <div class="thumbnail-nav">
+        <img src="images/360/1.png" class="thumbnail active" onclick="loadScene(0)" alt="Scene 1">
+        <img src="images/360/2.png" class="thumbnail" onclick="loadScene(1)" alt="Scene 2">
+        <img src="images/360/3.png" class="thumbnail" onclick="loadScene(2)" alt="Scene 3">
+        <img src="images/360/4.png" class="thumbnail" onclick="loadScene(3)" alt="Scene 4">
+    </div>
+
+    <script>
+        const scenes = [
+            { image: 'images/360/1.png', title: 'View 1' },
+            { image: 'images/360/2.png', title: 'View 2' },
+            { image: 'images/360/3.png', title: 'View 3' },
+            { image: 'images/360/4.png', title: 'View 4' }
+        ];
+
+        let viewer;
+        let currentScene = 0;
+
+        function initViewer() {
+            viewer = pannellum.viewer('panorama', {
+                type: 'equirectangular',
+                panorama: scenes[0].image,
+                autoLoad: true,
+                autoRotate: -2,
+                compass: false,
+                showControls: true,
+                mouseZoom: true,
+                hfov: 100,
+                minHfov: 50,
+                maxHfov: 120
+            });
+        }
+
+        function loadScene(index) {
+            currentScene = index;
+            viewer.loadScene(undefined, undefined, undefined, undefined, {
+                type: 'equirectangular',
+                panorama: scenes[index].image,
+                autoLoad: true,
+                autoRotate: -2
+            });
+
+            // Update thumbnails
+            document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+                thumb.classList.toggle('active', i === index);
+            });
+
+            // Update title
+            document.getElementById('sceneTitle').textContent = scenes[index].title;
+        }
+
+        // Initialize on load
+        window.onload = initViewer;
+    </script>
+</body>
+</html>
