@@ -397,9 +397,9 @@
 
         <div class="toolbar">
             <div class="year-tabs">
-                <button class="year-tab active" data-year="2026">2026년</button>
-                <button class="year-tab" data-year="2025">2025년</button>
+                <button class="year-tab active" data-year="2025">2025년</button>
                 <button class="year-tab" data-year="2024">2024년</button>
+                <button class="year-tab" data-year="2023">2023년</button>
             </div>
             <button class="btn" onclick="openAddModal()">➕ 사진 추가</button>
         </div>
@@ -442,8 +442,8 @@
     <div class="alert" id="alert"></div>
 
     <script>
-        let galleryData = { '2026': [], '2025': [], '2024': [] };
-        let currentYear = '2026';
+        let galleryData = { '2025': [], '2024': [], '2023': [] };
+        let currentYear = '2025';
         let hasChanges = false;
         let draggedItem = null;
 
@@ -490,9 +490,9 @@
 
         // gallery.html 파싱
         function parseGallery(content) {
-            galleryData = { '2026': [], '2025': [], '2024': [] };
+            galleryData = { '2025': [], '2024': [], '2023': [] };
 
-            ['2026', '2025', '2024'].forEach(year => {
+            ['2025', '2024', '2023'].forEach(year => {
                 const yearComment = `<!-- ${year}년 -->`;
                 const parts = content.split(yearComment);
                 if (parts.length < 2) return;
@@ -756,20 +756,20 @@
         // gallery.html 재구성
         function buildGalleryHTML(original) {
             // 기존 파일에서 헤더와 푸터 추출
-            const headerEnd = original.indexOf('<!-- 2026년 -->');
+            const headerEnd = original.indexOf('<!-- 2025년 -->');
             const footerStart = original.indexOf('<!-- 라이트박스 -->');
 
             const header = original.substring(0, headerEnd);
             const footer = original.substring(footerStart);
 
             // 전체 아이템 배열 생성 (galleryData 기준)
-            const allItems = [...galleryData['2026'], ...galleryData['2025'], ...galleryData['2024']];
+            const allItems = [...galleryData['2025'], ...galleryData['2024'], ...galleryData['2023']];
 
             // 각 연도별 섹션 생성
-            const yearSections = ['2026', '2025', '2024'].map(year => {
+            const yearSections = ['2025', '2024', '2023'].map(year => {
                 const items = galleryData[year];
-                const yearTitle = year === '2026' ? 'D1 LIGHTS 시즌 | 국내외 주요 대회' :
-                                 year === '2025' ? '일본 진출 | 국내 대회 우승' : '무브 오토모티브의 시작';
+                const yearTitle = year === '2025' ? 'D1 LIGHTS 시즌 | 국내외 주요 대회' :
+                                 year === '2024' ? '일본 진출 | 국내 대회 우승' : '무브 오토모티브의 시작';
 
                 const cardsHTML = items.map((item) => {
                     const globalIdx = allItems.findIndex(i => i === item);
