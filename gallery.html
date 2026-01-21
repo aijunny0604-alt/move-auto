@@ -684,14 +684,14 @@
 
         // Lenis 부드러운 스크롤 초기화
         const lenis = new Lenis({
-            duration: 1.0,
+            duration: 1.2,
             easing: (t) => 1 - Math.pow(1 - t, 3),
             orientation: 'vertical',
             smoothWheel: true,
             smoothTouch: false,
-            wheelMultiplier: 1,
+            wheelMultiplier: 0.8,
             touchMultiplier: 1.5,
-            lerp: 0.1,
+            lerp: 0.06,
         });
 
         function raf(time) {
