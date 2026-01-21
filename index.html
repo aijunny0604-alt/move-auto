@@ -1772,19 +1772,18 @@
             color: #fbbf24;
             background: none;
             padding: 0.75rem 1.5rem;
-            border-radius: 0;
             border: none;
-            animation: subtitlePulse 2s ease-in-out infinite;
             cursor: pointer;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 191, 36, 0.4), 0 0 30px rgba(251, 191, 36, 0.2);
+            animation: textGlow 2s ease-in-out infinite;
+            letter-spacing: 0.05em;
         }
-        @keyframes subtitlePulse {
+        @keyframes textGlow {
             0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 191, 36, 0.4), 0 0 30px rgba(251, 191, 36, 0.2);
             }
             50% {
-                transform: scale(1.03);
-                box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2);
+                text-shadow: 0 0 15px rgba(251, 191, 36, 0.8), 0 0 30px rgba(251, 191, 36, 0.6), 0 0 45px rgba(251, 191, 36, 0.4);
             }
         }
         .tree-container {
