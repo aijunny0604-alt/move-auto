@@ -420,6 +420,202 @@
                 right: 1rem;
             }
         }
+
+        /* Project Showcase Section */
+        .project-showcase {
+            background: linear-gradient(180deg, #0a0a0b 0%, #111113 50%, #0a0a0b 100%);
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        .project-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(239, 68, 68, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 20% 100%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(168, 85, 247, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .project-showcase-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        .project-showcase-tag {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 2rem;
+            color: #ef4444;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .project-showcase-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .project-showcase-subtitle {
+            font-size: 1.1rem;
+            color: #71717a;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        .project-showcase-subtitle strong {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        .project-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .project-card {
+            background: linear-gradient(145deg, rgba(30, 30, 35, 0.9) 0%, rgba(20, 20, 25, 0.95) 100%);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.5rem;
+            padding: 1px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.1), transparent 50%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        .project-card-image {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+        }
+        .project-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .project-card:hover .project-card-image img {
+            transform: scale(1.08);
+        }
+        .project-card-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(20, 20, 25, 1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .project-card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.4rem 1rem;
+            background: rgba(239, 68, 68, 0.9);
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+        .project-card-badge.blue {
+            background: rgba(59, 130, 246, 0.9);
+        }
+        .project-card-badge.purple {
+            background: rgba(168, 85, 247, 0.9);
+        }
+        .project-card-content {
+            padding: 1.5rem 1.5rem 2rem;
+            position: relative;
+            margin-top: -2rem;
+            z-index: 2;
+        }
+        .project-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .project-card-desc {
+            font-size: 0.9rem;
+            color: #a1a1aa;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .project-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .project-card-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            color: #71717a;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 1024px) {
+            .project-cards {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                gap: 1.5rem;
+            }
+            .project-showcase-title {
+                font-size: 2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .project-showcase {
+                padding: 3rem 1rem;
+            }
+            .project-showcase-title {
+                font-size: 1.6rem;
+            }
+            .project-showcase-subtitle {
+                font-size: 0.95rem;
+            }
+            .project-card-title {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -435,6 +631,77 @@
             <h1>PHOTO GALLERY</h1>
             <p>무브 오토모티브의 여정을 사진으로 만나보세요</p>
         </div>
+
+        <!-- Project Showcase Section -->
+        <section class="project-showcase">
+            <div class="project-showcase-header">
+                <div class="project-showcase-tag">Unique Projects</div>
+                <h2 class="project-showcase-title">우리만의 독창적인 도전</h2>
+                <p class="project-showcase-subtitle">
+                    <strong>제네시스 쿠페</strong>라는 한정된 국산 드리프트 베이스로<br>
+                    남들이 하지 않는 독창적인 프로젝트를 진행합니다
+                </p>
+            </div>
+
+            <div class="project-cards">
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <span class="project-card-badge">Signature</span>
+                        <img src="images/projects/gencoup-mustang-1.jpg" alt="Genesis Coupe + Mustang Bodykit">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">젠쿱 + 머스탱 바디킷</h3>
+                        <p class="project-card-desc">
+                            국산 제네시스 쿠페에 포드 머스탱의 아그레시브한 바디킷을 융합.
+                            K-드리프트만의 독특한 실루엣을 완성했습니다.
+                        </p>
+                        <div class="project-card-tags">
+                            <span class="project-card-tag">Wide Body</span>
+                            <span class="project-card-tag">Custom Aero</span>
+                            <span class="project-card-tag">Drift Spec</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <span class="project-card-badge blue">In Progress</span>
+                        <img src="images/projects/gencoup-veloster-1.jpg" alt="Genesis Coupe + Veloster N Bodykit">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">젠쿱 + 벨로스터N 바디킷</h3>
+                        <p class="project-card-desc">
+                            현대 N 퍼포먼스의 상징 벨로스터N 디자인 요소를 젠쿱에 이식.
+                            국산 드리프트카의 새로운 아이덴티티를 제시합니다.
+                        </p>
+                        <div class="project-card-tags">
+                            <span class="project-card-tag">N Performance</span>
+                            <span class="project-card-tag">Hybrid Design</span>
+                            <span class="project-card-tag">Street Style</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-card-image">
+                        <span class="project-card-badge purple">Coming Soon</span>
+                        <img src="images/projects/avante-rwd-1.jpg" alt="Avante N RWD Conversion">
+                    </div>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">아반떼N 후륜구동 컨버전</h3>
+                        <p class="project-card-desc">
+                            전륜구동 아반떼N을 후륜구동으로 완전 개조하는 야심찬 프로젝트.
+                            불가능을 가능으로 만드는 도전입니다.
+                        </p>
+                        <div class="project-card-tags">
+                            <span class="project-card-tag">RWD Swap</span>
+                            <span class="project-card-tag">Full Custom</span>
+                            <span class="project-card-tag">Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
                         <!-- 2026년 -->
         <section class="year-section">
