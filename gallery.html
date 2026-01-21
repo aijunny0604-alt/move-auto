@@ -37,12 +37,9 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* GPU 가속 */
-        main, .gallery-card, .year-section, header {
-            will-change: transform;
+        /* GPU 가속 - 스크롤 요소만 */
+        main {
             transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
         }
 
         /* 드래그 방지 */
@@ -169,15 +166,15 @@
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            transform: translateZ(0);
+            will-change: auto;
         }
 
         .gallery-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
             border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3);
         }
 
         .gallery-card-image {
@@ -195,11 +192,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
-        }
-
-        .gallery-card:hover .gallery-card-image img {
-            transform: scale(1.1);
         }
 
         .image-placeholder {
@@ -208,24 +200,7 @@
         }
 
         .zoom-icon {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .gallery-card:hover .zoom-icon {
-            opacity: 1;
+            display: none;
         }
 
         .zoom-icon svg {
