@@ -1770,10 +1770,10 @@
             font-weight: 600;
             margin-bottom: 2.5rem;
             color: #fbbf24;
-            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.15), transparent);
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.1), transparent);
             padding: 0.75rem 1.5rem;
             border-radius: 2rem;
-            border: 1px solid rgba(251, 191, 36, 0.3);
+            border: none;
             animation: subtitlePulse 2s ease-in-out infinite;
             cursor: pointer;
         }
@@ -2627,6 +2627,15 @@
         .media-stat-label { font-size: 0.75rem; color: #71717a; }
         
         .subsection-title { font-size: 1.25rem; margin-bottom: 0.5rem; text-align: center; }
+        .subsection-title.video-section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
         .subsection-desc { color: #71717a; font-size: 0.875rem; text-align: center; margin-bottom: 2rem; }
         
         /* 우리만의 독창적인 도전 섹션 - Hero Style */
@@ -2788,27 +2797,33 @@
         /* Gallery Button Section */
         .gallery-button-section {
             text-align: center;
-            margin: 2rem 0 4rem;
+            margin: 3rem 0 5rem;
+            padding: 2rem 0;
+            position: relative;
+            z-index: 10;
+            clear: both;
         }
         .gallery-view-btn {
             display: inline-flex;
             align-items: center;
             gap: 1rem;
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1.25rem 3rem;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
+            border: 2px solid rgba(251, 191, 36, 0.5);
             border-radius: 3rem;
-            color: rgba(255,255,255,0.8);
+            color: #fbbf24;
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.1rem;
+            font-weight: 600;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
         }
         .gallery-view-btn:hover {
-            background: rgba(255,255,255,0.05);
-            border-color: rgba(251, 191, 36, 0.5);
-            color: #fbbf24;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2));
+            border-color: #fbbf24;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35);
         }
         .gallery-btn-icon {
             display: flex;
@@ -5470,8 +5485,8 @@ body {
         
         <!-- 유튜브 -->
         <div class="youtube-container scroll-reveal">
-            <h3 class="subsection-title" data-i18n="video_title">영상</h3>
-            <p class="subsection-desc" data-i18n="video_desc">무브모터스의 드리프트 하이라이트</p>
+            <h3 class="subsection-title video-section-title" data-i18n="video_title">영상</h3>
+            <p class="subsection-desc" data-i18n="video_desc">우리만의 이야기</p>
             <div class="youtube-grid">
                 <div class="youtube-main">
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0eZT4HywTiY" title="무브모터스 드리프트" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 1rem;"></iframe>
