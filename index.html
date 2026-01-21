@@ -1767,9 +1767,25 @@
         .tree-subtitle {
             text-align: center;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 2.5rem;
-            color: #71717a;
+            color: #fbbf24;
+            background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.15), transparent);
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            animation: subtitlePulse 2s ease-in-out infinite;
+            cursor: pointer;
+        }
+        @keyframes subtitlePulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.2);
+            }
         }
         .tree-container {
             display: flex;
@@ -5807,7 +5823,7 @@ body {
 
         <!-- 스폰서 트리 구조 -->
         <div class="sponsor-tree scroll-reveal">
-            <div class="tree-subtitle">클릭하여 상세 혜택 보기</div>
+            <div class="tree-subtitle">👆 클릭하여 상세 혜택 보기</div>
             <div class="tree-container">
                 <div class="tree-level tree-top">
                     <div class="tree-node-wrapper">
