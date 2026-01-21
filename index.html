@@ -2737,11 +2737,11 @@
         .gallery-view-btn:hover .gallery-btn-arrow {
             transform: translateX(4px);
         }
-        .unique-projects-grid { 
-            display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            grid-template-rows: repeat(2, 250px);
-            gap: 1rem; 
+        .unique-projects-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(3, 280px);
+            gap: 1rem;
         }
         .unique-project-item { 
             position: relative; 
@@ -2757,6 +2757,8 @@
         .unique-project-item:nth-child(4) { grid-column: span 3; }
         .unique-project-item:nth-child(5) { grid-column: span 4; }
         .unique-project-item:nth-child(6) { grid-column: span 5; }
+        .unique-project-item:nth-child(7) { grid-column: span 6; }
+        .unique-project-item:nth-child(8) { grid-column: span 6; }
         .unique-project-item:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 50px rgba(239, 68, 68, 0.3); z-index: 10; }
         .unique-project-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
         .unique-project-item:hover img { transform: scale(1.1); }
@@ -6475,11 +6477,19 @@ body {
 
             function closeLightbox() {
                 const lb = document.getElementById('decalLightbox');
+                const lbCounter = document.getElementById('lightboxCounter');
+                const lbPrev = document.getElementById('lightboxPrev');
+                const lbNext = document.getElementById('lightboxNext');
                 if (lb) {
                     lb.classList.remove('active');
                     document.body.style.overflow = '';
+                    // 네비게이션 요소 다시 보이게
+                    if (lbCounter) lbCounter.style.display = '';
+                    if (lbPrev) lbPrev.style.display = '';
+                    if (lbNext) lbNext.style.display = '';
                 }
             }
+            window.closeLightbox = closeLightbox;
 
             function navigateLightbox(direction) {
                 lightboxIndex += direction;
@@ -6939,7 +6949,7 @@ body {
 <script src="gallery-button.js"></script>
     <!-- Decal Lightbox -->
     <div class="decal-lightbox" id="decalLightbox">
-        <button class="decal-lightbox-close">&times;</button>
+        <button class="decal-lightbox-close" onclick="closeLightbox()">&times;</button>
         <button class="decal-lightbox-nav prev" id="lightboxPrev">&#10094;</button>
         <img class="decal-lightbox-img" id="decalLightboxImg" src="" alt="">
         <button class="decal-lightbox-nav next" id="lightboxNext">&#10095;</button>
