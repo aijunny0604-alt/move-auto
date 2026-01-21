@@ -6574,6 +6574,26 @@ body {
             });
         })();
 
+        // Unique Projects Lightbox Function
+        window.openProjectLightbox = function(imgSrc, caption) {
+            const lb = document.getElementById('decalLightbox');
+            const lbImg = document.getElementById('decalLightboxImg');
+            const lbCaption = document.getElementById('decalLightboxCaption');
+            const lbCounter = document.getElementById('lightboxCounter');
+            const lbPrev = document.getElementById('lightboxPrev');
+            const lbNext = document.getElementById('lightboxNext');
+
+            if (lb && lbImg) {
+                lbImg.src = imgSrc;
+                if (lbCaption) lbCaption.textContent = caption || '';
+                if (lbCounter) lbCounter.style.display = 'none';
+                if (lbPrev) lbPrev.style.display = 'none';
+                if (lbNext) lbNext.style.display = 'none';
+                lb.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        };
+
         // 360 Car Viewer with Image Drag
         const CAR_ZONES = [
             { id: 'carZone1', imageIndex: 0, label: 'HOOD' },
