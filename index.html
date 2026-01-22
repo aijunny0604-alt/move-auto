@@ -8132,10 +8132,26 @@ body {
                 const targetId = this.getAttribute('data-target');
                 const containerId = targetToContainer[targetId];
                 const containerElement = document.getElementById(containerId);
+                const targetCard = document.getElementById(targetId); // 실제 카드 요소
 
                 if (containerElement) {
                     // 해당 섹션이 열려있는지 확인
                     const isExpanded = containerElement.classList.contains('expanded') || containerElement.classList.contains('show');
+
+                    // 이미 열려있고, 같은 컨테이너 내의 다른 카드를 클릭한 경우
+                    // (예: 타이틀 스폰서가 열린 상태에서 메인 스폰서 클릭)
+                    // → 닫지 않고 해당 카드로 스크롤만
+                    if (isExpanded && targetCard && targetCard !== containerElement) {
+                        // 활성 버튼 업데이트
+                        treeNodes.forEach(n => n.classList.remove('active'));
+                        this.classList.add('active');
+
+                        // 해당 카드로 스크롤
+                        setTimeout(() => {
+                            scrollToSponsor(targetCard);
+                        }, 100);
+                        return;
+                    }
 
                     // 모든 섹션 먼저 닫기
                     closeAllSponsorSections(isExpanded ? null : containerId);
@@ -8148,9 +8164,10 @@ body {
                             containerElement.classList.add('expanded');
                         }
 
-                        // 스크롤 - Lenis 멈추고 네이티브 스크롤 후 다시 시작
+                        // 스크롤 - 카드가 있으면 카드로, 없으면 컨테이너로
+                        const scrollTarget = (targetCard && targetCard !== containerElement) ? targetCard : containerElement;
                         setTimeout(() => {
-                            scrollToSponsor(containerElement);
+                            scrollToSponsor(scrollTarget);
                         }, 100);
 
                         // 활성 버튼 표시
