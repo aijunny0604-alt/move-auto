@@ -2051,10 +2051,16 @@
         }
         .sponsor-category.hidden-initially {
             display: none;
+            position: relative;
         }
         .sponsor-category.hidden-initially.show {
             display: block;
             animation: fadeInUp 0.5s ease;
+        }
+        .sponsor-category.hidden-initially.show .sponsor-close-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
@@ -7987,6 +7993,7 @@ body {
         // 스폰서 트리 노드 클릭 이벤트 - 접기/펼치기
         const treeNodes = document.querySelectorAll('.tree-node[data-target]');
         const sponsorCollapsibles = document.querySelectorAll('.sponsor-collapsible');
+        const hiddenInitially = document.querySelectorAll('.hidden-initially');
 
         // 타겟 ID와 컨테이너 매핑
         const targetToContainer = {
@@ -7998,6 +8005,20 @@ body {
             'sponsor-media': 'sponsor-supplier-media'
         };
 
+        // 모든 스폰서 섹션 닫기 함수
+        function closeAllSponsorSections(exceptId) {
+            sponsorCollapsibles.forEach(el => {
+                if (el.id !== exceptId) {
+                    el.classList.remove('expanded');
+                }
+            });
+            hiddenInitially.forEach(el => {
+                if (el.id !== exceptId) {
+                    el.classList.remove('show');
+                }
+            });
+        }
+
         treeNodes.forEach(node => {
             node.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
@@ -8005,72 +8026,50 @@ body {
                 const containerElement = document.getElementById(containerId);
 
                 if (containerElement) {
-                    // 모든 섹션 접기
-                    sponsorCollapsibles.forEach(el => {
-                        if (el.id !== containerId) {
-                            el.classList.remove('expanded');
-                        }
-                    });
-
-                    // 서플라이어/미디어 섹션 숨기기 (다른 섹션 클릭 시)
-                    const supplierMediaSection = document.getElementById('sponsor-supplier-media');
-                    if (supplierMediaSection && containerId !== 'sponsor-supplier-media') {
-                        supplierMediaSection.classList.remove('show');
-                    }
-
-                    // 해당 섹션 토글
+                    // 해당 섹션이 열려있는지 확인
                     const isExpanded = containerElement.classList.contains('expanded') || containerElement.classList.contains('show');
 
+                    // 모든 섹션 먼저 닫기
+                    closeAllSponsorSections(isExpanded ? null : containerId);
+
                     if (!isExpanded) {
-                        // hidden-initially 클래스가 있으면 show 추가, 아니면 expanded 추가
+                        // 섹션 열기
                         if (containerElement.classList.contains('hidden-initially')) {
                             containerElement.classList.add('show');
                         } else {
                             containerElement.classList.add('expanded');
                         }
 
-                        // 스크롤 - 애니메이션 완료 후 요소를 화면 중앙에 배치
+                        // 스크롤 - 애니메이션 완료 후 요소를 화면에 맞춤
                         setTimeout(() => {
                             const rect = containerElement.getBoundingClientRect();
                             const elementTop = rect.top + window.pageYOffset;
-                            const elementHeight = rect.height;
-                            const viewportHeight = window.innerHeight;
-                            const navHeight = 80; // 상단 네비게이션 높이
-
-                            let scrollTarget;
-
-                            // 요소가 뷰포트보다 크면 상단에 맞춤 (네비게이션 고려)
-                            if (elementHeight > viewportHeight - navHeight) {
-                                scrollTarget = elementTop - navHeight - 20;
-                            } else {
-                                // 요소가 작으면 화면 중앙에 배치
-                                scrollTarget = elementTop - (viewportHeight / 2) + (elementHeight / 2);
-                            }
+                            const navHeight = 80;
+                            const scrollTarget = elementTop - navHeight - 20;
 
                             window.scrollTo({
                                 top: Math.max(0, scrollTarget),
                                 behavior: 'smooth'
                             });
-                        }, 550);
+                        }, 400);
+
+                        // 활성 버튼 표시
+                        treeNodes.forEach(n => n.classList.remove('active'));
+                        this.classList.add('active');
                     } else {
-                        // hidden-initially 클래스가 있으면 show 제거, 아니면 expanded 제거
+                        // 섹션 닫기
                         if (containerElement.classList.contains('hidden-initially')) {
                             containerElement.classList.remove('show');
                         } else {
                             containerElement.classList.remove('expanded');
                         }
-                    }
-
-                    // 활성 버튼 표시
-                    treeNodes.forEach(n => n.classList.remove('active'));
-                    if (!isExpanded) {
-                        this.classList.add('active');
+                        treeNodes.forEach(n => n.classList.remove('active'));
                     }
                 }
             });
         });
 
-        // 닫기 버튼 추가
+        // 닫기 버튼 추가 (sponsor-collapsible용)
         sponsorCollapsibles.forEach(container => {
             const closeBtn = document.createElement('button');
             closeBtn.className = 'sponsor-close-btn';
@@ -8078,6 +8077,19 @@ body {
             closeBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 container.classList.remove('expanded');
+                treeNodes.forEach(n => n.classList.remove('active'));
+            });
+            container.insertBefore(closeBtn, container.firstChild);
+        });
+
+        // 닫기 버튼 추가 (hidden-initially용)
+        hiddenInitially.forEach(container => {
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'sponsor-close-btn';
+            closeBtn.innerHTML = '×';
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                container.classList.remove('show');
                 treeNodes.forEach(n => n.classList.remove('active'));
             });
             container.insertBefore(closeBtn, container.firstChild);
