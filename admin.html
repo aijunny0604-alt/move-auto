@@ -532,12 +532,15 @@
 
             console.log('Rendering year:', currentYear, 'Items:', items); // 디버깅
 
+            // GitHub Pages base URL for images
+            const baseUrl = 'https://aijunny0604-alt.github.io/move-auto/';
+
             container.innerHTML = `
                 <div class="gallery-grid">
                     ${items.map((item, index) => `
                         <div class="gallery-item" draggable="true" data-index="${index}">
                             ${item.img && item.img !== ''
-                                ? `<img src="${encodeURI(item.img)}" class="item-image" alt="${item.title}" onerror="this.parentElement.innerHTML='<div class=\\'item-placeholder\\'>📷</div>'">`
+                                ? `<img src="${baseUrl}${encodeURI(item.img)}" class="item-image" alt="${item.title}" onerror="this.parentElement.innerHTML='<div class=\\'item-placeholder\\'>📷</div>'">`
                                 : `<div class="item-placeholder">📷</div>`
                             }
                             <div class="item-info">
