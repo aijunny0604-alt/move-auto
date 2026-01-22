@@ -537,7 +537,7 @@
                     ${items.map((item, index) => `
                         <div class="gallery-item" draggable="true" data-index="${index}">
                             ${item.img && item.img !== ''
-                                ? `<img src="${item.img}" class="item-image" alt="${item.title}" onerror="this.parentElement.innerHTML='<div class=\\'item-placeholder\\'>📷</div>'">`
+                                ? `<img src="${encodeURI(item.img)}" class="item-image" alt="${item.title}" onerror="this.parentElement.innerHTML='<div class=\\'item-placeholder\\'>📷</div>'">`
                                 : `<div class="item-placeholder">📷</div>`
                             }
                             <div class="item-info">
@@ -808,7 +808,7 @@
             }).join('');
 
             // galleryData JavaScript 생성
-            const dataJS = allItems.map(i => `{ title: "${i.title}", desc: "${i.desc}", img: "${i.img}" }`).join(',\n            ');
+            const dataJS = allItems.map(i => `{ title: "${i.title}", desc: "${i.desc.replace(/\n/g, '\\n')}", date: "${i.date}", img: "${i.img}" }`).join(',\n            ');
 
             // 최종 HTML 조합
             let finalContent = header + yearSections + footer;
