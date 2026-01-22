@@ -3144,6 +3144,19 @@
         .social-link-new.naver:hover { background: rgba(3, 199, 90, 0.1); border-color: rgba(3, 199, 90, 0.4); }
         .social-link-new.naver:hover svg { fill: #03C75A; }
         .social-link-new.naver:hover span { color: #03C75A; }
+        /* 모바일 터치 애니메이션 */
+        .social-link-new.youtube.touched { background: rgba(255, 0, 0, 0.15); border-color: rgba(255, 0, 0, 0.5); }
+        .social-link-new.youtube.touched svg { fill: #FF0000; }
+        .social-link-new.youtube.touched span { color: #FF0000; }
+        .social-link-new.instagram.touched { background: linear-gradient(45deg, rgba(254, 218, 117, 0.15), rgba(217, 73, 150, 0.15), rgba(131, 58, 180, 0.15)); border-color: rgba(225, 48, 108, 0.5); }
+        .social-link-new.instagram.touched svg { fill: #E1306C; }
+        .social-link-new.instagram.touched span { color: #E1306C; }
+        .social-link-new.facebook.touched { background: rgba(24, 119, 242, 0.15); border-color: rgba(24, 119, 242, 0.5); }
+        .social-link-new.facebook.touched svg { fill: #1877F2; }
+        .social-link-new.facebook.touched span { color: #1877F2; }
+        .social-link-new.naver.touched { background: rgba(3, 199, 90, 0.15); border-color: rgba(3, 199, 90, 0.5); }
+        .social-link-new.naver.touched svg { fill: #03C75A; }
+        .social-link-new.naver.touched span { color: #03C75A; }
         @media (max-width: 600px) {
             .contact-big-card {
                 flex-direction: column;
@@ -8081,5 +8094,31 @@ body {
         <div class="decal-lightbox-counter" id="lightboxCounter">1 / 6</div>
         <div class="decal-lightbox-caption" id="decalLightboxCaption"></div>
     </div>
+
+    <!-- 모바일 소셜 링크 터치 애니메이션 -->
+    <script>
+    (function() {
+        const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        if (!isMobile) return;
+
+        document.querySelectorAll('.social-link-new').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+
+                // 호버 효과 강제 적용
+                this.classList.add('touched');
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+
+                // 색상 애니메이션 후 페이지 이동
+                setTimeout(() => {
+                    window.open(href, '_blank');
+                    this.classList.remove('touched');
+                    this.style.transform = '';
+                }, 350);
+            });
+        });
+    })();
+    </script>
 </body>
 </html>
