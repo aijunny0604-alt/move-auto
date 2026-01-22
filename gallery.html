@@ -1199,13 +1199,20 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         ];
 
         let currentImageIndex = 0;
-        const lightbox = document.getElementById('lightbox');
 
         function openLightbox(index) {
             currentImageIndex = index;
             const data = galleryData[index];
+
+            if (!data) {
+                console.error('No data found for index:', index);
+                return;
+            }
+
             const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
             const translatedData = langData[index] || { title: data.title, desc: data.desc };
+
+            const lightboxEl = document.getElementById('lightbox');
 
             document.getElementById('lightbox-image').src = data.img;
             document.getElementById('lightbox-title').textContent = translatedData.title;
@@ -1213,13 +1220,13 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
             document.getElementById('lightbox-date').textContent = data.date || '';
             document.getElementById('lightbox-current').textContent = index + 1;
             document.getElementById('lightbox-total').textContent = galleryData.length;
-            lightbox.classList.add('active');
+            lightboxEl.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
             if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
-                lightbox.classList.remove('active');
+                document.getElementById('lightbox').classList.remove('active');
                 document.body.style.overflow = '';
                 event.stopPropagation();
             }
@@ -1258,12 +1265,13 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
         // ESC 키로 라이트박스 닫기
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
+            const lightboxEl = document.getElementById('lightbox');
+            if (e.key === 'Escape' && lightboxEl.classList.contains('active')) {
+                lightboxEl.classList.remove('active');
                 document.body.style.overflow = '';
             }
             // 화살표 키로 이미지 전환
-            if (lightbox.classList.contains('active')) {
+            if (lightboxEl.classList.contains('active')) {
                 if (e.key === 'ArrowRight') nextImage();
                 if (e.key === 'ArrowLeft') prevImage();
             }
@@ -1273,11 +1281,11 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         let touchStartX = 0;
         let touchEndX = 0;
 
-        lightbox.addEventListener('touchstart', function(e) {
+        document.getElementById('lightbox').addEventListener('touchstart', function(e) {
             touchStartX = e.changedTouches[0].screenX;
         }, { passive: true });
 
-        lightbox.addEventListener('touchend', function(e) {
+        document.getElementById('lightbox').addEventListener('touchend', function(e) {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
         }, { passive: true });
