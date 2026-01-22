@@ -2002,6 +2002,17 @@
             max-width: 900px;
             margin: 0 auto 2.5rem;
         }
+        .sponsor-category.hidden-initially {
+            display: none;
+        }
+        .sponsor-category.hidden-initially.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         .category-title {
             font-size: 1.25rem;
             font-weight: 700;
@@ -6075,7 +6086,7 @@ body {
         </div>
 
         <!-- 서플라이어 & 미디어 -->
-        <div class="sponsor-category" id="sponsor-supplier-media">
+        <div class="sponsor-category hidden-initially" id="sponsor-supplier-media">
             <div class="sponsor-grid-2">
                 <div class="sponsor-card-mini supplier-card" id="sponsor-supplier">
                     <div class="mini-icon">🛠️</div>
@@ -6999,11 +7010,22 @@ body {
                         }
                     });
 
+                    // 서플라이어/미디어 섹션 숨기기 (다른 섹션 클릭 시)
+                    const supplierMediaSection = document.getElementById('sponsor-supplier-media');
+                    if (supplierMediaSection && containerId !== 'sponsor-supplier-media') {
+                        supplierMediaSection.classList.remove('show');
+                    }
+
                     // 해당 섹션 토글
-                    const isExpanded = containerElement.classList.contains('expanded');
+                    const isExpanded = containerElement.classList.contains('expanded') || containerElement.classList.contains('show');
 
                     if (!isExpanded) {
-                        containerElement.classList.add('expanded');
+                        // hidden-initially 클래스가 있으면 show 추가, 아니면 expanded 추가
+                        if (containerElement.classList.contains('hidden-initially')) {
+                            containerElement.classList.add('show');
+                        } else {
+                            containerElement.classList.add('expanded');
+                        }
 
                         // 스크롤 - 애니메이션 완료 후 요소를 화면 중앙에 배치
                         setTimeout(() => {
@@ -7029,7 +7051,12 @@ body {
                             });
                         }, 550);
                     } else {
-                        containerElement.classList.remove('expanded');
+                        // hidden-initially 클래스가 있으면 show 제거, 아니면 expanded 제거
+                        if (containerElement.classList.contains('hidden-initially')) {
+                            containerElement.classList.remove('show');
+                        } else {
+                            containerElement.classList.remove('expanded');
+                        }
                     }
 
                     // 활성 버튼 표시
