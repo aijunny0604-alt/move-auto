@@ -954,8 +954,23 @@
             display: none;
         }
 
-        /* 모바일 등장 애니메이션 비활성화 - 스크롤 튀김 방지 */
+        /* 모바일 종합 성능 최적화 */
         @media (max-width: 768px) {
+            /* GPU 가속 및 렌더링 최적화 */
+            * {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+
+            /* 모든 transition 비활성화 */
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+                animation: none !important;
+            }
+
+            /* scroll-reveal 및 기타 등장 애니메이션 즉시 표시 */
             .scroll-reveal,
             .benefit-card-new,
             .about-card,
@@ -966,43 +981,100 @@
             .hero,
             .hero-bg,
             .hero-content,
-            .parallax-bg {
+            .parallax-bg,
+            .card,
+            .unique-project-item,
+            .gallery-item,
+            .youtube-thumb,
+            .trackday-poster,
+            .comp-card,
+            .contact-big-card,
+            .social-section-new {
                 opacity: 1 !important;
                 transform: none !important;
-                filter: none !important;
-                transition: none !important;
-                animation: none !important;
+                visibility: visible !important;
             }
 
-            /* 모바일 렌더링 최적화 */
+            /* 모든 filter/backdrop-filter 비활성화 */
+            *,
+            *::before,
+            *::after {
+                filter: none !important;
+                -webkit-filter: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            /* 모든 box-shadow 비활성화 */
+            *,
+            *::before,
+            *::after {
+                box-shadow: none !important;
+            }
+
+            /* 배경색 강제 적용 (흰색 깜빡임 방지) */
             html, body {
                 background: #030303 !important;
+                background-color: #030303 !important;
             }
 
-            /* 트리뷰/스폰서십 영역 최적화 */
+            section,
             .sponsor-tree,
             .sponsor-details-container,
             .sponsor-category,
-            .sponsorship-section {
-                background: #030303 !important;
+            .sponsorship-section,
+            .project-showcase,
+            .closing-hero,
+            .contact-section,
+            .media-section,
+            .comp-section,
+            .schedule-section,
+            .about-section,
+            .trackday-section {
+                background-color: #030303 !important;
+            }
+
+            /* 복잡한 그라디언트 배경 단순화 */
+            .hero::before,
+            .project-showcase::before,
+            .closing-hero::before,
+            .first-section::before,
+            .why-section::before {
+                display: none !important;
+            }
+
+            /* 별 애니메이션 비활성화 */
+            .stars-far,
+            .stars-mid,
+            .stars-near,
+            .stars-bright,
+            .main-logo-hero {
+                animation: none !important;
+            }
+
+            /* hover 효과 비활성화 */
+            .tree-node:hover,
+            .sponsor-card:hover,
+            .sponsor-card-wide:hover,
+            .sponsor-card-mini:hover,
+            .card:hover,
+            .btn:hover,
+            .unique-project-item:hover,
+            .gallery-item:hover,
+            .youtube-thumb:hover {
                 transform: none !important;
-            }
-
-            .tree-node {
-                transition: none !important;
                 box-shadow: none !important;
             }
 
-            .sponsor-card,
-            .sponsor-card-wide,
-            .sponsor-card-mini {
-                transition: none !important;
-                box-shadow: none !important;
+            /* 이미지 최적화 */
+            img {
+                will-change: auto !important;
             }
 
-            nav {
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
+            /* 스크롤 성능 최적화 */
+            .car-showcase,
+            .decal-gallery-section {
+                will-change: auto !important;
             }
         }
 
@@ -2536,32 +2608,9 @@
                 gap: 0.5rem;
             }
 
-            /* 모바일 성능 최적화 - 700px 이하 */
-            .tree-node {
-                transition: none !important;
-            }
-            .tree-node:hover {
-                transform: none !important;
-                box-shadow: none !important;
-            }
-            .sponsor-highlight,
-            .sponsor-highlight::before {
-                animation: none !important;
-            }
-            .sponsor-card, .sponsor-card-wide, .sponsor-card-mini {
-                transition: none !important;
-            }
-            .sponsor-card:hover, .sponsor-card-wide:hover, .sponsor-card-mini:hover,
-            .sponsor-card.title-card:hover, .sponsor-card.main-card:hover {
-                transform: none !important;
-                box-shadow: none !important;
-            }
+            /* 700px 이하 추가 최적화 - 768px에서 대부분 처리됨 */
             .tree-subtitle {
-                animation: none !important;
-                text-shadow: 0 0 10px rgba(251, 191, 36, 0.6) !important;
-            }
-            .sponsor-category.hidden-initially.show {
-                animation: none !important;
+                text-shadow: none !important;
             }
         }
 
@@ -2582,11 +2631,6 @@
                 gap: 1rem;
             }
 
-            /* 480px 이하 추가 최적화 */
-            .sponsor-details-container * {
-                transition: none !important;
-                animation: none !important;
-            }
         }
 
         @media (max-width: 900px) {
@@ -5497,8 +5541,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 초기 로드
     loadRandomPreviewImages();
 
-    // 10초마다 이미지 변경
-    setInterval(loadRandomPreviewImages, 10000);
+    // 10초마다 이미지 변경 (PC만, 모바일에서는 리소스 절약)
+    if (window.innerWidth > 768) {
+        setInterval(loadRandomPreviewImages, 10000);
+    }
 
     // 저장된 언어 확인
     const savedLang = localStorage.getItem('selectedLang') || 'ko';
@@ -5518,10 +5564,11 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSponsorPrices(currentLang);
     }, 2000);
 
-    // 1초마다 금액 체크 (Google Translate가 바꾸면 다시 복구)
+    // 금액 체크 (Google Translate가 바꾸면 다시 복구) - 모바일은 5초, PC는 1초
+    const priceCheckInterval = window.innerWidth <= 768 ? 5000 : 1000;
     setInterval(() => {
         updateSponsorPrices(currentLang);
-    }, 1000);
+    }, priceCheckInterval);
 });
 
 // Google Translate 초기화
@@ -6389,49 +6436,49 @@ body {
             </div>
 
             <div class="unique-projects-grid">
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/mustang-bodykit.jpg" alt="파왕쿱 1호기 - 젠쿱 + 머스탱 바디킷 800마력">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/mustang-bodykit.jpg" alt="파왕쿱 1호기 - 젠쿱 + 머스탱 바디킷 800마력" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge">Signature</span>
                         <h4>젠쿱 + 머스탱 바디킷 (800HP)</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/veloster-bodykit.jpg" alt="젠쿱 + 벨로스터N 바디킷">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/veloster-bodykit.jpg" alt="젠쿱 + 벨로스터N 바디킷" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge blue">Motor Show</span>
                         <h4>젠쿱 + 벨로스터N 바디킷</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/bmw-m4-bodykit.jpg" alt="젠쿱 + BMW M4 바디킷">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/bmw-m4-bodykit.jpg" alt="젠쿱 + BMW M4 바디킷" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge blue">Motor Show</span>
                         <h4>젠쿱 + BMW M4 바디킷</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/japan-collab.jpg" alt="일본 선수들과 협력">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/japan-collab.jpg" alt="일본 선수들과 협력" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge purple">Global</span>
                         <h4>일본 선수들과 협력</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/amf-festival-1.jpg" alt="AMF 드리프트 쇼런">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/amf-festival-1.jpg" alt="AMF 드리프트 쇼런" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge orange">AMF</span>
                         <h4>AMF 드리프트 쇼런</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/amf-festival-2.jpg" alt="AMF 페스티벌">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/amf-festival-2.jpg" alt="AMF 페스티벌" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge orange">AMF</span>
                         <h4>AMF 국제 페스티벌</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/nct-thebat-1.jpg" alt="NCT U - The BAT 뮤직비디오 촬영 지원">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/nct-thebat-1.jpg" alt="NCT U - The BAT 뮤직비디오 촬영 지원" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge purple">MV</span>
                         <h4>NCT U - The BAT 뮤직비디오 촬영 지원</h4>
                     </div>
                 </div>
-                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/nct-thebat-2.jpg" alt="NCT U - The BAT 뮤직비디오 촬영 지원">
+                <div class="unique-project-item" onclick="openProjectLightbox(this.querySelector('img').src, this.querySelector('h4').textContent)"><img src="images/projects/nct-thebat-2.jpg" alt="NCT U - The BAT 뮤직비디오 촬영 지원" loading="lazy">
                     <div class="unique-project-overlay">
                         <span class="unique-project-badge purple">MV</span>
                         <h4>NCT U - The BAT 뮤직비디오 촬영 지원</h4>
@@ -6484,7 +6531,7 @@ body {
                 <div class="youtube-side">
                     <a href="https://youtu.be/WC1naxyLf2o" target="_blank" class="youtube-thumb">
                         <div class="youtube-thumb-img">
-                            <img src="https://img.youtube.com/vi/WC1naxyLf2o/maxresdefault.jpg" alt="D1 LIGHTS 브이로그">
+                            <img src="https://img.youtube.com/vi/WC1naxyLf2o/maxresdefault.jpg" alt="D1 LIGHTS 브이로그" loading="lazy">
                             <div class="play-btn small">▶</div>
                         </div>
                         <div class="thumb-info">
@@ -6494,7 +6541,7 @@ body {
                     </a>
                     <a href="https://youtu.be/73SfSDcNlFU" target="_blank" class="youtube-thumb">
                         <div class="youtube-thumb-img">
-                            <img src="https://img.youtube.com/vi/73SfSDcNlFU/maxresdefault.jpg" alt="KDGP 브이로그">
+                            <img src="https://img.youtube.com/vi/73SfSDcNlFU/maxresdefault.jpg" alt="KDGP 브이로그" loading="lazy">
                             <div class="play-btn small">▶</div>
                         </div>
                         <div class="thumb-info">
@@ -6504,7 +6551,7 @@ body {
                     </a>
                     <a href="https://youtu.be/M6o7Bwq9pn8" target="_blank" class="youtube-thumb">
                         <div class="youtube-thumb-img">
-                            <img src="https://img.youtube.com/vi/M6o7Bwq9pn8/maxresdefault.jpg" alt="파격적인 행보">
+                            <img src="https://img.youtube.com/vi/M6o7Bwq9pn8/maxresdefault.jpg" alt="파격적인 행보" loading="lazy">
                             <div class="play-btn small">▶</div>
                         </div>
                         <div class="thumb-info">
@@ -6763,22 +6810,22 @@ body {
             <!-- 상단 2개 -->
             <div class="trackday-row top">
                 <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(0)">
-                    <img src="images/trackday/poster1.jpg" alt="트랙데이 포스터 1">
+                    <img src="images/trackday/poster1.jpg" alt="트랙데이 포스터 1" loading="lazy">
                 </div>
                 <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(1)">
-                    <img src="images/trackday/poster2.jpg" alt="트랙데이 포스터 2">
+                    <img src="images/trackday/poster2.jpg" alt="트랙데이 포스터 2" loading="lazy">
                 </div>
             </div>
             <!-- 하단 3개 -->
             <div class="trackday-row bottom">
                 <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(2)">
-                    <img src="images/trackday/poster3.jpg" alt="트랙데이 포스터 3">
+                    <img src="images/trackday/poster3.jpg" alt="트랙데이 포스터 3" loading="lazy">
                 </div>
                 <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(3)">
-                    <img src="images/trackday/poster4.jpg" alt="트랙데이 포스터 4">
+                    <img src="images/trackday/poster4.jpg" alt="트랙데이 포스터 4" loading="lazy">
                 </div>
                 <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(4)">
-                    <img src="images/trackday/poster5.jpg" alt="트랙데이 포스터 5">
+                    <img src="images/trackday/poster5.jpg" alt="트랙데이 포스터 5" loading="lazy">
                 </div>
             </div>
         </div>
@@ -6805,7 +6852,7 @@ body {
         <div class="trackday-video-section scroll-reveal">
             <a href="https://www.youtube.com/shorts/sedxvGiKV94" target="_blank" class="trackday-video-card">
                 <div class="trackday-video-thumb">
-                    <img src="https://img.youtube.com/vi/sedxvGiKV94/maxresdefault.jpg" alt="스폰서 상품 증정 영상">
+                    <img src="https://img.youtube.com/vi/sedxvGiKV94/maxresdefault.jpg" alt="스폰서 상품 증정 영상" loading="lazy">
                     <div class="trackday-video-play">
                         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                     </div>
@@ -6856,10 +6903,10 @@ body {
                 </div>
                 <div class="car-canvas-container">
                     <div class="car-360-viewer" id="car360Viewer">
-                        <img src="images/360/1.png" class="car-360-image active" data-index="0" alt="Car View 0°">
-                        <img src="images/360/2.png" class="car-360-image" data-index="1" alt="Car View 90°">
-                        <img src="images/360/3.png" class="car-360-image" data-index="2" alt="Car View 180°">
-                        <img src="images/360/4.png" class="car-360-image" data-index="3" alt="Car View 270°">
+                        <img src="images/360/1.png" class="car-360-image active" data-index="0" alt="Car View 0°" loading="lazy">
+                        <img src="images/360/2.png" class="car-360-image" data-index="1" alt="Car View 90°" loading="lazy">
+                        <img src="images/360/3.png" class="car-360-image" data-index="2" alt="Car View 180°" loading="lazy">
+                        <img src="images/360/4.png" class="car-360-image" data-index="3" alt="Car View 270°" loading="lazy">
                     </div>
 
                     <!-- Zone Info Panels -->
@@ -6893,7 +6940,7 @@ body {
                 <!-- 모바일 세로 갤러리 -->
                 <div class="mobile-car-gallery">
                     <div class="mobile-car-item">
-                        <img src="images/360/1.png" alt="Front View">
+                        <img src="images/360/1.png" alt="Front View" loading="lazy">
                         <div class="zone-desc">
                             <span class="car-zone-tag gold">TITLE SPONSOR</span>
                             <h4 data-i18n="zone_hood_title">후드 (보닛)</h4>
@@ -6901,7 +6948,7 @@ body {
                         </div>
                     </div>
                     <div class="mobile-car-item">
-                        <img src="images/360/2.png" alt="Side View">
+                        <img src="images/360/2.png" alt="Side View" loading="lazy">
                         <div class="zone-desc">
                             <span class="car-zone-tag">MAIN SPONSOR</span>
                             <h4 data-i18n="zone_front_title">프론트 펜더</h4>
@@ -6909,7 +6956,7 @@ body {
                         </div>
                     </div>
                     <div class="mobile-car-item">
-                        <img src="images/360/3.png" alt="Rear View">
+                        <img src="images/360/3.png" alt="Rear View" loading="lazy">
                         <div class="zone-desc">
                             <span class="car-zone-tag purple">TECHNICAL PARTNER</span>
                             <h4 data-i18n="zone_skirt_title">사이드 스커트</h4>
@@ -6917,7 +6964,7 @@ body {
                         </div>
                     </div>
                     <div class="mobile-car-item">
-                        <img src="images/360/4.png" alt="Back View">
+                        <img src="images/360/4.png" alt="Back View" loading="lazy">
                         <div class="zone-desc">
                             <span class="car-zone-tag teal">SUPPLIER</span>
                             <h4 data-i18n="zone_trunk_title">리어 / 트렁크</h4>
@@ -6956,27 +7003,27 @@ body {
             <div class="decal-gallery-track-wrapper">
                 <div class="decal-gallery-track" id="decalTrack">
                     <div class="decal-gallery-item active">
-                        <img src="images/sponsor/1.jpeg" alt="Decal Example 1">
+                        <img src="images/sponsor/1.jpeg" alt="Decal Example 1" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label1">Formula Drift Style Wrap</div>
                     </div>
                     <div class="decal-gallery-item">
-                        <img src="images/sponsor/2.jpg" alt="Decal Example 2">
+                        <img src="images/sponsor/2.jpg" alt="Decal Example 2" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label2">Full Body Sponsor Livery</div>
                     </div>
                     <div class="decal-gallery-item">
-                        <img src="images/sponsor/3.webp" alt="Decal Example 3">
+                        <img src="images/sponsor/3.webp" alt="Decal Example 3" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label3">Racing Team Branding</div>
                     </div>
                     <div class="decal-gallery-item">
-                        <img src="images/sponsor/4.jpg" alt="Decal Example 4">
+                        <img src="images/sponsor/4.jpg" alt="Decal Example 4" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label4">Custom Paint Design</div>
                     </div>
                     <div class="decal-gallery-item">
-                        <img src="images/sponsor/5.jpg" alt="Decal Example 5">
+                        <img src="images/sponsor/5.jpg" alt="Decal Example 5" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label5">Premium Wrap Design</div>
                     </div>
                     <div class="decal-gallery-item">
-                        <img src="images/sponsor/6.jpg" alt="Decal Example 6">
+                        <img src="images/sponsor/6.jpg" alt="Decal Example 6" loading="lazy">
                         <div class="decal-gallery-item-label" data-i18n="decal_label6">Competition Ready Livery</div>
                     </div>
                 </div>
@@ -7496,7 +7543,15 @@ body {
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    // 모바일: 즉시 스크롤, PC: 부드러운 스크롤
+                    if (window.innerWidth <= 768) {
+                        target.scrollIntoView({ behavior: 'auto' });
+                    } else {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
             });
         });
         
