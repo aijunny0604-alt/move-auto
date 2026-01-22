@@ -7482,10 +7482,16 @@ body {
     </footer>
 
     <script>
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('revealed'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        // scroll-reveal 애니메이션 (PC만, 모바일은 이미 CSS에서 revealed 상태)
+        if (window.innerWidth > 768) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('revealed'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        } else {
+            // 모바일: 모든 요소 즉시 표시
+            document.querySelectorAll('.scroll-reveal').forEach(el => el.classList.add('revealed'));
+        }
         
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -7564,31 +7570,10 @@ body {
                 }
             }
 
-            // 모바일용 스크롤 등장 애니메이션 (Intersection Observer)
+            // 모바일: 모든 아이템 즉시 표시 (애니메이션 없이)
             if (isMobile()) {
-                const observerOptions = {
-                    root: null,
-                    rootMargin: '0px 0px -50px 0px',
-                    threshold: 0.1
-                };
-
-                const revealObserver = new IntersectionObserver((entries) => {
-                    entries.forEach((entry, index) => {
-                        if (entry.isIntersecting) {
-                            // 순차적 딜레이로 등장
-                            const item = entry.target;
-                            const itemIndex = Array.from(items).indexOf(item);
-                            setTimeout(() => {
-                                item.classList.add('revealed');
-                            }, itemIndex * 100);
-                            revealObserver.unobserve(item);
-                        }
-                    });
-                }, observerOptions);
-
                 items.forEach(item => {
-                    item.classList.add('reveal-ready');
-                    revealObserver.observe(item);
+                    item.classList.add('revealed');
                 });
             }
 
@@ -7643,11 +7628,13 @@ body {
                 }
             }
 
-            // 스크롤 이벤트에 연결
-            window.addEventListener('scroll', () => {
-                updateGallery();
-                checkDecalSectionVisibility();
-            });
+            // 스크롤 이벤트에 연결 (PC만)
+            if (window.innerWidth > 768) {
+                window.addEventListener('scroll', () => {
+                    updateGallery();
+                    checkDecalSectionVisibility();
+                });
+            }
             updateGallery();
             // 초기 로드 시에는 딜레이 후 체크 (애니메이션이 보이도록)
             setTimeout(() => {
@@ -7877,31 +7864,28 @@ body {
                 }
             }
 
-            // 스크롤 시 이미지 자동 전환 + Progress/Degree 표시
-            window.addEventListener('scroll', () => {
-                // 섹션 등장 애니메이션 체크 (PC만)
-                if (window.innerWidth > 768) {
+            // 스크롤 시 이미지 자동 전환 + Progress/Degree 표시 (PC만)
+            if (window.innerWidth > 768) {
+                window.addEventListener('scroll', () => {
                     checkCarSectionVisibility();
-                }
 
-                const rect = carShowcase.getBoundingClientRect();
-                // 섹션 전체 스크롤 범위 사용 (300vh - 100vh = 200vh)
-                const scrollHeight = carShowcase.offsetHeight - window.innerHeight;
-                const scrolled = -rect.top;
-                const progress = Math.max(0, Math.min(1, scrolled / scrollHeight));
+                    const rect = carShowcase.getBoundingClientRect();
+                    const scrollHeight = carShowcase.offsetHeight - window.innerHeight;
+                    const scrolled = -rect.top;
+                    const progress = Math.max(0, Math.min(1, scrolled / scrollHeight));
 
-                const isInShowcase = rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.3;
-                if (carProgressEl) carProgressEl.classList.toggle('visible', isInShowcase);
-                if (carDegreeEl) carDegreeEl.classList.toggle('visible', isInShowcase);
+                    const isInShowcase = rect.top < window.innerHeight * 0.7 && rect.bottom > window.innerHeight * 0.3;
+                    if (carProgressEl) carProgressEl.classList.toggle('visible', isInShowcase);
+                    if (carDegreeEl) carDegreeEl.classList.toggle('visible', isInShowcase);
 
-                // 스크롤 진행도에 따라 이미지 전환
-                if (isInShowcase) {
-                    const newIndex = Math.min(totalImages - 1, Math.floor(progress * totalImages));
-                    if (newIndex !== currentImageIndex) {
-                        showCarImage(newIndex);
+                    if (isInShowcase) {
+                        const newIndex = Math.min(totalImages - 1, Math.floor(progress * totalImages));
+                        if (newIndex !== currentImageIndex) {
+                            showCarImage(newIndex);
+                        }
                     }
-                }
-            });
+                });
+            }
 
             // Progress dots 클릭
             carProgressDots.forEach((dot, index) => {
