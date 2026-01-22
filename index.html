@@ -5044,6 +5044,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             const href = this.getAttribute('href');
             if (!href || href === '#') return;
 
@@ -5052,10 +5053,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const navHeight = document.querySelector('nav')?.offsetHeight || 80;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                if (lenis) {
+                    lenis.scrollTo(targetPosition, { immediate: false });
+                } else {
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
