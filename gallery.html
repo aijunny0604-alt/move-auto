@@ -153,6 +153,24 @@
             letter-spacing: 0.02em;
         }
 
+        /* 2023년 - 그린 테마 */
+        .year-2023 .year-header { border-bottom-color: rgba(34, 197, 94, 0.4); }
+        .year-2023 .year-header h2 { color: #22c55e; }
+        .year-2023 .gallery-card:hover { box-shadow: 0 20px 60px rgba(34, 197, 94, 0.3); }
+        .year-2023 .gallery-card::before { background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent); }
+
+        /* 2024년 - 퍼플 테마 */
+        .year-2024 .year-header { border-bottom-color: rgba(168, 85, 247, 0.4); }
+        .year-2024 .year-header h2 { color: #a855f7; }
+        .year-2024 .gallery-card:hover { box-shadow: 0 20px 60px rgba(168, 85, 247, 0.3); }
+        .year-2024 .gallery-card::before { background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), transparent); }
+
+        /* 2025년 - 블루 테마 (기본) */
+        .year-2025 .year-header { border-bottom-color: rgba(59, 130, 246, 0.4); }
+        .year-2025 .year-header h2 { color: #3b82f6; }
+        .year-2025 .gallery-card:hover { box-shadow: 0 20px 60px rgba(59, 130, 246, 0.3); }
+        .year-2025 .gallery-card::before { background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent); }
+
         /* 갤러리 그리드 */
         .gallery-grid {
             display: grid;
@@ -431,7 +449,7 @@
         </div>
 
                 <!-- 2023년 -->
-        <section class="year-section">
+        <section class="year-section year-2023">
             <div class="year-header">
                 <h2>2023</h2>
                 <p>무브 오토모티브의 시작</p>
@@ -441,7 +459,7 @@
         </section>
 
                 <!-- 2024년 -->
-        <section class="year-section">
+        <section class="year-section year-2024">
             <div class="year-header">
                 <h2>2024</h2>
                 <p>일본 진출 | 국내 대회 우승</p>
@@ -464,7 +482,7 @@
         </section>
 
                         <!-- 2025년 -->
-        <section class="year-section">
+        <section class="year-section year-2025">
             <div class="year-header">
                 <h2>2025</h2>
                 <p>D1 LIGHTS 시즌 | 국내외 주요 대회</p>
