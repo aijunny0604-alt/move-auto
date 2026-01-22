@@ -954,30 +954,15 @@
             display: none;
         }
 
-        /* 모바일 종합 성능 최적화 */
+        /* 모바일 성능 최적화 */
         @media (max-width: 768px) {
-            /* GPU 가속 및 렌더링 최적화 */
-            * {
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-            }
-
-            /* 모든 transition 비활성화 */
-            *,
-            *::before,
-            *::after {
-                transition: none !important;
-                animation: none !important;
-            }
-
-            /* scroll-reveal 및 기타 등장 애니메이션 즉시 표시 */
+            /* scroll-reveal 즉시 표시 */
             .scroll-reveal,
             .benefit-card-new,
             .about-card,
             .driver-stat,
             .schedule-round,
             .sponsor-tier,
-            [class*="visible"],
             .hero,
             .hero-bg,
             .hero-content,
@@ -993,63 +978,36 @@
                 opacity: 1 !important;
                 transform: none !important;
                 visibility: visible !important;
+                transition: none !important;
+                animation: none !important;
             }
 
-            /* 모든 filter/backdrop-filter 비활성화 */
-            *,
-            *::before,
-            *::after {
-                filter: none !important;
-                -webkit-filter: none !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
-            }
-
-            /* 모든 box-shadow 비활성화 */
-            *,
-            *::before,
-            *::after {
-                box-shadow: none !important;
-            }
-
-            /* 배경색 강제 적용 (흰색 깜빡임 방지) */
+            /* 배경색 강제 적용 */
             html, body {
                 background: #030303 !important;
-                background-color: #030303 !important;
             }
 
-            section,
+            /* 트리뷰/스폰서십 영역 최적화 */
             .sponsor-tree,
             .sponsor-details-container,
             .sponsor-category,
-            .sponsorship-section,
-            .project-showcase,
-            .closing-hero,
-            .contact-section,
-            .media-section,
-            .comp-section,
-            .schedule-section,
-            .about-section,
-            .trackday-section {
-                background-color: #030303 !important;
+            .sponsorship-section {
+                background: #030303 !important;
+                transform: none !important;
             }
 
-            /* 복잡한 그라디언트 배경 단순화 */
-            .hero::before,
-            .project-showcase::before,
-            .closing-hero::before,
-            .first-section::before,
-            .why-section::before {
-                display: none !important;
+            .tree-node,
+            .sponsor-card,
+            .sponsor-card-wide,
+            .sponsor-card-mini {
+                transition: none !important;
+                box-shadow: none !important;
             }
 
-            /* 별 애니메이션 비활성화 */
-            .stars-far,
-            .stars-mid,
-            .stars-near,
-            .stars-bright,
-            .main-logo-hero {
-                animation: none !important;
+            /* nav backdrop-filter 비활성화 */
+            nav {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
             }
 
             /* hover 효과 비활성화 */
@@ -1059,22 +1017,17 @@
             .sponsor-card-mini:hover,
             .card:hover,
             .btn:hover,
-            .unique-project-item:hover,
-            .gallery-item:hover,
-            .youtube-thumb:hover {
+            .unique-project-item:hover {
                 transform: none !important;
                 box-shadow: none !important;
             }
 
-            /* 이미지 최적화 */
-            img {
-                will-change: auto !important;
-            }
-
-            /* 스크롤 성능 최적화 */
-            .car-showcase,
-            .decal-gallery-section {
-                will-change: auto !important;
+            /* 별 애니메이션 비활성화 */
+            .stars-far,
+            .stars-mid,
+            .stars-near,
+            .stars-bright {
+                animation: none !important;
             }
         }
 
