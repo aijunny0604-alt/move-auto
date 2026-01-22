@@ -1245,6 +1245,8 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
         function updateLightboxContent() {
             const data = galleryData[currentImageIndex];
+            if (!data) return;
+
             const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
             const translatedData = langData[currentImageIndex] || { title: data.title, desc: data.desc };
             const img = document.getElementById('lightbox-image');
