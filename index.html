@@ -4788,6 +4788,43 @@ function updateSponsorPrices(lang) {
 
 // 페이지 로드 후 주기적으로 금액 체크 (Google Translate 대응)
 document.addEventListener('DOMContentLoaded', () => {
+    // 갤러리 프리뷰 이미지 랜덤 로드
+    const galleryImages = [
+        'images/1768199128104__MGC1312.jpg',
+        'images/1768197432422__MGC0909.jpg',
+        'images/1768196716222__MGC3603.jpg',
+        'images/1768196108161__MGC0287.jpg',
+        'images/1768195745712__MGC9400.jpg',
+        'images/1768195682186__MGC3478.jpg',
+        'images/1768195507101_3W8A3385.jpg',
+        'images/1768195152356__MGC5264.jpg'
+    ];
+
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+
+    function loadRandomPreviewImages() {
+        const previewImgs = document.querySelectorAll('.preview-img');
+        const randomImages = shuffleArray(galleryImages).slice(0, 4);
+        previewImgs.forEach((img, index) => {
+            if (randomImages[index]) {
+                img.src = randomImages[index];
+            }
+        });
+    }
+
+    // 초기 로드
+    loadRandomPreviewImages();
+
+    // 10초마다 이미지 변경
+    setInterval(loadRandomPreviewImages, 10000);
+
     // 저장된 언어 확인
     const savedLang = localStorage.getItem('selectedLang') || 'ko';
     const langMap = {'ko': 'ko', 'en': 'en', 'ja': 'ja', 'zh-CN': 'zh'};
@@ -5636,19 +5673,19 @@ body {
             
             <!-- 갤러리 버튼 섹션 -->
         <div class="gallery-cta-section scroll-reveal">
-            <!-- 플로팅 미리보기 이미지들 -->
-            <div class="gallery-preview-container">
+            <!-- 플로팅 미리보기 이미지들 (JS로 랜덤 로드) -->
+            <div class="gallery-preview-container" id="galleryPreviewContainer">
                 <div class="preview-image preview-1">
-                    <img src="images/projects/d1-japan.jpg" alt="Preview 1">
+                    <img src="" alt="Preview 1" class="preview-img">
                 </div>
                 <div class="preview-image preview-2">
-                    <img src="images/projects/kdgp-2024.jpg" alt="Preview 2">
+                    <img src="" alt="Preview 2" class="preview-img">
                 </div>
                 <div class="preview-image preview-3">
-                    <img src="images/projects/amf-festival.jpg" alt="Preview 3">
+                    <img src="" alt="Preview 3" class="preview-img">
                 </div>
                 <div class="preview-image preview-4">
-                    <img src="images/projects/nct-thebat-1.jpg" alt="Preview 4">
+                    <img src="" alt="Preview 4" class="preview-img">
                 </div>
             </div>
 
