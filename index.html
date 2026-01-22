@@ -7,8 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
+        // 갤러리에서 돌아온 경우 - 모든 인트로 즉시 숨김
+        if (sessionStorage.getItem('skipAllIntro') === 'true') {
+            document.write('<style>.enter-screen,.video-intro{display:none!important;}</style>');
+        }
         // PC 언어 변경 후 reload 시 - 인트로 내용만 숨기고 배경은 유지 (부드러운 전환)
-        if (sessionStorage.getItem('skipIntro') === 'true') {
+        else if (sessionStorage.getItem('skipIntro') === 'true') {
             document.write('<style>.enter-screen .enter-logo,.enter-screen .enter-btn,.enter-screen .enter-lang-selector,.enter-screen .enter-welcome{display:none!important;}</style>');
         }
     </script>
