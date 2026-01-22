@@ -1201,35 +1201,25 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         let currentImageIndex = 0;
 
         function openLightbox(index) {
-            try {
-                currentImageIndex = index;
-                const data = galleryData[index];
+            currentImageIndex = index;
+            const data = galleryData[index];
 
-                if (!data) {
-                    alert('Error: No data found for index ' + index);
-                    return;
-                }
+            if (!data) return;
 
-                const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
-                const translatedData = langData[index] || { title: data.title, desc: data.desc };
+            const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
+            const translatedData = langData[index] || { title: data.title, desc: data.desc };
 
-                const lightboxEl = document.getElementById('lightbox');
-                if (!lightboxEl) {
-                    alert('Error: lightbox element not found');
-                    return;
-                }
+            const lightboxEl = document.getElementById('lightbox');
+            if (!lightboxEl) return;
 
-                document.getElementById('lightbox-image').src = data.img;
-                document.getElementById('lightbox-title').textContent = translatedData.title;
-                document.getElementById('lightbox-desc').textContent = translatedData.desc;
-                document.getElementById('lightbox-date').textContent = data.date || '';
-                document.getElementById('lightbox-current').textContent = index + 1;
-                document.getElementById('lightbox-total').textContent = galleryData.length;
-                lightboxEl.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            } catch (e) {
-                alert('openLightbox error: ' + e.message);
-            }
+            document.getElementById('lightbox-image').src = data.img;
+            document.getElementById('lightbox-title').textContent = translatedData.title;
+            document.getElementById('lightbox-desc').textContent = translatedData.desc;
+            document.getElementById('lightbox-date').textContent = data.date || '';
+            document.getElementById('lightbox-current').textContent = index + 1;
+            document.getElementById('lightbox-total').textContent = galleryData.length;
+            lightboxEl.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
@@ -1312,39 +1302,43 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
         // Lenis 부드러운 스크롤 초기화 (모바일 제외)
         let lenis = null;
-        if (window.innerWidth > 768) {
-            lenis = new Lenis({
-                duration: 0.8,
-                easing: (t) => 1 - Math.pow(1 - t, 3),
-                orientation: 'vertical',
-                smoothWheel: true,
-                smoothTouch: false,
-                wheelMultiplier: 1.2,
-                touchMultiplier: 2,
-                lerp: 0.12,
-            });
+        try {
+            if (window.innerWidth > 768 && typeof Lenis !== 'undefined') {
+                lenis = new Lenis({
+                    duration: 0.8,
+                    easing: (t) => 1 - Math.pow(1 - t, 3),
+                    orientation: 'vertical',
+                    smoothWheel: true,
+                    smoothTouch: false,
+                    wheelMultiplier: 1.2,
+                    touchMultiplier: 2,
+                    lerp: 0.12,
+                });
 
-            function raf(time) {
-                lenis.raf(time);
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
                 requestAnimationFrame(raf);
+
+                // 라이트박스 열릴 때 Lenis 정지
+                const originalOpenLightbox = openLightbox;
+                openLightbox = function(index) {
+                    if (lenis) lenis.stop();
+                    originalOpenLightbox(index);
+                };
+
+                const originalCloseLightbox = closeLightbox;
+                closeLightbox = function(event) {
+                    if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
+                        if (lenis) lenis.start();
+                    }
+                    originalCloseLightbox(event);
+                };
             }
-            requestAnimationFrame(raf);
+        } catch (e) {
+            console.warn('Lenis initialization failed:', e);
         }
-
-        // 라이트박스 열릴 때 Lenis 정지
-        const originalOpenLightbox = openLightbox;
-        openLightbox = function(index) {
-            if (lenis) lenis.stop();
-            originalOpenLightbox(index);
-        };
-
-        const originalCloseLightbox = closeLightbox;
-        closeLightbox = function(event) {
-            if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
-                if (lenis) lenis.start();
-            }
-            originalCloseLightbox(event);
-        };
     </script>
 </body>
 </html>
