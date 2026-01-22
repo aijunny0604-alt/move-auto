@@ -2501,6 +2501,34 @@
             .tree-container {
                 gap: 0.5rem;
             }
+
+            /* 모바일 성능 최적화 - 700px 이하 */
+            .tree-node {
+                transition: none !important;
+            }
+            .tree-node:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .sponsor-highlight,
+            .sponsor-highlight::before {
+                animation: none !important;
+            }
+            .sponsor-card, .sponsor-card-wide, .sponsor-card-mini {
+                transition: none !important;
+            }
+            .sponsor-card:hover, .sponsor-card-wide:hover, .sponsor-card-mini:hover,
+            .sponsor-card.title-card:hover, .sponsor-card.main-card:hover {
+                transform: none !important;
+                box-shadow: none !important;
+            }
+            .tree-subtitle {
+                animation: none !important;
+                text-shadow: 0 0 10px rgba(251, 191, 36, 0.6) !important;
+            }
+            .sponsor-category.hidden-initially.show {
+                animation: none !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -2518,6 +2546,12 @@
             }
             .tree-partners {
                 gap: 1rem;
+            }
+
+            /* 480px 이하 추가 최적화 */
+            .sponsor-details-container * {
+                transition: none !important;
+                animation: none !important;
             }
         }
 
