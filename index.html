@@ -2803,50 +2803,203 @@
             .hero-scroll-indicator { bottom: 2rem; }
         }
 
-        /* Gallery Button Section */
-        .gallery-button-section {
-            text-align: center;
-            margin: 10rem 0 8rem;
-            padding: 4rem 0;
+        /* Gallery CTA Section - Creative Design */
+        .gallery-cta-section {
             position: relative;
-            z-index: 10;
-            clear: both;
-        }
-        .gallery-view-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.25rem 3rem;
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(245, 158, 11, 0.1));
-            border: 2px solid rgba(251, 191, 36, 0.5);
-            border-radius: 3rem;
-            color: #fbbf24;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
-        }
-        .gallery-view-btn:hover {
-            background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.2));
-            border-color: #fbbf24;
-            color: #fff;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.35);
-        }
-        .gallery-btn-icon {
+            text-align: center;
+            margin: 8rem 0;
+            padding: 6rem 2rem;
+            min-height: 350px;
             display: flex;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+        }
+
+        /* 플로팅 미리보기 컨테이너 */
+        .gallery-preview-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* 플로팅 이미지 기본 스타일 */
+        .preview-image {
+            position: absolute;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0.7;
         }
-        .gallery-view-btn:hover .gallery-btn-icon {
-            opacity: 1;
+        .preview-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
-        .gallery-btn-arrow {
+
+        /* 각 이미지 위치 및 애니메이션 */
+        .preview-1 {
+            width: 140px;
+            height: 100px;
+            top: 10%;
+            left: 8%;
+            transform: rotate(-8deg);
+            animation: float1 6s ease-in-out infinite;
+        }
+        .preview-2 {
+            width: 120px;
+            height: 90px;
+            top: 15%;
+            right: 10%;
+            transform: rotate(6deg);
+            animation: float2 7s ease-in-out infinite;
+        }
+        .preview-3 {
+            width: 130px;
+            height: 95px;
+            bottom: 15%;
+            left: 12%;
+            transform: rotate(5deg);
+            animation: float3 5.5s ease-in-out infinite;
+        }
+        .preview-4 {
+            width: 125px;
+            height: 88px;
+            bottom: 12%;
+            right: 8%;
+            transform: rotate(-6deg);
+            animation: float4 6.5s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+            0%, 100% { transform: rotate(-8deg) translateY(0); }
+            50% { transform: rotate(-8deg) translateY(-15px); }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: rotate(6deg) translateY(0); }
+            50% { transform: rotate(6deg) translateY(-12px); }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: rotate(5deg) translateY(0); }
+            50% { transform: rotate(5deg) translateY(-18px); }
+        }
+        @keyframes float4 {
+            0%, 100% { transform: rotate(-6deg) translateY(0); }
+            50% { transform: rotate(-6deg) translateY(-10px); }
+        }
+
+        /* 호버 시 이미지가 버튼으로 모여드는 효과 */
+        .gallery-cta-section:hover .preview-1 {
+            transform: rotate(-3deg) translate(30%, 20%);
+            opacity: 0.9;
+        }
+        .gallery-cta-section:hover .preview-2 {
+            transform: rotate(3deg) translate(-30%, 20%);
+            opacity: 0.9;
+        }
+        .gallery-cta-section:hover .preview-3 {
+            transform: rotate(2deg) translate(25%, -15%);
+            opacity: 0.9;
+        }
+        .gallery-cta-section:hover .preview-4 {
+            transform: rotate(-2deg) translate(-25%, -15%);
+            opacity: 0.9;
+        }
+
+        /* 메인 CTA 버튼 */
+        .gallery-cta-btn {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 2rem 4rem;
+            background: linear-gradient(145deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+            border: 2px solid rgba(251, 191, 36, 0.4);
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+        .gallery-cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s;
+        }
+        .gallery-cta-btn:hover::before {
+            opacity: 0.3;
+        }
+        .gallery-cta-btn:hover {
+            transform: scale(1.05);
+            border-color: #fbbf24;
+            box-shadow: 0 0 50px rgba(251, 191, 36, 0.3), 0 0 100px rgba(251, 191, 36, 0.1);
+        }
+
+        .cta-text-top {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: rgba(251, 191, 36, 0.7);
+            text-transform: uppercase;
+        }
+        .cta-text-main {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fbbf24;
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+        }
+        .cta-arrow {
+            margin-top: 0.5rem;
+            color: #fbbf24;
             transition: transform 0.3s;
         }
-        .gallery-view-btn:hover .gallery-btn-arrow {
-            transform: translateX(4px);
+        .gallery-cta-btn:hover .cta-arrow {
+            transform: translateX(8px);
+        }
+
+        .gallery-cta-hint {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.4);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .gallery-cta-section {
+                margin: 5rem 0;
+                padding: 4rem 1rem;
+                min-height: 280px;
+            }
+            .preview-image {
+                width: 80px !important;
+                height: 60px !important;
+            }
+            .preview-1 { top: 5%; left: 5%; }
+            .preview-2 { top: 8%; right: 5%; }
+            .preview-3 { bottom: 8%; left: 8%; }
+            .preview-4 { bottom: 5%; right: 5%; }
+            .gallery-cta-btn {
+                padding: 1.5rem 2.5rem;
+            }
+            .cta-text-main {
+                font-size: 1.2rem;
+            }
+            .cta-text-top {
+                font-size: 0.65rem;
+            }
         }
         .unique-projects-grid {
             display: grid;
@@ -5481,20 +5634,37 @@ body {
                 </div>
             </div>
             
-            <!-- 갤러리 버튼 -->
-        <div class="gallery-button-section scroll-reveal">
-            <a href="gallery.html" class="gallery-view-btn">
-                <span class="gallery-btn-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="3" width="7" height="7"></rect>
-                        <rect x="14" y="14" width="7" height="7"></rect>
-                        <rect x="3" y="14" width="7" height="7"></rect>
+            <!-- 갤러리 버튼 섹션 -->
+        <div class="gallery-cta-section scroll-reveal">
+            <!-- 플로팅 미리보기 이미지들 -->
+            <div class="gallery-preview-container">
+                <div class="preview-image preview-1">
+                    <img src="images/projects/d1-japan.jpg" alt="Preview 1">
+                </div>
+                <div class="preview-image preview-2">
+                    <img src="images/projects/kdgp-2024.jpg" alt="Preview 2">
+                </div>
+                <div class="preview-image preview-3">
+                    <img src="images/projects/amf-festival.jpg" alt="Preview 3">
+                </div>
+                <div class="preview-image preview-4">
+                    <img src="images/projects/nct-thebat-1.jpg" alt="Preview 4">
+                </div>
+            </div>
+
+            <!-- 메인 CTA 버튼 -->
+            <a href="gallery.html" class="gallery-cta-btn">
+                <span class="cta-text-top">MORE PHOTOS</span>
+                <span class="cta-text-main">갤러리 보러가기</span>
+                <span class="cta-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </span>
-                <span class="gallery-btn-text">갤러리 더보기</span>
-                <span class="gallery-btn-arrow">→</span>
             </a>
+
+            <!-- 하단 텍스트 -->
+            <p class="gallery-cta-hint">100+ 고화질 사진 보기</p>
         </div>
         
         <!-- 유튜브 -->
