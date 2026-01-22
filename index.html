@@ -5038,27 +5038,51 @@ document.addEventListener('DOMContentLoaded', function() {
     const skipBtn = document.getElementById('skipIntro');
     const introProgress = document.getElementById('introProgress');
 
-    // PC 언어 변경 후 reload된 경우 - 영상 인트로부터 시작
+    // PC 언어 변경 후 reload된 경우 또는 갤러리에서 돌아온 경우
     const isSkipIntro = sessionStorage.getItem('skipIntro') === 'true';
     if (isSkipIntro) {
         sessionStorage.removeItem('skipIntro');
 
-        // 영상 인트로 준비
-        if (videoIntro) {
-            videoIntro.classList.remove('hidden');
-            videoIntro.classList.add('active');
-        }
-        if (introVideo) {
-            introVideo.muted = false;
-            introVideo.volume = 1.0;
-            introVideo.play().catch(e => console.log('Video autoplay failed:', e));
-        }
-
-        // 인트로 화면(별 배경)을 서서히 페이드아웃
-        if (enterScreen) {
-            setTimeout(function() {
+        // URL에 해시가 있으면 인트로 전부 건너뛰고 해당 섹션으로 이동
+        if (window.location.hash) {
+            // 인트로 화면 숨기기
+            if (enterScreen) {
                 enterScreen.classList.add('hidden');
+            }
+            if (videoIntro) {
+                videoIntro.classList.add('hidden');
+                videoIntro.classList.remove('active');
+            }
+            document.body.classList.remove('intro-active');
+            document.body.classList.add('main-visible');
+
+            // 해시 위치로 스크롤
+            setTimeout(function() {
+                const target = document.querySelector(window.location.hash);
+                if (target) {
+                    const navHeight = document.querySelector('nav')?.offsetHeight || 80;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({ top: targetPosition, behavior: 'auto' });
+                }
             }, 100);
+        } else {
+            // 해시 없으면 영상 인트로 재생
+            if (videoIntro) {
+                videoIntro.classList.remove('hidden');
+                videoIntro.classList.add('active');
+            }
+            if (introVideo) {
+                introVideo.muted = false;
+                introVideo.volume = 1.0;
+                introVideo.play().catch(e => console.log('Video autoplay failed:', e));
+            }
+
+            // 인트로 화면(별 배경)을 서서히 페이드아웃
+            if (enterScreen) {
+                setTimeout(function() {
+                    enterScreen.classList.add('hidden');
+                }, 100);
+            }
         }
     }
 
