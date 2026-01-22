@@ -979,12 +979,23 @@
                 background: #030303 !important;
                 -webkit-overflow-scrolling: touch;
             }
-            * {
-                -webkit-backface-visibility: hidden;
-                backface-visibility: hidden;
+
+            /* pseudo-element 비활성화 - 렌더링 성능 향상 */
+            *::before,
+            *::after {
+                display: none !important;
             }
-            .section, section, div {
-                background-color: inherit;
+
+            /* 필수 pseudo-element만 허용 */
+            .sponsor-badge::before,
+            .sponsor-badge::after,
+            .check::before {
+                display: block !important;
+            }
+
+            /* 그라디언트 배경 단순화 */
+            .section, section {
+                background: #030303 !important;
             }
             .first-section,
             .sponsorship-section,
@@ -992,7 +1003,10 @@
             .trackday-section,
             .closing-hero,
             .contact-section,
-            .supporter-section {
+            .supporter-section,
+            .media-section,
+            .schedule-section,
+            .about-section {
                 background: #030303 !important;
             }
             .sponsor-tree,
@@ -1002,6 +1016,17 @@
             }
             nav {
                 background: rgba(3, 3, 3, 0.98) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+
+            /* box-shadow 비활성화 */
+            .sponsor-card,
+            .sponsor-card-wide,
+            .sponsor-card-mini,
+            .pricing-card,
+            .tree-node {
+                box-shadow: none !important;
             }
         }
 
