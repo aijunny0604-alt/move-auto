@@ -537,27 +537,73 @@
                 backdrop-filter: none;
                 background: rgba(255,255,255,0.15);
             }
+
+            .lang-selector {
+                gap: 0.3rem;
+            }
+
+            .lang-btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* 언어 선택 버튼 */
+        .lang-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: auto;
+        }
+
+        .lang-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #fff;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-color: #3b82f6;
+            color: #fff;
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-content">
-            <a href="index.html#gallery-section" class="back-btn" onclick="sessionStorage.setItem('skipAllIntro','true');">← 메인으로</a>
+            <a href="index.html#gallery-section" class="back-btn" onclick="sessionStorage.setItem('skipAllIntro','true');" data-i18n="back_btn">← 메인으로</a>
+            <div class="lang-selector">
+                <button class="lang-btn active" id="btn-ko" onclick="setLanguage('ko')">한국어</button>
+                <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="btn-ja" onclick="setLanguage('ja')">日本語</button>
+                <button class="lang-btn" id="btn-zh" onclick="setLanguage('zh')">中文</button>
+            </div>
         </div>
     </header>
 
     <main>
         <div class="page-title">
             <h1>PHOTO GALLERY</h1>
-            <p>무브 오토모티브의 여정을 사진으로 만나보세요</p>
+            <p data-i18n="gallery_subtitle">무브 오토모티브의 여정을 사진으로 만나보세요</p>
         </div>
 
                                                                 <!-- 2025년 -->
         <section class="year-section year-2025">
             <div class="year-header">
                 <h2>2025</h2>
-                <p>D1 LIGHTS 시즌 | 국내외 주요 대회</p>
+                <p data-i18n="year_2025_desc">D1 LIGHTS 시즌 | 국내외 주요 대회</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(0)">
@@ -674,7 +720,7 @@ JDC에 참가하여예선 통과후
         <section class="year-section year-2024">
             <div class="year-header">
                 <h2>2024</h2>
-                <p>일본 진출 | 국내 대회 우승</p>
+                <p data-i18n="year_2024_desc">일본 진출 | 국내 대회 우승</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(7)">
@@ -836,7 +882,7 @@ JDC에 참가하여예선 통과후
         <section class="year-section year-2023">
             <div class="year-header">
                 <h2>2023</h2>
-                <p>무브 오토모티브의 시작</p>
+                <p data-i18n="year_2023_desc">무브 오토모티브의 시작</p>
             </div>
             <div class="gallery-grid">
                 <div class="gallery-card" onclick="openLightbox(17)">
@@ -943,6 +989,187 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
     </div>
 
     <script>
+        // 번역 데이터
+        const translations = {
+            ko: {
+                back_btn: "← 메인으로",
+                gallery_subtitle: "무브 오토모티브의 여정을 사진으로 만나보세요",
+                year_2025_desc: "D1 LIGHTS 시즌 | 국내외 주요 대회",
+                year_2024_desc: "일본 진출 | 국내 대회 우승",
+                year_2023_desc: "무브 오토모티브의 시작"
+            },
+            en: {
+                back_btn: "← Back to Main",
+                gallery_subtitle: "Explore Move Automotive's journey through photos",
+                year_2025_desc: "D1 LIGHTS Season | Major Domestic & International Events",
+                year_2024_desc: "Japan Debut | Domestic Championship",
+                year_2023_desc: "The Beginning of Move Automotive"
+            },
+            ja: {
+                back_btn: "← メインへ",
+                gallery_subtitle: "ムーブオートモーティブの旅を写真でご覧ください",
+                year_2025_desc: "D1 LIGHTS シーズン | 国内外の主要大会",
+                year_2024_desc: "日本進出 | 国内大会優勝",
+                year_2023_desc: "ムーブオートモーティブの始まり"
+            },
+            zh: {
+                back_btn: "← 返回主页",
+                gallery_subtitle: "通过照片了解Move Automotive的旅程",
+                year_2025_desc: "D1 LIGHTS 赛季 | 国内外主要赛事",
+                year_2024_desc: "进军日本 | 国内大赛冠军",
+                year_2023_desc: "Move Automotive的起点"
+            }
+        };
+
+        // 갤러리 다국어 데이터 (제목, 설명)
+        const galleryTranslations = {
+            ko: [
+                { title: "드리프트 파왕의 실내 운전석 캠", desc: "택시타임 동승뷰" },
+                { title: "일본의 지방전 드리프트 대회 JDC 본선 진출!", desc: "일본의 지방전 리그\nJDC에 참가하여 예선 통과 후\n본선 진출 기념 윈드실드를 받고 사진 한장" },
+                { title: "대중들에게 큰 환호를 받고 있는 파왕쿱 V2 드리프트", desc: "남다른 차량 외관과 엔진 사운드\n드리프트 임팩트로\n대중들에게 큰 환호를 받고 있는 파왕쿱 V2 드리프트" },
+                { title: "AMF 페스티벌에서 무브모터스 벨로스터 쿱과 미사일 쿱", desc: "AMF 페스티벌에서 무브모터스 벨로스터 쿱과 미사일 쿱" },
+                { title: "레이싱 모델들과 파왕쿱 기념샷", desc: "레이싱 모델들과 파왕쿱 기념샷" },
+                { title: "AMF 국제 페스티벌 초청을 통해 일본과의 교류", desc: "지금도 교류하고 있는\n일본의 카미야, 야스이 대표님\n한국의 보령 AMF 페스티벌에 초청하여\n함께 교류의 시간을 갖고 드리프트로 즐겼던 추억" },
+                { title: "2025 보령 AMF 국제 페스티벌 행사에 전시된 파왕쿱 V2", desc: "AMF 국제 페스티벌을 통해\n새로운 외관으로 재탄생한 파왕쿱을\n대중들에게 알릴 수 있었던 축제" },
+                { title: "2024 부산 국제 모터쇼에 전시된 벨로스터 쿱", desc: "많은 대중들에게 벨로스터 쿱의\n존재를 알릴 수 있었던 행사" },
+                { title: "2024 부산 국제 모터쇼에 전시된 파왕쿱 V1", desc: "2024 부산 국제 모터쇼에 전시된 파왕쿱 V1\n많은 관람객들과 일반 대중들에게\n차량을 알릴 수 있었던 행사" },
+                { title: "일본의 D1GP 카미모토 심사위원장님의 시상", desc: "KDGP X D1GP 시리즈에서 1등으로 우승!\n덕분에 일본 D1 LIGHTS 라이센스 발급 기회를 얻었다" },
+                { title: "KDGP X D1GP 시리즈에서 1등으로 우승!", desc: "KDGP X D1GP 시리즈에서 1등으로 우승!\n덕분에 일본 D1 LIGHTS 라이센스 발급 기회를 얻었다" },
+                { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱" },
+                { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT\n뮤직비디오 차량으로 사용된 파왕쿱" },
+                { title: "파왕쿱과 벨로스터 쿱", desc: "3.8 엔진의 파왕쿱과\n2.0 엔진의 벨로스터 쿱의 조합\n\n국내에서 보기 힘든 외관의 드리프트 차량\n그리고 드리프트 스펙" },
+                { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 벨로스터쿱", desc: "파왕쿱 다음으로 탄생한 벨로스터 쿱\n제네시스 쿠페와 벨로스터N 조합으로 많은 이슈를\n일으켰던 차량" },
+                { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱" },
+                { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱" },
+                { title: "파왕쿱 V1을 처음으로 실물 공개한 날", desc: "파왕쿱 V1을 처음으로 실물 공개했던 현장 사진\n800마력이 넘는 하이스펙과\n제네시스 쿠페의 남다른 모습으로 많은 이목을 끌었습니다" },
+                { title: "인제 스피디움에서 드리프트인의 밤", desc: "인제 스피디움 야간 드리프트를 즐기는 파왕쿱" },
+                { title: "인제 스피디움에서 드리프트인의 밤", desc: "제 1회 드리프트인의 밤\n인제 스피디움 코스 드리프트 택시 및 이벤트 쇼카로써의 활약" },
+                { title: "제 1회 TS 튜닝카 페스티벌 초청", desc: "제1회 TS 튜닝카 페스티벌에 초청되어\n드리프트 및 차량 전시 행사 참여" },
+                { title: "LOW STREET 차량 전시회 초청 행사", desc: "800마력 엔진을 품은 파왕쿱 V1\n제네시스 쿠페 + BMW M4룩 조합으로 화제가 되어\nLOW STREET 차량 전시 이벤트에 초청 행사" }
+            ],
+            en: [
+                { title: "Drift King's In-Car Camera", desc: "Taxi time ride-along view" },
+                { title: "Advanced to JDC Main Round in Japan!", desc: "Participated in Japan's regional league JDC\nPassed the preliminary round\nPhoto with the windshield commemorating main round advancement" },
+                { title: "Pawang Coupe V2 Receiving Great Cheers from the Crowd", desc: "With its unique exterior and engine sound\nDrift impact\nPawang Coupe V2 receiving great cheers from the crowd" },
+                { title: "Move Motors Veloster Coupe and Missile Coupe at AMF Festival", desc: "Move Motors Veloster Coupe and Missile Coupe at AMF Festival" },
+                { title: "Photo with Racing Models and Pawang Coupe", desc: "Photo with racing models and Pawang Coupe" },
+                { title: "Exchange with Japan through AMF International Festival", desc: "Representatives Kamiya and Yasui from Japan\nwho we still exchange with\nInvited to Korea's Boryeong AMF Festival\nMemories of exchanging and enjoying drifting together" },
+                { title: "Pawang Coupe V2 Exhibited at 2025 Boryeong AMF International Festival", desc: "Through the AMF International Festival\nA celebration where we could introduce\nthe reborn Pawang Coupe with its new exterior to the public" },
+                { title: "Veloster Coupe Exhibited at 2024 Busan International Motor Show", desc: "An event where we could introduce\nthe Veloster Coupe to the public" },
+                { title: "Pawang Coupe V1 Exhibited at 2024 Busan International Motor Show", desc: "Pawang Coupe V1 exhibited at 2024 Busan International Motor Show\nAn event where we could introduce the vehicle\nto many visitors and the general public" },
+                { title: "Award Ceremony by D1GP Chief Judge Kamimoto", desc: "Won 1st place in KDGP X D1GP Series!\nGained the opportunity to obtain D1 LIGHTS license in Japan" },
+                { title: "Won 1st Place in KDGP X D1GP Series!", desc: "Won 1st place in KDGP X D1GP Series!\nGained the opportunity to obtain D1 LIGHTS license in Japan" },
+                { title: "Pawang Coupe in NCT U - The BAT Music Video", desc: "Pawang Coupe appearing in idol group NCT U's The BAT music video" },
+                { title: "Pawang Coupe in NCT U - The BAT Music Video", desc: "Pawang Coupe used as the vehicle\nin idol group NCT U's The BAT music video" },
+                { title: "Pawang Coupe and Veloster Coupe", desc: "Combination of 3.8 engine Pawang Coupe\nand 2.0 engine Veloster Coupe\n\nRare drift cars with unique exterior\nand drift specs in Korea" },
+                { title: "Veloster Coupe in KDGP X D1GP Preliminary", desc: "Veloster Coupe born after Pawang Coupe\nA vehicle that created buzz with Genesis Coupe\nand Veloster N combination" },
+                { title: "Pawang Coupe in KDGP X D1GP Preliminary", desc: "Pawang Coupe competing in KDGP X D1GP preliminary round" },
+                { title: "Pawang Coupe in KDGP X D1GP Preliminary", desc: "Pawang Coupe competing in KDGP X D1GP preliminary round" },
+                { title: "First Public Reveal of Pawang Coupe V1", desc: "On-site photo of Pawang Coupe V1's first public reveal\nWith over 800hp high specs and\nunique Genesis Coupe appearance, it drew much attention" },
+                { title: "Drifters' Night at Inje Speedium", desc: "Pawang Coupe enjoying night drifting at Inje Speedium" },
+                { title: "Drifters' Night at Inje Speedium", desc: "1st Drifters' Night\nActive as drift taxi and event show car at Inje Speedium course" },
+                { title: "Invited to 1st TS Tuning Car Festival", desc: "Invited to the 1st TS Tuning Car Festival\nParticipated in drift and vehicle exhibition event" },
+                { title: "Invited to LOW STREET Car Exhibition", desc: "Pawang Coupe V1 with 800hp engine\nBecame a hot topic with Genesis Coupe + BMW M4 look\nInvited to LOW STREET car exhibition event" }
+            ],
+            ja: [
+                { title: "ドリフトキングの車内カメラ", desc: "タクシータイム同乗ビュー" },
+                { title: "日本の地方戦JDC本戦進出!", desc: "日本の地方リーグJDCに参加し\n予選を通過後\n本戦進出記念のウィンドシールドを受け取り記念撮影" },
+                { title: "観客から大歓声を受けるパワンクープV2ドリフト", desc: "ユニークな外観とエンジンサウンド\nドリフトインパクトで\n観客から大歓声を受けるパワンクープV2ドリフト" },
+                { title: "AMFフェスティバルでムーブモーターズのベロスタークープとミサイルクープ", desc: "AMFフェスティバルでムーブモーターズのベロスタークープとミサイルクープ" },
+                { title: "レーシングモデルとパワンクープの記念撮影", desc: "レーシングモデルとパワンクープの記念撮影" },
+                { title: "AMF国際フェスティバル招待による日本との交流", desc: "今も交流している\n日本の神谷、安井代表\n韓国の保寧AMFフェスティバルに招待し\n共に交流の時間を持ちドリフトを楽しんだ思い出" },
+                { title: "2025保寧AMF国際フェスティバルに展示されたパワンクープV2", desc: "AMF国際フェスティバルを通じて\n新しい外観で生まれ変わったパワンクープを\n大衆に紹介できた祭典" },
+                { title: "2024釜山国際モーターショーに展示されたベロスタークープ", desc: "多くの人々にベロスタークープの\n存在を知らせることができたイベント" },
+                { title: "2024釜山国際モーターショーに展示されたパワンクープV1", desc: "2024釜山国際モーターショーに展示されたパワンクープV1\n多くの観覧客と一般大衆に\n車両を紹介できたイベント" },
+                { title: "D1GP上本審査委員長による授賞式", desc: "KDGP X D1GPシリーズで1位優勝!\nおかげで日本D1 LIGHTSライセンス発給の機会を得た" },
+                { title: "KDGP X D1GPシリーズで1位優勝!", desc: "KDGP X D1GPシリーズで1位優勝!\nおかげで日本D1 LIGHTSライセンス発給の機会を得た" },
+                { title: "NCT U - The BATミュージックビデオに登場したパワンクープ", desc: "アイドルグループNCT U - The BATミュージックビデオに登場したパワンクープ" },
+                { title: "NCT U - The BATミュージックビデオに登場したパワンクープ", desc: "アイドルグループNCT U - The BAT\nミュージックビデオ車両として使用されたパワンクープ" },
+                { title: "パワンクープとベロスタークープ", desc: "3.8エンジンのパワンクープと\n2.0エンジンのベロスタークープの組み合わせ\n\n韓国では珍しい外観のドリフト車両\nそしてドリフトスペック" },
+                { title: "KDGP X D1GP予選に出場中のベロスタークープ", desc: "パワンクープの次に誕生したベロスタークープ\nジェネシスクーペとベロスターN組み合わせで多くの話題を\n呼んだ車両" },
+                { title: "KDGP X D1GP予選に出場中のパワンクープ", desc: "KDGP X D1GP予選に出場中のパワンクープ" },
+                { title: "KDGP X D1GP予選に出場中のパワンクープ", desc: "KDGP X D1GP予選に出場中のパワンクープ" },
+                { title: "パワンクープV1初の実物公開日", desc: "パワンクープV1を初めて実物公開した現場写真\n800馬力を超えるハイスペックと\nジェネシスクーペの独特な姿で多くの注目を集めました" },
+                { title: "仁川スピーディウムでドリフターズナイト", desc: "仁川スピーディウムでナイトドリフトを楽しむパワンクープ" },
+                { title: "仁川スピーディウムでドリフターズナイト", desc: "第1回ドリフターズナイト\n仁川スピーディウムコースドリフトタクシー及びイベントショーカーとしての活躍" },
+                { title: "第1回TSチューニングカーフェスティバル招待", desc: "第1回TSチューニングカーフェスティバルに招待され\nドリフト及び車両展示イベント参加" },
+                { title: "LOW STREET車両展示会招待イベント", desc: "800馬力エンジンを搭載したパワンクープV1\nジェネシスクーペ+BMW M4ルックの組み合わせで話題になり\nLOW STREET車両展示イベントに招待" }
+            ],
+            zh: [
+                { title: "漂移王的车内摄像头", desc: "出租车时间同乘视角" },
+                { title: "晋级日本地方赛JDC正赛!", desc: "参加日本地方联赛JDC\n通过预选后\n获得正赛晋级纪念挡风玻璃并拍照留念" },
+                { title: "受到观众热烈欢呼的霸王Coupe V2漂移", desc: "独特的车身外观和发动机声浪\n漂移冲击力\n受到观众热烈欢呼的霸王Coupe V2漂移" },
+                { title: "AMF节上的Move Motors Veloster Coupe和导弹Coupe", desc: "AMF节上的Move Motors Veloster Coupe和导弹Coupe" },
+                { title: "与赛车模特和霸王Coupe的纪念照", desc: "与赛车模特和霸王Coupe的纪念照" },
+                { title: "通过AMF国际节与日本交流", desc: "至今仍保持交流的\n日本的神谷、安井代表\n邀请到韩国保宁AMF节\n一起交流并享受漂移的美好回忆" },
+                { title: "2025保宁AMF国际节展出的霸王Coupe V2", desc: "通过AMF国际节\n向大众展示\n焕然一新外观的霸王Coupe的庆典" },
+                { title: "2024釜山国际车展展出的Veloster Coupe", desc: "向大众展示\nVeloster Coupe存在的活动" },
+                { title: "2024釜山国际车展展出的霸王Coupe V1", desc: "2024釜山国际车展展出的霸王Coupe V1\n向众多观众和普通大众\n展示车辆的活动" },
+                { title: "D1GP首席评委上本的颁奖典礼", desc: "在KDGP X D1GP系列赛中获得第一名!\n因此获得了日本D1 LIGHTS执照的机会" },
+                { title: "KDGP X D1GP系列赛获得第一名!", desc: "在KDGP X D1GP系列赛中获得第一名!\n因此获得了日本D1 LIGHTS执照的机会" },
+                { title: "出现在NCT U - The BAT MV中的霸王Coupe", desc: "出现在偶像组合NCT U - The BAT MV中的霸王Coupe" },
+                { title: "出现在NCT U - The BAT MV中的霸王Coupe", desc: "偶像组合NCT U - The BAT\nMV中使用的霸王Coupe" },
+                { title: "霸王Coupe和Veloster Coupe", desc: "3.8发动机的霸王Coupe和\n2.0发动机的Veloster Coupe的组合\n\n在韩国罕见的漂移车外观\n以及漂移规格" },
+                { title: "参加KDGP X D1GP预选赛的Veloster Coupe", desc: "继霸王Coupe之后诞生的Veloster Coupe\n以Genesis Coupe和Veloster N组合\n引起广泛关注的车辆" },
+                { title: "参加KDGP X D1GP预选赛的霸王Coupe", desc: "参加KDGP X D1GP预选赛的霸王Coupe" },
+                { title: "参加KDGP X D1GP预选赛的霸王Coupe", desc: "参加KDGP X D1GP预选赛的霸王Coupe" },
+                { title: "霸王Coupe V1首次实物公开日", desc: "霸王Coupe V1首次实物公开现场照片\n超过800马力的高规格和\nGenesis Coupe独特的外观吸引了众多关注" },
+                { title: "仁济赛道的漂移之夜", desc: "在仁济赛道享受夜间漂移的霸王Coupe" },
+                { title: "仁济赛道的漂移之夜", desc: "第一届漂移之夜\n在仁济赛道作为漂移出租车和活动展示车的活跃表现" },
+                { title: "受邀参加第一届TS改装车节", desc: "受邀参加第一届TS改装车节\n参与漂移及车辆展示活动" },
+                { title: "受邀参加LOW STREET车展", desc: "搭载800马力发动机的霸王Coupe V1\n以Genesis Coupe + BMW M4造型组合成为热门话题\n受邀参加LOW STREET车展活动" }
+            ]
+        };
+
+        let currentLang = 'ko';
+
+        // 언어 변경 함수
+        function setLanguage(lang) {
+            currentLang = lang;
+
+            // 버튼 활성화 상태 변경
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + lang).classList.add('active');
+
+            // 일반 텍스트 번역
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // 갤러리 카드 번역
+            updateGalleryCards(lang);
+
+            // localStorage에 저장 (index.html과 동기화)
+            localStorage.setItem('selectedLang', lang);
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+        }
+
+        // 갤러리 카드 텍스트 업데이트
+        function updateGalleryCards(lang) {
+            const cards = document.querySelectorAll('.gallery-card');
+            const langData = galleryTranslations[lang] || galleryTranslations['ko'];
+
+            cards.forEach((card, index) => {
+                if (langData[index]) {
+                    const titleEl = card.querySelector('.event-title');
+                    const descEl = card.querySelector('.event-desc');
+                    if (titleEl) titleEl.textContent = langData[index].title;
+                    if (descEl) descEl.textContent = langData[index].desc;
+                }
+            });
+        }
+
+        // 페이지 로드 시 저장된 언어 적용
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            const langMap = {'ko': 'ko', 'en': 'en', 'ja': 'ja', 'zh-CN': 'zh', 'zh': 'zh'};
+            currentLang = langMap[savedLang] || savedLang;
+            setLanguage(currentLang);
+        });
+
         const galleryData = [
             { title: "드리프트 파왕의 실내 운전석 캠 ", desc: "택시타임 동승뷰", date: "2025", img: "images/1769091510706_481071066_926727009675571_8562033104878840175_n.jpg" },
             { title: "일본의 지방전 드리프트 대회 JDC 본선 진출!", desc: "일본의 지방전 리그\nJDC에 참가하여예선 통과후\n본선 진출 기념 윈드실드를 받고 사진 한장  ", date: "2025", img: "images/1769091268660_473027031_18387995098097952_5518520359317282581_n.jpg" },
@@ -974,9 +1201,12 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         function openLightbox(index) {
             currentImageIndex = index;
             const data = galleryData[index];
+            const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
+            const translatedData = langData[index] || { title: data.title, desc: data.desc };
+
             document.getElementById('lightbox-image').src = data.img;
-            document.getElementById('lightbox-title').textContent = data.title;
-            document.getElementById('lightbox-desc').textContent = data.desc;
+            document.getElementById('lightbox-title').textContent = translatedData.title;
+            document.getElementById('lightbox-desc').textContent = translatedData.desc;
             document.getElementById('lightbox-date').textContent = data.date || '';
             document.getElementById('lightbox-current').textContent = index + 1;
             document.getElementById('lightbox-total').textContent = galleryData.length;
@@ -1006,12 +1236,14 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
         function updateLightboxContent() {
             const data = galleryData[currentImageIndex];
+            const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
+            const translatedData = langData[currentImageIndex] || { title: data.title, desc: data.desc };
             const img = document.getElementById('lightbox-image');
             img.style.opacity = '0';
             setTimeout(() => {
                 img.src = data.img;
-                document.getElementById('lightbox-title').textContent = data.title;
-                document.getElementById('lightbox-desc').textContent = data.desc;
+                document.getElementById('lightbox-title').textContent = translatedData.title;
+                document.getElementById('lightbox-desc').textContent = translatedData.desc;
                 document.getElementById('lightbox-date').textContent = data.date || '';
                 document.getElementById('lightbox-current').textContent = currentImageIndex + 1;
                 img.style.opacity = '1';
