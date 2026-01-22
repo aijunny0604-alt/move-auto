@@ -5863,6 +5863,11 @@ document.addEventListener('DOMContentLoaded', function() {
             infinite: false,
         });
 
+        // Lenis 스크롤 시 window scroll 이벤트 발생시키기
+        lenis.on('scroll', () => {
+            window.dispatchEvent(new Event('scroll'));
+        });
+
         function raf(time) {
             lenis.raf(time);
             requestAnimationFrame(raf);
