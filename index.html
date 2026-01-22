@@ -433,7 +433,7 @@
         @keyframes pulse-bg { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 1; } }
         .first-card > * { position: relative; z-index: 1; }
         .first-label { font-size: 0.8rem; color: #60a5fa; text-transform: uppercase; letter-spacing: 0.2em; margin-bottom: 1rem; }
-        .first-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 1rem; }
+        .first-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 1rem; white-space: nowrap; }
         .first-title span { color: #60a5fa; }
         .first-desc { color: #a1a1aa; font-size: 1rem; line-height: 1.8; margin-bottom: 2rem; }
         .first-highlights { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
@@ -468,7 +468,7 @@
         .section { padding: 6rem 2rem; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-tag { color: var(--blue); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; }
-        .section-title { font-size: clamp(1.75rem, 4vw, 2.25rem); margin-top: 0.75rem; font-weight: 700; }
+        .section-title { font-size: clamp(1.2rem, 4vw, 2.25rem); margin-top: 0.75rem; font-weight: 700; white-space: nowrap; }
         
         .driver-section { background: rgba(39, 39, 42, 0.15); }
         .driver-card { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 3rem; align-items: start; }
@@ -648,12 +648,13 @@
             margin-bottom: 1rem;
         }
         .car-showcase-title {
-            font-size: 2.5rem;
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
             font-weight: 800;
             color: #fff;
             margin-bottom: 0.75rem;
             letter-spacing: -0.02em;
             line-height: 1.2;
+            white-space: nowrap;
         }
         .car-showcase-header p {
             color: rgba(255,255,255,0.6);
@@ -1231,11 +1232,12 @@
             transform: translateX(-50%) translateY(0);
         }
         .decal-gallery-header h2 {
-            font-size: 2.2rem;
+            font-size: clamp(1rem, 4.5vw, 2.2rem);
             font-weight: 800;
             color: #fff;
             letter-spacing: -0.01em;
             text-shadow: 0 2px 20px rgba(0,0,0,0.7);
+            white-space: nowrap;
         }
         .decal-gallery-header p {
             color: rgba(255,255,255,0.6);
@@ -3210,7 +3212,7 @@
         .media-stat-value { font-weight: 700; font-size: 1.1rem; color: #60a5fa; margin-bottom: 0.25rem; }
         .media-stat-label { font-size: 0.75rem; color: #71717a; }
         
-        .subsection-title { font-size: 1.25rem; margin-bottom: 0.5rem; text-align: center; }
+        .subsection-title { font-size: clamp(1rem, 4vw, 1.25rem); margin-bottom: 0.5rem; text-align: center; white-space: nowrap; }
         .subsection-title.video-section-title {
             font-size: 2.5rem;
             font-weight: 800;
