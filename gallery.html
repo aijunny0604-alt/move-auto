@@ -260,7 +260,7 @@
 
         /* 라이트박스 */
         .lightbox {
-            display: none;
+            display: flex;
             position: fixed;
             top: 0;
             left: 0;
@@ -272,12 +272,15 @@
             justify-content: center;
             backdrop-filter: blur(30px);
             opacity: 0;
-            transition: opacity 0.4s ease;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
         }
 
         .lightbox.active {
-            display: flex;
             opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         .lightbox-content {
