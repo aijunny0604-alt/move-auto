@@ -2570,129 +2570,306 @@
             .closing-subtitle { font-size: 1rem; }
         }
 
-        /* Trackday Portfolio Section - Pop Style */
+        /* Trackday Portfolio Section - Luxury Style */
         .trackday-section {
-            padding: 6rem 2rem;
-            background: linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, #050505 0%, #0a0a0a 50%, #050505 100%);
+            position: relative;
             overflow: hidden;
+        }
+        .trackday-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(180deg, transparent, rgba(251, 191, 36, 0.5), transparent);
         }
         .trackday-header {
             text-align: center;
-            margin-bottom: 4rem;
-        }
-        .trackday-tag {
-            display: inline-block;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 0.2em;
-            color: #ec4899;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            padding: 0.5rem 1.5rem;
-            background: rgba(236, 72, 153, 0.1);
-            border-radius: 2rem;
-            border: 1px solid rgba(236, 72, 153, 0.3);
-        }
-        .trackday-title {
-            font-size: 3rem;
-            font-weight: 900;
-            color: #fff;
-            margin-bottom: 1rem;
+            margin-bottom: 5rem;
         }
         .trackday-subtitle {
-            font-size: 1.1rem;
-            color: rgba(255,255,255,0.6);
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.5);
             max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.7;
+            margin: 1rem auto 0;
+            line-height: 1.8;
         }
-        /* Pop Gallery Grid */
+        /* Luxury 2-3 Layout Gallery */
         .trackday-gallery {
-            display: flex;
-            gap: 1.5rem;
-            max-width: 1400px;
+            max-width: 1100px;
             margin: 0 auto;
-            perspective: 1000px;
-            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .trackday-row {
+            display: flex;
             justify-content: center;
+            gap: 2rem;
+        }
+        .trackday-row.top {
+            padding: 0 5%;
+        }
+        .trackday-row.bottom {
+            padding: 0;
         }
         .trackday-poster {
             position: relative;
-            width: 280px;
-            border-radius: 16px;
+            flex: 0 0 auto;
+            border-radius: 12px;
             overflow: hidden;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.6),
+                0 0 0 1px rgba(255,255,255,0.05);
         }
-        .trackday-poster:nth-child(odd) {
-            transform: rotate(-3deg);
+        .trackday-row.top .trackday-poster {
+            width: 320px;
         }
-        .trackday-poster:nth-child(even) {
-            transform: rotate(3deg);
+        .trackday-row.bottom .trackday-poster {
+            width: 280px;
+        }
+        .trackday-poster::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                transparent 50%,
+                rgba(0,0,0,0.8) 100%
+            );
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .trackday-poster::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, rgba(251,191,36,0.4), rgba(245,158,11,0.2), transparent);
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         .trackday-poster:hover {
-            transform: rotate(0deg) scale(1.08) translateY(-10px);
-            z-index: 10;
-            box-shadow: 0 25px 60px rgba(236, 72, 153, 0.3);
+            transform: translateY(-15px) scale(1.03);
+            box-shadow:
+                0 35px 70px rgba(0,0,0,0.5),
+                0 0 60px rgba(251,191,36,0.15),
+                0 0 0 1px rgba(251,191,36,0.2);
+        }
+        .trackday-poster:hover::before {
+            opacity: 1;
+        }
+        .trackday-poster:hover::after {
+            opacity: 1;
         }
         .trackday-poster img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s ease;
         }
-        .trackday-poster::after {
-            content: '';
+        .trackday-poster:hover img {
+            transform: scale(1.05);
+        }
+        .trackday-poster-overlay {
             position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.7) 100%);
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            z-index: 2;
             opacity: 0;
-            transition: opacity 0.3s;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
         }
-        .trackday-poster:hover::after {
+        .trackday-poster:hover .trackday-poster-overlay {
             opacity: 1;
+            transform: translateY(0);
         }
-        /* Benefits */
-        .trackday-benefits {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-top: 4rem;
-            flex-wrap: wrap;
+        .trackday-poster-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fbbf24;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
-        .trackday-benefit {
-            text-align: center;
-            max-width: 200px;
+        .trackday-poster-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #fbbf24;
+            border-radius: 50%;
         }
-        .trackday-benefit-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+        .trackday-zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 50px;
+            height: 50px;
+            background: rgba(251,191,36,0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 1rem;
+            z-index: 3;
+            opacity: 0;
+            transition: all 0.4s ease;
         }
-        .trackday-benefit-title {
-            font-size: 1rem;
-            font-weight: 700;
+        .trackday-zoom-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: #000;
+        }
+        .trackday-poster:hover .trackday-zoom-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        /* Trackday Lightbox */
+        .trackday-lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        .trackday-lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .trackday-lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s ease;
+        }
+        .trackday-lightbox.active .trackday-lightbox-content {
+            transform: scale(1);
+        }
+        .trackday-lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+        .trackday-lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .trackday-lightbox-close:hover {
+            background: rgba(251,191,36,0.2);
+            border-color: rgba(251,191,36,0.5);
+        }
+        .trackday-lightbox-close svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+        .trackday-lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .trackday-lightbox-nav:hover {
+            background: rgba(251,191,36,0.2);
+            border-color: rgba(251,191,36,0.5);
+        }
+        .trackday-lightbox-nav.prev { left: -70px; }
+        .trackday-lightbox-nav.next { right: -70px; }
+        .trackday-lightbox-nav svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
+        }
+        /* Benefits Section */
+        .trackday-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 5rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .trackday-benefit {
+            text-align: center;
+            max-width: 180px;
+        }
+        .trackday-benefit .benefit-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            filter: grayscale(0.3);
+        }
+        .trackday-benefit h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
             color: #fff;
             margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
         }
-        .trackday-benefit-desc {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
+        .trackday-benefit p {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            line-height: 1.6;
+        }
+        @media (max-width: 1024px) {
+            .trackday-row.top .trackday-poster { width: 280px; }
+            .trackday-row.bottom .trackday-poster { width: 240px; }
+            .trackday-lightbox-nav.prev { left: 10px; }
+            .trackday-lightbox-nav.next { right: 10px; }
         }
         @media (max-width: 768px) {
-            .trackday-section { padding: 4rem 1rem; }
-            .trackday-title { font-size: 2rem; }
-            .trackday-poster { width: 160px; }
-            .trackday-poster:nth-child(odd),
-            .trackday-poster:nth-child(even) { transform: rotate(0deg); }
-            .trackday-benefits { gap: 1.5rem; }
+            .trackday-section { padding: 5rem 1rem; }
+            .trackday-gallery { gap: 1.5rem; }
+            .trackday-row { flex-wrap: wrap; gap: 1.5rem; }
+            .trackday-row.top .trackday-poster,
+            .trackday-row.bottom .trackday-poster { width: calc(50% - 0.75rem); max-width: 200px; }
+            .trackday-benefits { gap: 2rem; flex-wrap: wrap; }
             .trackday-benefit { max-width: 140px; }
+            .trackday-lightbox-nav { width: 40px; height: 40px; }
+            .trackday-lightbox-nav.prev { left: 5px; }
+            .trackday-lightbox-nav.next { right: 5px; }
+            .trackday-lightbox-close { top: -45px; }
         }
 
         /* New Contact Section */
@@ -5063,6 +5240,65 @@ function googleTranslateElementInit() {
     }, 'google_translate_element');
 }
 
+// 트랙데이 라이트박스 기능
+const trackdayImages = [
+    'images/trackday/poster1.jpg',
+    'images/trackday/poster2.jpg',
+    'images/trackday/poster3.jpg',
+    'images/trackday/poster4.jpg',
+    'images/trackday/poster5.jpg'
+];
+let currentTrackdayIndex = 0;
+
+function openTrackdayLightbox(index) {
+    currentTrackdayIndex = index;
+    const lightbox = document.getElementById('trackdayLightbox');
+    const img = document.getElementById('trackdayLightboxImg');
+    img.src = trackdayImages[index];
+    lightbox.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTrackdayLightbox() {
+    const lightbox = document.getElementById('trackdayLightbox');
+    lightbox.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function navigateTrackdayLightbox(direction) {
+    currentTrackdayIndex += direction;
+    if (currentTrackdayIndex < 0) currentTrackdayIndex = trackdayImages.length - 1;
+    if (currentTrackdayIndex >= trackdayImages.length) currentTrackdayIndex = 0;
+    document.getElementById('trackdayLightboxImg').src = trackdayImages[currentTrackdayIndex];
+}
+
+// 라이트박스 배경 클릭 시 닫기
+document.addEventListener('click', function(e) {
+    const lightbox = document.getElementById('trackdayLightbox');
+    if (e.target === lightbox) {
+        closeTrackdayLightbox();
+    }
+});
+
+// ESC 키로 라이트박스 닫기
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeTrackdayLightbox();
+    }
+    if (e.key === 'ArrowLeft') {
+        const lightbox = document.getElementById('trackdayLightbox');
+        if (lightbox.classList.contains('active')) {
+            navigateTrackdayLightbox(-1);
+        }
+    }
+    if (e.key === 'ArrowRight') {
+        const lightbox = document.getElementById('trackdayLightbox');
+        if (lightbox.classList.contains('active')) {
+            navigateTrackdayLightbox(1);
+        }
+    }
+});
+
 // 복사 함수
 function copyToClipboard(text, btn) {
     navigator.clipboard.writeText(text).then(() => {
@@ -6214,6 +6450,102 @@ body {
         </div>
     </section>
 
+    <!-- Trackday Portfolio Section -->
+    <section id="trackday" class="trackday-section">
+        <div class="section-header trackday-header">
+            <div class="section-tag">Trackday</div>
+            <h2 class="section-title">드리프트 트랙데이</h2>
+            <p class="trackday-subtitle">무브모터스가 직접 개최하는 트랙데이 이벤트에서<br>스폰서 브랜드가 프리미엄 노출됩니다</p>
+        </div>
+
+        <div class="trackday-gallery">
+            <!-- 상단 2개 -->
+            <div class="trackday-row top">
+                <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(0)">
+                    <img src="images/trackday/poster1.jpg" alt="트랙데이 포스터 1">
+                    <div class="trackday-poster-overlay">
+                        <span class="trackday-poster-badge">스폰서 로고 노출</span>
+                    </div>
+                    <div class="trackday-zoom-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z"/></svg>
+                    </div>
+                </div>
+                <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(1)">
+                    <img src="images/trackday/poster2.jpg" alt="트랙데이 포스터 2">
+                    <div class="trackday-poster-overlay">
+                        <span class="trackday-poster-badge">스폰서 로고 노출</span>
+                    </div>
+                    <div class="trackday-zoom-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z"/></svg>
+                    </div>
+                </div>
+            </div>
+            <!-- 하단 3개 -->
+            <div class="trackday-row bottom">
+                <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(2)">
+                    <img src="images/trackday/poster3.jpg" alt="트랙데이 포스터 3">
+                    <div class="trackday-poster-overlay">
+                        <span class="trackday-poster-badge">스폰서 로고 노출</span>
+                    </div>
+                    <div class="trackday-zoom-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z"/></svg>
+                    </div>
+                </div>
+                <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(3)">
+                    <img src="images/trackday/poster4.jpg" alt="트랙데이 포스터 4">
+                    <div class="trackday-poster-overlay">
+                        <span class="trackday-poster-badge">스폰서 로고 노출</span>
+                    </div>
+                    <div class="trackday-zoom-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z"/></svg>
+                    </div>
+                </div>
+                <div class="trackday-poster scroll-reveal" onclick="openTrackdayLightbox(4)">
+                    <img src="images/trackday/poster5.jpg" alt="트랙데이 포스터 5">
+                    <div class="trackday-poster-overlay">
+                        <span class="trackday-poster-badge">스폰서 로고 노출</span>
+                    </div>
+                    <div class="trackday-zoom-icon">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zm.5-7H9v2H7v1h2v2h1v-2h2V9h-2V7z"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trackday-benefits scroll-reveal">
+            <div class="trackday-benefit">
+                <div class="benefit-icon">📸</div>
+                <h4>포스터 노출</h4>
+                <p>트랙데이 홍보 포스터에 스폰서 로고 삽입</p>
+            </div>
+            <div class="trackday-benefit">
+                <div class="benefit-icon">🎪</div>
+                <h4>현장 부스</h4>
+                <p>트랙데이 현장에서 부스 운영 기회 제공</p>
+            </div>
+            <div class="trackday-benefit">
+                <div class="benefit-icon">📱</div>
+                <h4>SNS 홍보</h4>
+                <p>트랙데이 관련 SNS 콘텐츠에 브랜드 노출</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trackday Lightbox -->
+    <div class="trackday-lightbox" id="trackdayLightbox">
+        <div class="trackday-lightbox-content">
+            <button class="trackday-lightbox-close" onclick="closeTrackdayLightbox()">
+                <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+            <button class="trackday-lightbox-nav prev" onclick="navigateTrackdayLightbox(-1)">
+                <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </button>
+            <img src="" alt="트랙데이 포스터" id="trackdayLightboxImg">
+            <button class="trackday-lightbox-nav next" onclick="navigateTrackdayLightbox(1)">
+                <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+            </button>
+        </div>
+    </div>
 
     <!-- 3D Car Showcase Section -->
     <section id="car-showcase" class="car-showcase-section">
@@ -6763,66 +7095,6 @@ body {
         <a href="#contact" class="supporter-cta scroll-reveal">
             서포터 신청하기 →
         </a>
-    </section>
-
-    <!-- Trackday Portfolio Section -->
-    <section id="trackday" class="trackday-section">
-        <div class="section-header">
-            <div class="section-tag">Trackday</div>
-            <h2 class="section-title">드리프트 트랙데이</h2>
-            <p class="trackday-subtitle">무브모터스가 개최하는 트랙데이에서<br>스폰서 브랜드가 직접 노출됩니다</p>
-        </div>
-
-        <div class="trackday-gallery">
-            <div class="trackday-poster scroll-reveal">
-                <img src="images/trackday/poster1.jpg" alt="트랙데이 포스터 1">
-                <div class="trackday-overlay">
-                    <span class="trackday-badge">스폰서 로고 노출</span>
-                </div>
-            </div>
-            <div class="trackday-poster scroll-reveal">
-                <img src="images/trackday/poster2.jpg" alt="트랙데이 포스터 2">
-                <div class="trackday-overlay">
-                    <span class="trackday-badge">스폰서 로고 노출</span>
-                </div>
-            </div>
-            <div class="trackday-poster scroll-reveal">
-                <img src="images/trackday/poster3.jpg" alt="트랙데이 포스터 3">
-                <div class="trackday-overlay">
-                    <span class="trackday-badge">스폰서 로고 노출</span>
-                </div>
-            </div>
-            <div class="trackday-poster scroll-reveal">
-                <img src="images/trackday/poster4.jpg" alt="트랙데이 포스터 4">
-                <div class="trackday-overlay">
-                    <span class="trackday-badge">스폰서 로고 노출</span>
-                </div>
-            </div>
-            <div class="trackday-poster scroll-reveal">
-                <img src="images/trackday/poster5.jpg" alt="트랙데이 포스터 5">
-                <div class="trackday-overlay">
-                    <span class="trackday-badge">스폰서 로고 노출</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="trackday-benefits scroll-reveal">
-            <div class="trackday-benefit">
-                <div class="benefit-icon">📸</div>
-                <h4>포스터 노출</h4>
-                <p>트랙데이 홍보 포스터에 스폰서 로고 삽입</p>
-            </div>
-            <div class="trackday-benefit">
-                <div class="benefit-icon">🎪</div>
-                <h4>현장 부스</h4>
-                <p>트랙데이 현장에서 부스 운영 기회 제공</p>
-            </div>
-            <div class="trackday-benefit">
-                <div class="benefit-icon">📱</div>
-                <h4>SNS 홍보</h4>
-                <p>트랙데이 관련 SNS 콘텐츠에 브랜드 노출</p>
-            </div>
-        </div>
     </section>
 
     <!-- Closing Hero Section -->
