@@ -2481,9 +2481,98 @@
         
         .contact-section { background: linear-gradient(180deg, rgba(39, 39, 42, 0.2) 0%, var(--darker) 100%); }
         
+        /* Closing Hero Section */
+        .closing-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            overflow: hidden;
+        }
+        .closing-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('images/closing-bg.jpg') center center / cover no-repeat;
+            filter: brightness(0.4);
+            z-index: 0;
+        }
+        .closing-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+        .closing-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        .closing-tagline {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            color: #fbbf24;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .closing-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.5);
+        }
+        .closing-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+        .closing-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: rgba(255,255,255,0.6);
+            border-left: 3px solid #fbbf24;
+            padding-left: 1.5rem;
+            margin: 2rem auto;
+            max-width: 500px;
+            text-align: left;
+        }
+        .closing-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 3rem;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(251, 191, 36, 0.4);
+        }
+        .closing-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(251, 191, 36, 0.5);
+        }
+        @media (max-width: 768px) {
+            .closing-hero { min-height: 80vh; padding: 3rem 1.5rem; }
+            .closing-title { font-size: 2rem; }
+            .closing-subtitle { font-size: 1rem; }
+            .closing-quote { font-size: 0.95rem; }
+        }
+
         /* New Contact Section */
-        .contact-section-new { 
-            background: linear-gradient(180deg, rgba(39, 39, 42, 0.2) 0%, var(--darker) 100%); 
+        .contact-section-new {
+            background: linear-gradient(180deg, rgba(39, 39, 42, 0.2) 0%, var(--darker) 100%);
             padding-bottom: 4rem;
         }
         .contact-subtitle { color: #a1a1aa; font-size: 1rem; margin-top: 0.75rem; }
@@ -6562,6 +6651,25 @@ body {
         <a href="#contact" class="supporter-cta scroll-reveal">
             서포터 신청하기 →
         </a>
+    </section>
+
+    <!-- Closing Hero Section -->
+    <section class="closing-hero">
+        <div class="closing-content scroll-reveal">
+            <div class="closing-tagline">Thank You For Watching</div>
+            <h2 class="closing-title">함께 달려주셔서<br>감사합니다</h2>
+            <p class="closing-subtitle">
+                무브모터스는 여러분의 응원과 함께<br>
+                더 높은 곳을 향해 도전합니다
+            </p>
+            <blockquote class="closing-quote">
+                "한계를 넘어, 세계를 향해"<br>
+                — MOVE Automotive
+            </blockquote>
+            <a href="#contact" class="closing-cta">
+                함께하기 →
+            </a>
+        </div>
     </section>
 
     <section id="contact" class="section contact-section-new">
