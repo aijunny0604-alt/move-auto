@@ -697,7 +697,11 @@
                 let imgPath = '';
 
                 if (photoFile) {
-                    imgPath = `images/${Date.now()}_${photoFile.name}`;
+                    // 파일 확장자 추출
+                    const ext = photoFile.name.split('.').pop().toLowerCase();
+                    // 한글 파일명 문제 해결 - 타임스탬프 기반 영문 파일명 생성
+                    const safeFileName = `photo_${Date.now()}.${ext}`;
+                    imgPath = `images/${safeFileName}`;
                     const photoContent = await fileToBase64(photoFile);
                     await uploadToGitHub(token, 'aijunny0604-alt/move-auto', imgPath, photoContent.split(',')[1]);
                 }
