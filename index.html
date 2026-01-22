@@ -3138,13 +3138,20 @@
         .social-link-new.naver:hover svg { fill: #03C75A; }
         .social-link-new.naver:hover span { color: #03C75A; }
         @media (max-width: 600px) {
-            .contact-big-card { 
-                flex-direction: column; 
-                gap: 2rem; 
-                padding: 2rem; 
+            .contact-big-card {
+                flex-direction: column;
+                gap: 2rem;
+                padding: 2rem;
             }
             .contact-big-divider { width: 100%; height: 1px; }
-            .social-links-new { flex-wrap: wrap; }
+            .social-links-new {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            .social-link-new { width: 100%; }
         }
         .contact-wrapper { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
         .contact-form-wrapper h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
@@ -3168,11 +3175,15 @@
         .contact-item .info .value { font-size: 0.95rem; font-weight: 500; }
         
         .social-section h4 { font-size: 0.9rem; margin-bottom: 1rem; color: #a1a1aa; }
-        .social-links { display: flex; gap: 0.75rem; }
+        .social-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
         .social-link { width: 48px; height: 48px; background: rgba(39, 39, 42, 0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 0.75rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s; text-decoration: none; }
         .social-link:hover { transform: translateY(-3px); border-color: var(--blue); background: rgba(59, 130, 246, 0.1); }
         .social-link svg { width: 22px; height: 22px; fill: #a1a1aa; transition: fill 0.3s; }
         .social-link:hover svg { fill: white; }
+        @media (max-width: 480px) {
+            .social-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; max-width: 220px; margin: 0 auto; }
+            .social-link { width: 100%; height: 48px; }
+        }
         
         footer { padding: 2.5rem 2rem; border-top: 1px solid rgba(255,255,255,0.05); }
         .footer-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
