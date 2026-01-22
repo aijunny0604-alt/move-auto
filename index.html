@@ -8082,6 +8082,9 @@ body {
             'sponsor-media': 'sponsor-supplier-media'
         };
 
+        // 현재 활성화된 타겟 ID 추적
+        let currentActiveTargetId = null;
+
         // 모든 스폰서 섹션 닫기 함수
         function closeAllSponsorSections(exceptId) {
             sponsorCollapsibles.forEach(el => {
@@ -8138,18 +8141,21 @@ body {
                     // 해당 섹션이 열려있는지 확인
                     const isExpanded = containerElement.classList.contains('expanded') || containerElement.classList.contains('show');
 
-                    // 이미 열려있고, 같은 컨테이너 내의 다른 카드를 클릭한 경우
+                    // 이미 열려있고, 같은 컨테이너 내의 **다른** 타겟을 클릭한 경우
                     // (예: 타이틀 스폰서가 열린 상태에서 메인 스폰서 클릭)
                     // → 닫지 않고 해당 카드로 스크롤만
-                    if (isExpanded && targetCard && targetCard !== containerElement) {
+                    if (isExpanded && currentActiveTargetId && currentActiveTargetId !== targetId && targetToContainer[currentActiveTargetId] === containerId) {
                         // 활성 버튼 업데이트
                         treeNodes.forEach(n => n.classList.remove('active'));
                         this.classList.add('active');
+                        currentActiveTargetId = targetId;
 
                         // 해당 카드로 스크롤
-                        setTimeout(() => {
-                            scrollToSponsor(targetCard);
-                        }, 100);
+                        if (targetCard) {
+                            setTimeout(() => {
+                                scrollToSponsor(targetCard);
+                            }, 100);
+                        }
                         return;
                     }
 
@@ -8173,6 +8179,7 @@ body {
                         // 활성 버튼 표시
                         treeNodes.forEach(n => n.classList.remove('active'));
                         this.classList.add('active');
+                        currentActiveTargetId = targetId;
                     } else {
                         // 섹션 닫기
                         if (containerElement.classList.contains('hidden-initially')) {
@@ -8181,6 +8188,7 @@ body {
                             containerElement.classList.remove('expanded');
                         }
                         treeNodes.forEach(n => n.classList.remove('active'));
+                        currentActiveTargetId = null;
                     }
                 }
             });
@@ -8195,6 +8203,7 @@ body {
                 e.stopPropagation();
                 container.classList.remove('expanded');
                 treeNodes.forEach(n => n.classList.remove('active'));
+                currentActiveTargetId = null;
             });
             container.insertBefore(closeBtn, container.firstChild);
         });
@@ -8208,6 +8217,7 @@ body {
                 e.stopPropagation();
                 container.classList.remove('show');
                 treeNodes.forEach(n => n.classList.remove('active'));
+                currentActiveTargetId = null;
             });
             container.insertBefore(closeBtn, container.firstChild);
         });
