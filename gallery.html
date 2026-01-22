@@ -266,36 +266,27 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.97);
             z-index: 9999;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .lightbox.active {
             display: flex;
+            opacity: 1;
         }
 
         .lightbox-content {
             width: 90vw;
             height: 90vh;
             position: relative;
-            animation: zoomIn 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
         }
 
         .lightbox-image-container {
@@ -309,33 +300,99 @@
 
         .lightbox-image {
             max-width: 100%;
-            max-height: 100%;
+            max-height: calc(100% - 140px);
             object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 60px rgba(59, 130, 246, 0.15);
+            animation: imageZoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes imageZoomIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .lightbox-info {
             position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.7), transparent);
-            padding: 3rem 2rem 2rem 2rem;
-            backdrop-filter: blur(10px);
-            border-radius: 0 0 10px 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.85) 60%, transparent);
+            padding: 4rem 2.5rem 2rem 2.5rem;
+            text-align: center;
+            animation: infoSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+        }
+
+        @keyframes infoSlideUp {
+            from {
+                transform: translateX(-50%) translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-date {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.15));
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+            padding: 0.5rem 1.5rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
         }
 
         .lightbox-title {
             font-size: 1.8rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             color: #fff;
+            line-height: 1.4;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
         }
 
         .lightbox-desc {
-            color: #ccc;
-            font-size: 1.1rem;
+            color: rgba(255,255,255,0.75);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            white-space: pre-line;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            color: rgba(255,255,255,0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            backdrop-filter: blur(10px);
+        }
+
+        .lightbox-counter span {
+            color: #3b82f6;
+            font-weight: 700;
         }
 
         .lightbox-close {
@@ -344,25 +401,27 @@
             right: 2rem;
             width: 50px;
             height: 50px;
-            background: rgba(59, 130, 246, 0.9);
-            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255,255,255,0.2);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             z-index: 10000;
+            backdrop-filter: blur(10px);
         }
 
         .lightbox-close:hover {
             transform: rotate(90deg) scale(1.1);
-            background: #3b82f6;
+            background: rgba(59, 130, 246, 0.8);
+            border-color: #3b82f6;
         }
 
         .lightbox-close svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: #fff;
         }
 
@@ -370,20 +429,22 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: rgba(59, 130, 246, 0.7);
-            border: none;
+            width: 56px;
+            height: 56px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255,255,255,0.15);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         .lightbox-nav:hover {
-            background: #3b82f6;
+            background: rgba(59, 130, 246, 0.7);
+            border-color: #3b82f6;
             transform: translateY(-50%) scale(1.1);
         }
 
@@ -396,8 +457,8 @@
         }
 
         .lightbox-nav svg {
-            width: 24px;
-            height: 24px;
+            width: 26px;
+            height: 26px;
             fill: #fff;
         }
 
@@ -416,21 +477,65 @@
                 font-size: 2rem;
             }
 
+            /* 모바일 라이트박스 최적화 */
+            .lightbox {
+                backdrop-filter: none;
+                background: rgba(0, 0, 0, 0.98);
+            }
+
             .lightbox-content {
-                max-width: 95%;
+                width: 100vw;
+                height: 100vh;
+            }
+
+            .lightbox-image {
+                max-height: calc(100vh - 200px);
+                border-radius: 0;
+                box-shadow: none;
+                animation: none;
+            }
+
+            .lightbox-info {
+                padding: 2rem 1.5rem 1.5rem 1.5rem;
+                animation: none;
+            }
+
+            .lightbox-title {
+                font-size: 1.3rem;
+            }
+
+            .lightbox-desc {
+                font-size: 0.95rem;
+            }
+
+            .lightbox-counter {
+                top: 1rem;
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
             }
 
             .lightbox-nav {
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
+                backdrop-filter: none;
+                background: rgba(59, 130, 246, 0.8);
             }
 
             .lightbox-nav.prev {
-                left: 1rem;
+                left: 0.75rem;
             }
 
             .lightbox-nav.next {
+                right: 0.75rem;
+            }
+
+            .lightbox-close {
+                top: 1rem;
                 right: 1rem;
+                width: 44px;
+                height: 44px;
+                backdrop-filter: none;
+                background: rgba(255,255,255,0.15);
             }
         }
     </style>
@@ -742,9 +847,11 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
                 </div>
         </section>
+    </main>
 
-        <!-- 라이트박스 -->
+    <!-- 라이트박스 -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-counter"><span id="lightbox-current">1</span> / <span id="lightbox-total">18</span></div>
         <button class="lightbox-close" onclick="closeLightbox(event)">
             <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
         </button>
@@ -754,10 +861,11 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         <button class="lightbox-nav next" onclick="nextImage(event)">
             <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
         </button>
-        <div class="lightbox-content">
+        <div class="lightbox-content" onclick="event.stopPropagation()">
             <div class="lightbox-image-container">
                 <img id="lightbox-image" class="lightbox-image" src="" alt="">
                 <div class="lightbox-info">
+                    <span class="lightbox-date" id="lightbox-date"></span>
                     <h3 class="lightbox-title" id="lightbox-title"></h3>
                     <p class="lightbox-desc" id="lightbox-desc"></p>
                 </div>
@@ -767,40 +875,28 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
 
     <script>
         const galleryData = [
-            { title: "412412", desc: "4125123t", img: "images/1768199128104__MGC1312.jpg" },
-            { title: "1251515", desc: "125125", img: "images/1768197432422__MGC0909.jpg" },
-            { title: "ㄻㄴㄹ", desc: "ㅁㄴㄻㄴㄹ", img: "images/1768196716222__MGC3603.jpg" },
-            { title: "ㅁㅎ13ㅈㅅ1", desc: "3ㅅ1ㅅ1", img: "images/1768196108161__MGC0287.jpg" },
-            { title: "ㅇㄴㅁㄹㄶ", desc: "ㅁㄴㅇㅎㄴㅇㅎ", img: "images/1768195745712__MGC9400.jpg" },
-            { title: "드리프트", desc: "연습 주행", img: "images/1768195682186__MGC3478.jpg" },
-            { title: "파왕쿱", desc: "테스트런", img: "images/1768195507101_3W8A3385.jpg" },
-            { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", img: "images/1769088578645_NCT U - The BAT4.jpg" },
-            { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT
-뮤직비디오 차량으로 사용된 파왕쿱", img: "images/1769088548644_NCT U - The BAT3.jpg" },
-            { title: "파왕쿱과 벨로스터 쿱", desc: "3.8 엔진의 파왕쿱과
-2.0 엔진의 벨로스터 쿱의 조합
-
-국내에서 보기 힘든 외관의 드리프트 차량
-그리고 드리프트 스펙 ", img: "images/1769088439068_469122885_18382835896097952_8109205568379780992_n.jpg" },
-            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 벨로스터쿱", desc: "파왕쿱 다음으로 탄생한 벨로스터 쿱
-제네시스 쿠페와 벨로스터N 조합으로 많은 이슈를
-일으켰던 차량", img: "images/1769088348758_481077668_925402109808061_6360321347056815418_n.jpg" },
-            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", img: "images/1769088297693_498944229_3932005903612862_1922168426667427611_n.jpg" },
-            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", img: "images/1769088278434_495371156_3925448814268571_3700045513392960956_n.jpg" },
-            { title: "파왕쿱 V1을 처음으로 실물 공개한 날", desc: "파왕쿱 V1을 처음으로 실물 공개했던 현장 사진
-800마력이 넘는 하이스펙과 
-제네시스 쿠페의 남다른 모습으로 많은 이목을 끓었습니다. ", img: "images/1769087475706_489929150_3883250251821761_8250940618764240936_n.jpg" },
-            { title: "인제 스피디움에서 드리프트인의 밤", desc: "인제 스피디움 야간 드리프트를 즐기는 파왕쿱", img: "images/1769086126316_493594971_3904923049654481_8955754442906279793_n.jpg" },
-            { title: "인제 스피디움에서 드리프트인의 밤", desc: "제 1회 드리프트인의 밤
-인제 스피디움 코스 드리프트 택시 및 이벤트 쇼카로써의 활약", img: "images/1769085744023_493876909_3904923182987801_2494489649914422363_n.jpg" },
-            { title: "제 1회 TS 튜닝카 페스티벌 초청", desc: "제1회 TS 튜닝카 페스티벌에 초청되어
-드리프트 및 차량 전시 행사 참여  ", img: "images/1769085630445_489790205_3883250031821783_9008641615105631104_n.jpg" },
-            { title: "LOW STREET 차량 전시회 초청 행사", desc: "800마력 엔진을 품은 파왕쿱 V1
-제네시스 쿠페 + BMW M4룩 조합으로 화제가 되어 
-LOW STREET 차량 전시 이벤트에 초청 행사", img: "images/1769085528125_487926690_3873024546177665_535200077103060889_n.jpg" }
+            { title: "412412", desc: "4125123t", date: "11f1g13", img: "images/1768199128104__MGC1312.jpg" },
+            { title: "1251515", desc: "125125", date: "32131", img: "images/1768197432422__MGC0909.jpg" },
+            { title: "ㄻㄴㄹ", desc: "ㅁㄴㄻㄴㄹ", date: "ㅁㄹㄹ", img: "images/1768196716222__MGC3603.jpg" },
+            { title: "ㅁㅎ13ㅈㅅ1", desc: "3ㅅ1ㅅ1", date: "ㅇㅁㅁㄷㅎㄹ", img: "images/1768196108161__MGC0287.jpg" },
+            { title: "ㅇㄴㅁㄹㄶ", desc: "ㅁㄴㅇㅎㄴㅇㅎ", date: "ㄱ12ㄱ412", img: "images/1768195745712__MGC9400.jpg" },
+            { title: "드리프트", desc: "연습 주행", date: "2026.01", img: "images/1768195682186__MGC3478.jpg" },
+            { title: "파왕쿱", desc: "테스트런", date: "26260", img: "images/1768195507101_3W8A3385.jpg" },
+            { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", date: "2024", img: "images/1769088578645_NCT U - The BAT4.jpg" },
+            { title: "아이돌 그룹 NCT U - The BAT 뮤직비디오에 출현한 파왕쿱", desc: "아이돌 그룹 NCT U - The BAT\n뮤직비디오 차량으로 사용된 파왕쿱", date: "2024", img: "images/1769088548644_NCT U - The BAT3.jpg" },
+            { title: "파왕쿱과 벨로스터 쿱", desc: "3.8 엔진의 파왕쿱과\n2.0 엔진의 벨로스터 쿱의 조합\n\n국내에서 보기 힘든 외관의 드리프트 차량\n그리고 드리프트 스펙", date: "2024", img: "images/1769088439068_469122885_18382835896097952_8109205568379780992_n.jpg" },
+            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 벨로스터쿱", desc: "파왕쿱 다음으로 탄생한 벨로스터 쿱\n제네시스 쿠페와 벨로스터N 조합으로 많은 이슈를\n일으켰던 차량", date: "2024", img: "images/1769088348758_481077668_925402109808061_6360321347056815418_n.jpg" },
+            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", date: "2024", img: "images/1769088297693_498944229_3932005903612862_1922168426667427611_n.jpg" },
+            { title: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", desc: "KDGP X D1GP 경기에서 예선전을 치루고 있는 파왕쿱", date: "2024", img: "images/1769088278434_495371156_3925448814268571_3700045513392960956_n.jpg" },
+            { title: "파왕쿱 V1을 처음으로 실물 공개한 날", desc: "파왕쿱 V1을 처음으로 실물 공개했던 현장 사진\n800마력이 넘는 하이스펙과\n제네시스 쿠페의 남다른 모습으로 많은 이목을 끓었습니다.", date: "2023", img: "images/1769087475706_489929150_3883250251821761_8250940618764240936_n.jpg" },
+            { title: "인제 스피디움에서 드리프트인의 밤", desc: "인제 스피디움 야간 드리프트를 즐기는 파왕쿱", date: "2023", img: "images/1769086126316_493594971_3904923049654481_8955754442906279793_n.jpg" },
+            { title: "인제 스피디움에서 드리프트인의 밤", desc: "제 1회 드리프트인의 밤\n인제 스피디움 코스 드리프트 택시 및 이벤트 쇼카로써의 활약", date: "2023", img: "images/1769085744023_493876909_3904923182987801_2494489649914422363_n.jpg" },
+            { title: "제 1회 TS 튜닝카 페스티벌 초청", desc: "제1회 TS 튜닝카 페스티벌에 초청되어\n드리프트 및 차량 전시 행사 참여", date: "2023", img: "images/1769085630445_489790205_3883250031821783_9008641615105631104_n.jpg" },
+            { title: "LOW STREET 차량 전시회 초청 행사", desc: "800마력 엔진을 품은 파왕쿱 V1\n제네시스 쿠페 + BMW M4룩 조합으로 화제가 되어\nLOW STREET 차량 전시 이벤트에 초청 행사", date: "2023", img: "images/1769085528125_487926690_3873024546177665_535200077103060889_n.jpg" }
         ];
 
         let currentImageIndex = 0;
+        const lightbox = document.getElementById('lightbox');
 
         function openLightbox(index) {
             currentImageIndex = index;
@@ -808,75 +904,120 @@ LOW STREET 차량 전시 이벤트에 초청 행사", img: "images/1769085528125
             document.getElementById('lightbox-image').src = data.img;
             document.getElementById('lightbox-title').textContent = data.title;
             document.getElementById('lightbox-desc').textContent = data.desc;
-            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox-date').textContent = data.date || '';
+            document.getElementById('lightbox-current').textContent = index + 1;
+            document.getElementById('lightbox-total').textContent = galleryData.length;
+            lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
             if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
-                document.getElementById('lightbox').classList.remove('active');
+                lightbox.classList.remove('active');
                 document.body.style.overflow = '';
                 event.stopPropagation();
             }
         }
 
         function nextImage(event) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             currentImageIndex = (currentImageIndex + 1) % galleryData.length;
-            openLightbox(currentImageIndex);
+            updateLightboxContent();
         }
 
         function prevImage(event) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
-            openLightbox(currentImageIndex);
+            updateLightboxContent();
         }
+
+        function updateLightboxContent() {
+            const data = galleryData[currentImageIndex];
+            const img = document.getElementById('lightbox-image');
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = data.img;
+                document.getElementById('lightbox-title').textContent = data.title;
+                document.getElementById('lightbox-desc').textContent = data.desc;
+                document.getElementById('lightbox-date').textContent = data.date || '';
+                document.getElementById('lightbox-current').textContent = currentImageIndex + 1;
+                img.style.opacity = '1';
+            }, 150);
+        }
+
+        // 이미지 페이드 트랜지션
+        document.getElementById('lightbox-image').style.transition = 'opacity 0.15s ease';
 
         // ESC 키로 라이트박스 닫기
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.getElementById('lightbox').classList.remove('active');
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
                 document.body.style.overflow = '';
             }
-        });
-
-        // 화살표 키로 이미지 전환
-        document.addEventListener('keydown', function(e) {
-            if (document.getElementById('lightbox').classList.contains('active')) {
-                if (e.key === 'ArrowRight') nextImage(e);
-                if (e.key === 'ArrowLeft') prevImage(e);
+            // 화살표 키로 이미지 전환
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowRight') nextImage();
+                if (e.key === 'ArrowLeft') prevImage();
             }
         });
 
-        // Lenis 부드러운 스크롤 초기화
-        const lenis = new Lenis({
-            duration: 0.8,
-            easing: (t) => 1 - Math.pow(1 - t, 3),
-            orientation: 'vertical',
-            smoothWheel: true,
-            smoothTouch: false,
-            wheelMultiplier: 1.2,
-            touchMultiplier: 2,
-            lerp: 0.12,
-        });
+        // 모바일 스와이프 기능
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-        function raf(time) {
-            lenis.raf(time);
+        lightbox.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightbox.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextImage();
+                } else {
+                    prevImage();
+                }
+            }
+        }
+
+        // Lenis 부드러운 스크롤 초기화 (모바일 제외)
+        let lenis = null;
+        if (window.innerWidth > 768) {
+            lenis = new Lenis({
+                duration: 0.8,
+                easing: (t) => 1 - Math.pow(1 - t, 3),
+                orientation: 'vertical',
+                smoothWheel: true,
+                smoothTouch: false,
+                wheelMultiplier: 1.2,
+                touchMultiplier: 2,
+                lerp: 0.12,
+            });
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
             requestAnimationFrame(raf);
         }
-        requestAnimationFrame(raf);
 
         // 라이트박스 열릴 때 Lenis 정지
         const originalOpenLightbox = openLightbox;
         openLightbox = function(index) {
-            lenis.stop();
+            if (lenis) lenis.stop();
             originalOpenLightbox(index);
         };
 
         const originalCloseLightbox = closeLightbox;
         closeLightbox = function(event) {
             if (event.target.id === 'lightbox' || event.target.closest('.lightbox-close')) {
-                lenis.start();
+                if (lenis) lenis.start();
             }
             originalCloseLightbox(event);
         };
