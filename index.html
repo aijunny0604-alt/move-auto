@@ -8007,9 +8007,6 @@ body {
         const sponsorCollapsibles = document.querySelectorAll('.sponsor-collapsible');
         const hiddenInitially = document.querySelectorAll('.hidden-initially');
 
-        // Lenis 인스턴스 가져오기 (전역에서 접근)
-        const getLenis = () => window.lenis || null;
-
         // 타겟 ID와 컨테이너 매핑
         const targetToContainer = {
             'sponsor-title': 'sponsor-main-category',
@@ -8034,23 +8031,6 @@ body {
             });
         }
 
-        // 스폰서 섹션으로 스크롤하는 함수
-        function scrollToSponsorSection(element) {
-            const lenisInstance = getLenis();
-            const navHeight = 80;
-            const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-            const scrollTarget = Math.max(0, elementTop - navHeight - 20);
-
-            if (lenisInstance) {
-                lenisInstance.scrollTo(scrollTarget, { immediate: false });
-            } else {
-                window.scrollTo({
-                    top: scrollTarget,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
         treeNodes.forEach(node => {
             node.addEventListener('click', function() {
                 const targetId = this.getAttribute('data-target');
@@ -8071,11 +8051,6 @@ body {
                         } else {
                             containerElement.classList.add('expanded');
                         }
-
-                        // 스크롤 - 애니메이션 완료 후 요소를 화면에 맞춤
-                        setTimeout(() => {
-                            scrollToSponsorSection(containerElement);
-                        }, 300);
 
                         // 활성 버튼 표시
                         treeNodes.forEach(n => n.classList.remove('active'));
