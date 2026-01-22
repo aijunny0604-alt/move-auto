@@ -3248,7 +3248,7 @@
             z-index: 1;
         }
         .unique-projects-title {
-            font-size: clamp(3rem, 10vw, 7rem);
+            font-size: clamp(1.6rem, 8vw, 7rem);
             font-weight: 900;
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 30%, #d97706 60%, #b45309 100%);
             -webkit-background-clip: text;
@@ -3258,6 +3258,14 @@
             letter-spacing: -0.02em;
             animation: heroTitleGlow 3s ease-in-out infinite;
             line-height: 1.1;
+            white-space: nowrap;
+            text-shadow:
+                0 1px 0 #b45309,
+                0 2px 0 #a04408,
+                0 3px 0 #8b3a07,
+                0 4px 0 #763006,
+                0 5px 10px rgba(0,0,0,0.4);
+            filter: drop-shadow(0 4px 8px rgba(180, 83, 9, 0.5)) drop-shadow(0 0 40px rgba(251, 191, 36, 0.5));
         }
         @keyframes heroTitleGlow {
             0%, 100% { filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.5)); }
@@ -3370,7 +3378,7 @@
         @media (max-width: 768px) {
             .featured-video-info h4 { font-size: 1.25rem; }
             .unique-projects-hero { min-height: 80vh; padding: 1.5rem; width: calc(100% + 2rem); margin-left: -1rem; margin-right: -1rem; }
-            .unique-projects-title { font-size: clamp(2.5rem, 8vw, 4rem); }
+            .unique-projects-title { font-size: clamp(1.6rem, 7vw, 4rem); white-space: nowrap; }
             .unique-projects-subtitle { font-size: 1rem; line-height: 1.7; }
             .hero-scroll-indicator { bottom: 2rem; }
         }
@@ -3611,14 +3619,14 @@
         .unique-project-badge.blue { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .unique-project-badge.purple { background: linear-gradient(135deg, #a855f7, #9333ea); }
         .unique-project-badge.orange { background: linear-gradient(135deg, #f97316, #ea580c); }
-        @media (max-width: 1024px) { 
+        @media (max-width: 1024px) {
             .unique-projects-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
             .unique-project-item { grid-column: span 1 !important; aspect-ratio: 4/3; }
-            .unique-projects-title { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+            .unique-projects-title { font-size: clamp(1.5rem, 6vw, 2.5rem); white-space: nowrap; }
         }
-        @media (max-width: 480px) { 
+        @media (max-width: 480px) {
             .unique-projects-grid { grid-template-columns: 1fr; }
-            .unique-projects-title { font-size: clamp(1.5rem, 6vw, 2rem); }
+            .unique-projects-title { font-size: clamp(1.2rem, 5.5vw, 2rem); white-space: nowrap; }
         }
 
         .gallery-container { max-width: 1000px; margin: 0 auto 4rem; }
@@ -6231,7 +6239,7 @@ body {
         <!-- 우리만의 독창적인 도전 - Hero Section -->
         <div class="unique-projects-hero" id="unique-projects-hero">
             <div class="unique-projects-title-wrapper">
-                <h3 class="unique-projects-title">우리만의 독창적인 도전</h3>
+                <h3 class="unique-projects-title">우리만의 독창적인 도전!</h3>
                 <p class="unique-projects-subtitle">제네시스 쿠페라는 한정된 국산 드리프트 베이스로<br>남들이 하지 않는 독창적인 프로젝트를 진행합니다</p>
             </div>
             <div class="hero-scroll-indicator" onclick="document.getElementById('unique-projects-content').scrollIntoView({behavior: 'smooth'})">
