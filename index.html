@@ -8102,16 +8102,17 @@ body {
 
         // 스폰서 섹션으로 스크롤 (모바일에서는 비활성화)
         function scrollToSponsor(element) {
-            // 모바일에서는 자동 스크롤 비활성화 (렌더링 문제 방지)
-            if (window.innerWidth <= 768) {
-                return;
-            }
-
             const navHeight = 80;
             const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
             const scrollTarget = Math.max(0, elementTop - navHeight - 20);
 
-            // Lenis 잠시 멈추기
+            // 모바일에서는 즉시 스크롤 (애니메이션 없이)
+            if (window.innerWidth <= 768) {
+                window.scrollTo(0, scrollTarget);
+                return;
+            }
+
+            // PC: Lenis 잠시 멈추기
             if (window.lenis) {
                 window.lenis.stop();
             }
