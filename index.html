@@ -272,7 +272,8 @@
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
-        body { font-family: 'Noto Sans KR', sans-serif; background: var(--darker); color: white; overflow-x: hidden; max-width: 100vw; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
+        html { background: #030303; }
+        body { font-family: 'Noto Sans KR', sans-serif; background: #030303; color: white; overflow-x: hidden; max-width: 100vw; user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; }
         img { max-width: 100%; height: auto; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         
@@ -973,25 +974,34 @@
                 animation: none !important;
             }
 
-            /* 모바일 흰색 페이지 방지 */
-            body, html {
+            /* 모바일 흰색 페이지 방지 및 렌더링 최적화 */
+            html, body {
                 background: #030303 !important;
+                -webkit-overflow-scrolling: touch;
             }
-            .section, section {
-                background-color: #030303;
+            * {
                 -webkit-backface-visibility: hidden;
                 backface-visibility: hidden;
             }
-            .sponsorship-section {
+            .section, section, div {
+                background-color: inherit;
+            }
+            .first-section,
+            .sponsorship-section,
+            .project-showcase,
+            .trackday-section,
+            .closing-hero,
+            .contact-section,
+            .supporter-section {
                 background: #030303 !important;
             }
-            .sponsor-tree {
-                background: #030303;
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
+            .sponsor-tree,
+            .sponsor-details-container,
+            .sponsor-category {
+                background: #030303 !important;
             }
-            .sponsor-details-container {
-                background: #030303;
+            nav {
+                background: rgba(3, 3, 3, 0.98) !important;
             }
         }
 
