@@ -972,6 +972,27 @@
                 transition: none !important;
                 animation: none !important;
             }
+
+            /* 모바일 흰색 페이지 방지 */
+            body, html {
+                background: #030303 !important;
+            }
+            .section, section {
+                background-color: #030303;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+            }
+            .sponsorship-section {
+                background: #030303 !important;
+            }
+            .sponsor-tree {
+                background: #030303;
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            .sponsor-details-container {
+                background: #030303;
+            }
         }
 
         /* Project Showcase Section */
@@ -1631,7 +1652,11 @@
         }
 
         /* Sponsorship Pricing Section */
-        .sponsorship-section { background: linear-gradient(180deg, transparent 0%, rgba(39, 39, 42, 0.3) 50%, transparent 100%); }
+        .sponsorship-section {
+            background: linear-gradient(180deg, #030303 0%, rgba(39, 39, 42, 0.3) 50%, #030303 100%);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
         .sponsorship-subtitle { color: #a1a1aa; font-size: 1rem; margin-top: 0.75rem; }
         .pricing-grid {
             display: grid;
