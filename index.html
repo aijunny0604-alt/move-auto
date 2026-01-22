@@ -636,6 +636,8 @@
             margin-bottom: 1.5rem;
             z-index: 10;
             opacity: 1;
+            padding: 0 1rem;
+            width: 100%;
         }
         .car-showcase-header h2 {
             font-size: 1.6rem;
@@ -643,11 +645,14 @@
             letter-spacing: 0.35em;
             color: rgba(255, 255, 255, 0.85);
             text-transform: uppercase;
+            word-break: keep-all;
+            white-space: nowrap;
         }
         .car-showcase-header p {
             color: #71717a;
             font-size: 1rem;
             margin-top: 0.5rem;
+            word-break: keep-all;
         }
         .car-canvas-container {
             position: relative;
@@ -822,8 +827,16 @@
         .car-degree.visible { opacity: 1; }
 
         @media (max-width: 768px) {
-            .car-showcase-header h2 { font-size: 1.5rem; }
-            .car-showcase-header p { font-size: 0.8rem; }
+            .car-showcase-header h2 {
+                font-size: 1.2rem;
+                letter-spacing: 0.15em;
+                white-space: normal;
+                line-height: 1.4;
+            }
+            .car-showcase-header p {
+                font-size: 0.85rem;
+                line-height: 1.6;
+            }
             .car-showcase-section {
                 height: auto !important;
                 min-height: auto !important;
@@ -852,6 +865,7 @@
                 transform: none !important;
                 position: relative;
                 margin-bottom: 1rem;
+                padding: 0 0.5rem;
             }
             .car-progress {
                 display: none !important;
@@ -2826,31 +2840,30 @@
         .trackday-benefits {
             display: flex;
             justify-content: center;
-            gap: 4rem;
+            gap: 5rem;
             margin-top: 5rem;
             padding-top: 4rem;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
         .trackday-benefit {
             text-align: center;
-            max-width: 180px;
+            max-width: 240px;
         }
         .trackday-benefit .benefit-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            filter: grayscale(0.3);
+            font-size: 3rem;
+            margin-bottom: 1.25rem;
         }
         .trackday-benefit h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             color: #fff;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
             letter-spacing: 0.02em;
         }
         .trackday-benefit p {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.4);
-            line-height: 1.6;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.7;
         }
         @media (max-width: 1024px) {
             .trackday-row.top .trackday-poster { width: 280px; }
@@ -2864,8 +2877,11 @@
             .trackday-row { flex-wrap: wrap; gap: 1.5rem; }
             .trackday-row.top .trackday-poster,
             .trackday-row.bottom .trackday-poster { width: calc(50% - 0.75rem); max-width: 200px; }
-            .trackday-benefits { gap: 2rem; flex-wrap: wrap; }
-            .trackday-benefit { max-width: 140px; }
+            .trackday-benefits { gap: 2.5rem; flex-wrap: wrap; }
+            .trackday-benefit { max-width: 180px; }
+            .trackday-benefit .benefit-icon { font-size: 2.5rem; }
+            .trackday-benefit h4 { font-size: 1.05rem; }
+            .trackday-benefit p { font-size: 0.85rem; }
             .trackday-lightbox-nav { width: 40px; height: 40px; }
             .trackday-lightbox-nav.prev { left: 5px; }
             .trackday-lightbox-nav.next { right: 5px; }
