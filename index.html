@@ -974,59 +974,35 @@
                 animation: none !important;
             }
 
-            /* 모바일 흰색 페이지 방지 및 렌더링 최적화 */
+            /* 모바일 렌더링 최적화 */
             html, body {
                 background: #030303 !important;
-                -webkit-overflow-scrolling: touch;
             }
 
-            /* pseudo-element 비활성화 - 렌더링 성능 향상 */
-            *::before,
-            *::after {
-                display: none !important;
-            }
-
-            /* 필수 pseudo-element만 허용 */
-            .sponsor-badge::before,
-            .sponsor-badge::after,
-            .check::before {
-                display: block !important;
-            }
-
-            /* 그라디언트 배경 단순화 */
-            .section, section {
-                background: #030303 !important;
-            }
-            .first-section,
-            .sponsorship-section,
-            .project-showcase,
-            .trackday-section,
-            .closing-hero,
-            .contact-section,
-            .supporter-section,
-            .media-section,
-            .schedule-section,
-            .about-section {
-                background: #030303 !important;
-            }
+            /* 트리뷰/스폰서십 영역 최적화 */
             .sponsor-tree,
             .sponsor-details-container,
-            .sponsor-category {
+            .sponsor-category,
+            .sponsorship-section {
                 background: #030303 !important;
-            }
-            nav {
-                background: rgba(3, 3, 3, 0.98) !important;
-                backdrop-filter: none !important;
-                -webkit-backdrop-filter: none !important;
+                transform: none !important;
             }
 
-            /* box-shadow 비활성화 */
+            .tree-node {
+                transition: none !important;
+                box-shadow: none !important;
+            }
+
             .sponsor-card,
             .sponsor-card-wide,
-            .sponsor-card-mini,
-            .pricing-card,
-            .tree-node {
+            .sponsor-card-mini {
+                transition: none !important;
                 box-shadow: none !important;
+            }
+
+            nav {
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
             }
         }
 
