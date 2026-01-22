@@ -3247,25 +3247,26 @@
             z-index: 1;
         }
         .unique-projects-title {
-            font-size: 4rem;
+            font-size: clamp(3rem, 10vw, 7rem);
             font-weight: 900;
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 30%, #d97706 60%, #b45309 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             letter-spacing: -0.02em;
             animation: heroTitleGlow 3s ease-in-out infinite;
+            line-height: 1.1;
         }
         @keyframes heroTitleGlow {
-            0%, 100% { filter: drop-shadow(0 0 30px rgba(251, 191, 36, 0.4)); }
-            50% { filter: drop-shadow(0 0 60px rgba(251, 191, 36, 0.6)); }
+            0%, 100% { filter: drop-shadow(0 0 40px rgba(251, 191, 36, 0.5)); }
+            50% { filter: drop-shadow(0 0 80px rgba(251, 191, 36, 0.7)); }
         }
         .unique-projects-subtitle {
-            color: rgba(255,255,255,0.7);
-            font-size: 1.25rem;
-            line-height: 1.8;
-            max-width: 600px;
+            color: rgba(255,255,255,0.75);
+            font-size: 1.35rem;
+            line-height: 1.9;
+            max-width: 700px;
             margin: 0 auto;
         }
         .hero-scroll-indicator {
@@ -3368,7 +3369,7 @@
         @media (max-width: 768px) {
             .featured-video-info h4 { font-size: 1.25rem; }
             .unique-projects-hero { min-height: 80vh; padding: 1.5rem; }
-            .unique-projects-title { font-size: 2.5rem; }
+            .unique-projects-title { font-size: clamp(2.5rem, 8vw, 4rem); }
             .unique-projects-subtitle { font-size: 1rem; line-height: 1.7; }
             .hero-scroll-indicator { bottom: 2rem; }
         }
@@ -3612,11 +3613,11 @@
         @media (max-width: 1024px) { 
             .unique-projects-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
             .unique-project-item { grid-column: span 1 !important; aspect-ratio: 4/3; }
-            .unique-projects-title { font-size: 2rem; }
+            .unique-projects-title { font-size: clamp(1.8rem, 7vw, 2.5rem); }
         }
         @media (max-width: 480px) { 
             .unique-projects-grid { grid-template-columns: 1fr; }
-            .unique-projects-title { font-size: 1.75rem; }
+            .unique-projects-title { font-size: clamp(1.5rem, 6vw, 2rem); }
         }
 
         .gallery-container { max-width: 1000px; margin: 0 auto 4rem; }
