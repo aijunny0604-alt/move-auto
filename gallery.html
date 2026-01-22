@@ -1201,27 +1201,35 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         let currentImageIndex = 0;
 
         function openLightbox(index) {
-            currentImageIndex = index;
-            const data = galleryData[index];
+            try {
+                currentImageIndex = index;
+                const data = galleryData[index];
 
-            if (!data) {
-                console.error('No data found for index:', index);
-                return;
+                if (!data) {
+                    alert('Error: No data found for index ' + index);
+                    return;
+                }
+
+                const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
+                const translatedData = langData[index] || { title: data.title, desc: data.desc };
+
+                const lightboxEl = document.getElementById('lightbox');
+                if (!lightboxEl) {
+                    alert('Error: lightbox element not found');
+                    return;
+                }
+
+                document.getElementById('lightbox-image').src = data.img;
+                document.getElementById('lightbox-title').textContent = translatedData.title;
+                document.getElementById('lightbox-desc').textContent = translatedData.desc;
+                document.getElementById('lightbox-date').textContent = data.date || '';
+                document.getElementById('lightbox-current').textContent = index + 1;
+                document.getElementById('lightbox-total').textContent = galleryData.length;
+                lightboxEl.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            } catch (e) {
+                alert('openLightbox error: ' + e.message);
             }
-
-            const langData = galleryTranslations[currentLang] || galleryTranslations['ko'];
-            const translatedData = langData[index] || { title: data.title, desc: data.desc };
-
-            const lightboxEl = document.getElementById('lightbox');
-
-            document.getElementById('lightbox-image').src = data.img;
-            document.getElementById('lightbox-title').textContent = translatedData.title;
-            document.getElementById('lightbox-desc').textContent = translatedData.desc;
-            document.getElementById('lightbox-date').textContent = data.date || '';
-            document.getElementById('lightbox-current').textContent = index + 1;
-            document.getElementById('lightbox-total').textContent = galleryData.length;
-            lightboxEl.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
