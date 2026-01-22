@@ -633,24 +633,25 @@
         }
         .car-showcase-header {
             text-align: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
             z-index: 10;
             opacity: 1;
             padding: 0 1rem;
             width: 100%;
         }
-        .car-showcase-header h2 {
-            font-size: 1.6rem;
-            font-weight: 400;
-            letter-spacing: 0.35em;
-            color: rgba(255, 255, 255, 0.85);
-            text-transform: uppercase;
-            word-break: keep-all;
-            white-space: nowrap;
+        .car-showcase-header .section-tag {
+            margin-bottom: 1rem;
+        }
+        .car-showcase-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
         }
         .car-showcase-header p {
-            color: #71717a;
-            font-size: 1rem;
+            color: rgba(255,255,255,0.6);
+            font-size: 1.2rem;
             margin-top: 0.5rem;
             word-break: keep-all;
         }
@@ -827,14 +828,12 @@
         .car-degree.visible { opacity: 1; }
 
         @media (max-width: 768px) {
-            .car-showcase-header h2 {
-                font-size: 1.2rem;
-                letter-spacing: 0.15em;
-                white-space: normal;
-                line-height: 1.4;
+            .car-showcase-title {
+                font-size: 1.8rem;
+                line-height: 1.3;
             }
             .car-showcase-header p {
-                font-size: 0.85rem;
+                font-size: 1rem;
                 line-height: 1.6;
             }
             .car-showcase-section {
@@ -6684,8 +6683,9 @@ body {
         <div class="car-sticky">
             <div class="car-sticky-inner">
                 <div class="car-showcase-header">
-                    <h2 data-i18n="car3d_title">SPONSORSHIP PLACEMENT</h2>
-                    <p data-i18n="car3d_subtitle">스크롤하여 스폰서 배치 존을 탐색해보세요</p>
+                    <div class="section-tag">Sponsor Zone</div>
+                    <h2 class="car-showcase-title">스폰서 로고 배치 존</h2>
+                    <p data-i18n="car3d_subtitle">스크롤하여 차량의 스폰서 배치 위치를 탐색해보세요</p>
                 </div>
                 <div class="car-canvas-container">
                     <div class="car-360-viewer" id="car360Viewer">
