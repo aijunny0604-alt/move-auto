@@ -1692,6 +1692,7 @@
             background: linear-gradient(180deg, #030303 0%, rgba(39, 39, 42, 0.3) 50%, #030303 100%);
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
+            scroll-margin-top: 150px;
         }
         .sponsorship-subtitle { color: #a1a1aa; font-size: 1rem; margin-top: 0.75rem; }
         .sponsorship-note { color: #71717a; font-size: 0.8rem; margin-top: 0.5rem; }
@@ -7985,9 +7986,9 @@ body {
 
         // 스폰서 섹션으로 스크롤 (모바일에서는 비활성화)
         function scrollToSponsor(element) {
-            const navHeight = 80;
+            const scrollOffset = 200; // 상단에서 200px 여백
             const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-            const scrollTarget = Math.max(0, elementTop - navHeight - 20);
+            const scrollTarget = Math.max(0, elementTop - scrollOffset);
 
             // 모바일에서는 즉시 스크롤 (애니메이션 없이)
             if (window.innerWidth <= 768) {
