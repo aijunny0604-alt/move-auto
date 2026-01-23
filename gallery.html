@@ -260,21 +260,17 @@
 
         /* 라이트박스 */
         .lightbox {
-            display: flex;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.97);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 9999;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(30px);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         .lightbox.active {
@@ -284,61 +280,45 @@
         }
 
         .lightbox-content {
-            width: 90vw;
-            height: 90vh;
-            position: relative;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            max-width: 90vw;
+            max-height: 90vh;
         }
 
         .lightbox-image-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
         .lightbox-image {
-            max-width: 100%;
-            max-height: calc(100% - 140px);
+            max-width: 85vw;
+            max-height: 65vh;
             object-fit: contain;
-            border-radius: 12px;
-            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 60px rgba(59, 130, 246, 0.15);
-        }
-
-        @keyframes imageZoomIn {
-            from {
-                transform: scale(0.9);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
+            border-radius: 8px;
         }
 
         .lightbox-info {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
             width: 100%;
-            max-width: 800px;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.98), rgba(0, 0, 0, 0.85) 60%, transparent);
-            padding: 4rem 2.5rem 2rem 2.5rem;
+            max-width: 700px;
+            padding: 1.5rem 1rem;
             text-align: center;
+            background: transparent;
         }
 
         @keyframes infoSlideUp {
             from {
-                transform: translateX(-50%) translateY(30px);
+                transform: translateY(20px);
                 opacity: 0;
             }
             to {
-                transform: translateX(-50%) translateY(0);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
