@@ -1694,6 +1694,7 @@
             backface-visibility: hidden;
         }
         .sponsorship-subtitle { color: #a1a1aa; font-size: 1rem; margin-top: 0.75rem; }
+        .sponsorship-note { color: #71717a; font-size: 0.8rem; margin-top: 0.5rem; }
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -2352,6 +2353,17 @@
         .sponsor-name {
             font-size: 1.35rem;
             font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .partner-nego {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.5);
+            color: #60a5fa;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
             margin-bottom: 1rem;
         }
         .sponsor-price {
@@ -3512,101 +3524,6 @@
             justify-content: center;
         }
 
-        /* 플로팅 미리보기 컨테이너 */
-        .gallery-preview-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        /* 플로팅 이미지 기본 스타일 */
-        .preview-image {
-            position: absolute;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0.7;
-        }
-        .preview-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 각 이미지 위치 및 애니메이션 */
-        .preview-1 {
-            width: 140px;
-            height: 100px;
-            top: 10%;
-            left: 8%;
-            transform: rotate(-8deg);
-            animation: float1 6s ease-in-out infinite;
-        }
-        .preview-2 {
-            width: 120px;
-            height: 90px;
-            top: 15%;
-            right: 10%;
-            transform: rotate(6deg);
-            animation: float2 7s ease-in-out infinite;
-        }
-        .preview-3 {
-            width: 130px;
-            height: 95px;
-            bottom: 15%;
-            left: 12%;
-            transform: rotate(5deg);
-            animation: float3 5.5s ease-in-out infinite;
-        }
-        .preview-4 {
-            width: 125px;
-            height: 88px;
-            bottom: 12%;
-            right: 8%;
-            transform: rotate(-6deg);
-            animation: float4 6.5s ease-in-out infinite;
-        }
-
-        @keyframes float1 {
-            0%, 100% { transform: rotate(-8deg) translateY(0); }
-            50% { transform: rotate(-8deg) translateY(-15px); }
-        }
-        @keyframes float2 {
-            0%, 100% { transform: rotate(6deg) translateY(0); }
-            50% { transform: rotate(6deg) translateY(-12px); }
-        }
-        @keyframes float3 {
-            0%, 100% { transform: rotate(5deg) translateY(0); }
-            50% { transform: rotate(5deg) translateY(-18px); }
-        }
-        @keyframes float4 {
-            0%, 100% { transform: rotate(-6deg) translateY(0); }
-            50% { transform: rotate(-6deg) translateY(-10px); }
-        }
-
-        /* 호버 시 이미지가 버튼으로 모여드는 효과 */
-        .gallery-cta-section:hover .preview-1 {
-            transform: rotate(-3deg) translate(30%, 20%);
-            opacity: 0.9;
-        }
-        .gallery-cta-section:hover .preview-2 {
-            transform: rotate(3deg) translate(-30%, 20%);
-            opacity: 0.9;
-        }
-        .gallery-cta-section:hover .preview-3 {
-            transform: rotate(2deg) translate(25%, -15%);
-            opacity: 0.9;
-        }
-        .gallery-cta-section:hover .preview-4 {
-            transform: rotate(-2deg) translate(-25%, -15%);
-            opacity: 0.9;
-        }
-
         /* 메인 CTA 버튼 */
         .gallery-cta-btn {
             position: relative;
@@ -4670,7 +4587,7 @@ const translations = {
         sponsor_official_tier: "Official Partner",
         sponsor_supplier_tier: "Supplier",
         sponsor_media_tier: "Media Partner",
-        sponsor_price_unit: "만 원",
+        sponsor_price_unit: "만 원~",
         sponsor_title_price: "5,000",
         sponsor_main_price: "1,000",
         sponsor_nego: "금액 협의",
@@ -4681,11 +4598,11 @@ const translations = {
         supporter_desc: "무브모터스는 팬 여러분과 함께 성장하고 싶습니다.",
         supporter_scroll: "밀어서 보기",
         tier_vip: "⭐ 응원단장",
-        tier_vip_price: "100만원 이상",
-        tier_premium_price: "40만원",
-        tier_support_price: "20만원",
+        tier_vip_price: "100만원~ 이상",
+        tier_premium_price: "40만원~",
+        tier_support_price: "20만원~",
         tier_fan: "❤️ 팬",
-        tier_fan_price: "10만원",
+        tier_fan_price: "10만원~",
         membership_annual: "연간 갱신 멤버십",
         membership_desc: "매년 갱신하며 함께 성장하는 서포터 프로그램입니다",
         supporter_note1: "※ 피트패스: 일본 D1 대회 방문 시 피트 출입 티켓 제공",
@@ -5418,10 +5335,10 @@ let currentLang = 'ko';
 
 // 나라별 스폰서 금액 (환율 적용)
 const sponsorPrices = {
-    ko: { title: '5,000', main: '1,000', unit: '만 원', nego: '금액 협의' },
-    en: { title: '$35,000', main: '$7,000', unit: '', nego: 'Negotiable' },
-    ja: { title: '500', main: '100', unit: '万円', nego: '価格相談' },
-    zh: { title: '25', main: '5', unit: '万元', nego: '价格可议' }
+    ko: { title: '5,000', main: '1,000', unit: '만 원~', nego: '금액 협의' },
+    en: { title: '$35,000~', main: '$7,000~', unit: '', nego: 'Negotiable' },
+    ja: { title: '500', main: '100', unit: '万円~', nego: '価格相談' },
+    zh: { title: '25', main: '5', unit: '万元~', nego: '价格可议' }
 };
 
 function setLanguage(lang) {
@@ -5465,45 +5382,6 @@ function updateSponsorPrices(lang) {
 
 // 페이지 로드 후 주기적으로 금액 체크 (Google Translate 대응)
 document.addEventListener('DOMContentLoaded', () => {
-    // 갤러리 프리뷰 이미지 랜덤 로드
-    const galleryImages = [
-        'images/1768199128104__MGC1312.jpg',
-        'images/1768197432422__MGC0909.jpg',
-        'images/1768196716222__MGC3603.jpg',
-        'images/1768196108161__MGC0287.jpg',
-        'images/1768195745712__MGC9400.jpg',
-        'images/1768195682186__MGC3478.jpg',
-        'images/1768195507101_3W8A3385.jpg',
-        'images/1768195152356__MGC5264.jpg'
-    ];
-
-    function shuffleArray(array) {
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
-    }
-
-    function loadRandomPreviewImages() {
-        const previewImgs = document.querySelectorAll('.preview-img');
-        const randomImages = shuffleArray(galleryImages).slice(0, 4);
-        previewImgs.forEach((img, index) => {
-            if (randomImages[index]) {
-                img.src = randomImages[index];
-            }
-        });
-    }
-
-    // 초기 로드
-    loadRandomPreviewImages();
-
-    // 10초마다 이미지 변경 (PC만, 모바일에서는 리소스 절약)
-    if (window.innerWidth > 768) {
-        setInterval(loadRandomPreviewImages, 10000);
-    }
-
     // 저장된 언어 확인
     const savedLang = localStorage.getItem('selectedLang') || 'ko';
     const langMap = {'ko': 'ko', 'en': 'en', 'ja': 'ja', 'zh-CN': 'zh'};
@@ -5612,10 +5490,10 @@ function copyToClipboard(text, btn) {
 // 언어 변경 함수
 // 화폐 전환 시스템
 const currencyConfig = {
-    ko: { symbol: '', suffix: '만원', divider: 10000, locale: 'ko-KR', minSuffix: ' 이상' },
-    en: { symbol: '$', suffix: '', divider: 1, rate: 0.00075, locale: 'en-US', minSuffix: '+' },
-    ja: { symbol: '¥', suffix: '', divider: 1, rate: 0.11, locale: 'ja-JP', minSuffix: '以上' },
-    'zh-CN': { symbol: '¥', suffix: '', divider: 1, rate: 0.0054, locale: 'zh-CN', minSuffix: '以上' }
+    ko: { symbol: '', suffix: '만원~', divider: 10000, locale: 'ko-KR', minSuffix: ' 이상' },
+    en: { symbol: '$', suffix: '~', divider: 1, rate: 0.00075, locale: 'en-US', minSuffix: '+' },
+    ja: { symbol: '¥', suffix: '~', divider: 1, rate: 0.11, locale: 'ja-JP', minSuffix: '以上' },
+    'zh-CN': { symbol: '¥', suffix: '~', divider: 1, rate: 0.0054, locale: 'zh-CN', minSuffix: '以上' }
 };
 
 function formatPrice(priceKRW, lang, isMin = false) {
@@ -6463,22 +6341,6 @@ body {
 
         <!-- 갤러리 버튼 섹션 -->
         <div class="gallery-cta-section scroll-reveal" id="gallery-section">
-            <!-- 플로팅 미리보기 이미지들 (JS로 랜덤 로드) -->
-            <div class="gallery-preview-container" id="galleryPreviewContainer">
-                <div class="preview-image preview-1">
-                    <img src="" alt="Preview 1" class="preview-img">
-                </div>
-                <div class="preview-image preview-2">
-                    <img src="" alt="Preview 2" class="preview-img">
-                </div>
-                <div class="preview-image preview-3">
-                    <img src="" alt="Preview 3" class="preview-img">
-                </div>
-                <div class="preview-image preview-4">
-                    <img src="" alt="Preview 4" class="preview-img">
-                </div>
-            </div>
-
             <!-- 메인 CTA 버튼 -->
             <a href="gallery.html" class="gallery-cta-btn">
                 <span class="cta-text-top">MORE PHOTOS</span>
@@ -7021,6 +6883,7 @@ body {
             <div class="section-tag" data-i18n="section_sponsorship">Sponsorship</div>
             <h2 class="section-title" data-i18n="sponsorship_title">스폰서십 패키지</h2>
             <p class="sponsorship-subtitle" data-i18n="sponsorship_subtitle">다양한 방식으로 함께할 수 있습니다</p>
+            <p class="sponsorship-note">※ 2026년 시즌 기준 (1년 단위)</p>
         </div>
 
         <!-- 스폰서 트리 구조 -->
@@ -7091,7 +6954,7 @@ body {
                     <div class="sponsor-tier">Title Sponsor</div>
                     <h4 class="sponsor-name" data-i18n="sponsor_title_name">타이틀 스폰서</h4>
                     <div class="sponsor-price-new notranslate" translate="no">
-                        <span class="price-amount" id="title-price">5,000</span><span class="price-unit" id="title-unit">만 원</span><span class="price-nego-box" id="title-nego">금액 협의</span>
+                        <span class="price-amount" id="title-price">5,000</span><span class="price-unit" id="title-unit">만 원~</span><span class="price-nego-box" id="title-nego">금액 협의</span>
                     </div>
                     <ul class="sponsor-features">
                         <li><span class="check">✓</span> <span data-i18n="sp_naming">차량 네이밍 권리</span></li>
@@ -7112,7 +6975,7 @@ body {
                     <div class="sponsor-tier">Main Sponsor</div>
                     <h4 class="sponsor-name" data-i18n="sponsor_main_name">메인 스폰서</h4>
                     <div class="sponsor-price-new notranslate" translate="no">
-                        <span class="price-amount" id="main-price">1,000</span><span class="price-unit" id="main-unit">만 원</span><span class="price-nego-box" id="main-nego">금액 협의</span>
+                        <span class="price-amount" id="main-price">1,000</span><span class="price-unit" id="main-unit">만 원~</span><span class="price-nego-box" id="main-nego">금액 협의</span>
                     </div>
                     <ul class="sponsor-features">
                         <li><span class="check">✓</span> <span data-i18n="sp_side_logo">차량 측면 로고 노출</span></li>
@@ -7140,6 +7003,7 @@ body {
                     <div class="wide-card-header">
                         <div class="sponsor-tier">Technical Partner</div>
                         <h4 class="sponsor-name" data-i18n="sponsor_tech_name">테크니컬 파트너</h4>
+                        <div class="partner-nego">금액 협의</div>
                         <div class="partner-examples">
                             <span>엔진/ECU/터보</span>
                             <span>서스펜션/브레이크</span>
@@ -7166,6 +7030,7 @@ body {
                     <div class="wide-card-header">
                         <div class="sponsor-tier">Official Partner</div>
                         <h4 class="sponsor-name" data-i18n="sponsor_official_name">오피셜 파트너</h4>
+                        <div class="partner-nego">금액 협의</div>
                         <div class="partner-examples">
                             <span>헬멧/수트/장갑</span>
                             <span>공구/배터리</span>
@@ -7190,6 +7055,7 @@ body {
                     <div class="mini-icon">🛠️</div>
                     <div class="sponsor-tier">Supplier</div>
                     <h4 class="sponsor-name" data-i18n="sponsor_supplier_name">서플라이어</h4>
+                    <div class="partner-nego">금액 협의</div>
                     <p class="mini-desc" data-i18n="sp_supplier_desc">팀 운영에 필요한 서비스/물품 지원</p>
                     <ul class="sponsor-features small">
                         <li><span class="check">✓</span> <span data-i18n="sp_web_logo">홈페이지/포스터 로고</span></li>
@@ -7201,6 +7067,7 @@ body {
                     <div class="mini-icon">🎬</div>
                     <div class="sponsor-tier">Media Partner</div>
                     <h4 class="sponsor-name" data-i18n="sponsor_media_name">미디어 파트너</h4>
+                    <div class="partner-nego">금액 협의</div>
                     <p class="mini-desc" data-i18n="sp_media_desc">촬영/편집 등 콘텐츠 제작 협력</p>
                     <ul class="sponsor-features small">
                         <li><span class="check">✓</span> <span data-i18n="sp_credit">크레딧 표기</span></li>
@@ -7252,7 +7119,7 @@ body {
                         <tr class="tier-premium">
                             <td class="plan-col">
                                 <div class="tier-name" data-i18n="tier_passionate">🔥 열혈팬</div>
-                                <div class="tier-price" data-price="1000000" data-price-type="min">100만원 이상</div>
+                                <div class="tier-price" data-price="1000000" data-price-type="min">100만원~ 이상</div>
                             </td>
                             <td><span style="color: #ffd700; font-size: 0.75rem; font-weight: 600;">2026 시즌 한정<br>풀 컬렉션<br><span style="font-size: 0.65rem; color: #a1a1aa;">(레고+후드집업+반팔티+스티커)</span></span></td>
                             <td><span style="color: #ffd700; font-size: 0.75rem; font-weight: 600;" data-i18n="tier_vip_collab">VIP<br>공동작업자</span></td>
@@ -7262,7 +7129,7 @@ body {
                         <tr class="tier-main">
                             <td class="plan-col">
                                 <div class="tier-name" data-i18n="tier_vip">⭐ 응원단장</div>
-                                <div class="tier-price" data-price="400000">40만원</div>
+                                <div class="tier-price" data-price="400000">40만원~</div>
                             </td>
                             <td><span style="color: #60a5fa; font-size: 0.75rem;">시즌 한정<br>서포터 기어<br><span style="font-size: 0.65rem; color: #a1a1aa;">(후드집업+반팔티+스티커)</span></span></td>
                             <td><span style="color: #a1a1aa; font-size: 0.75rem;">@태그</span></td>
@@ -7272,7 +7139,7 @@ body {
                         <tr class="tier-support">
                             <td class="plan-col">
                                 <div class="tier-name" data-i18n="tier_supporter">💪 서포터</div>
-                                <div class="tier-price" data-price="200000">20만원</div>
+                                <div class="tier-price" data-price="200000">20만원~</div>
                             </td>
                             <td><span style="color: #a1a1aa; font-size: 0.75rem;">시즌 한정<br>서포터 키트<br><span style="font-size: 0.65rem; color: #71717a;">(반팔티+스티커)</span></span></td>
                             <td><span style="color: #a1a1aa; font-size: 0.75rem;" data-i18n="tier_tag">@태그</span></td>
@@ -7282,7 +7149,7 @@ body {
                         <tr class="tier-fan">
                             <td class="plan-col">
                                 <div class="tier-name" data-i18n="tier_fan">❤️ 팬</div>
-                                <div class="tier-price" data-price="100000">10만원</div>
+                                <div class="tier-price" data-price="100000">10만원~</div>
                             </td>
                             <td><span style="color: #a1a1aa; font-size: 0.75rem;">시즌 한정<br>팬 스타터팩<br><span style="font-size: 0.65rem; color: #71717a;">(스티커)</span></span></td>
                             <td><span style="color: #a1a1aa; font-size: 0.75rem;" data-i18n="tier_tag">@태그</span></td>
@@ -7298,7 +7165,7 @@ body {
                 <div class="supporter-card tier-vip">
                     <div class="card-header">
                         <span class="card-tier-name">🔥 열혈팬</span>
-                        <span class="card-tier-price" data-price="1000000" data-price-type="min">100만원 이상</span>
+                        <span class="card-tier-price" data-price="1000000" data-price-type="min">100만원~ 이상</span>
                     </div>
                     <div class="card-benefits">
                         <div class="card-benefit-row">
@@ -7323,7 +7190,7 @@ body {
                 <div class="supporter-card tier-premium">
                     <div class="card-header">
                         <span class="card-tier-name">⭐ 응원단장</span>
-                        <span class="card-tier-price" data-price="400000">40만원</span>
+                        <span class="card-tier-price" data-price="400000">40만원~</span>
                     </div>
                     <div class="card-benefits">
                         <div class="card-benefit-row">
@@ -7348,7 +7215,7 @@ body {
                 <div class="supporter-card tier-standard">
                     <div class="card-header">
                         <span class="card-tier-name">💪 서포터</span>
-                        <span class="card-tier-price" data-price="200000">20만원</span>
+                        <span class="card-tier-price" data-price="200000">20만원~</span>
                     </div>
                     <div class="card-benefits">
                         <div class="card-benefit-row">
@@ -7373,7 +7240,7 @@ body {
                 <div class="supporter-card tier-basic">
                     <div class="card-header">
                         <span class="card-tier-name">❤️ 팬</span>
-                        <span class="card-tier-price" data-price="100000">10만원</span>
+                        <span class="card-tier-price" data-price="100000">10만원~</span>
                     </div>
                     <div class="card-benefits">
                         <div class="card-benefit-row">
