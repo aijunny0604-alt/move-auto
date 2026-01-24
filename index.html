@@ -3523,6 +3523,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            scroll-margin-top: 25vh;
         }
 
         /* 메인 CTA 버튼 */
@@ -5678,7 +5679,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const target = document.querySelector(window.location.hash);
                 if (target) {
                     const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    // gallery-section은 화면 중앙에 오도록 추가 오프셋
+                    const extraOffset = window.location.hash === '#gallery-section' ? (window.innerHeight * 0.25) : 0;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
                     window.scrollTo({ top: targetPosition, behavior: 'auto' });
                 }
             }, 100);
