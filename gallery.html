@@ -1398,6 +1398,17 @@ LOW STREET 차량 전시 이벤트에 초청 행사</p>
         } catch (e) {
             console.warn('Lenis initialization failed:', e);
         }
+
+        // 갤러리 카드 클릭 이벤트 바인딩
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryCards = document.querySelectorAll('.gallery-card');
+            galleryCards.forEach(function(card, index) {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', function() {
+                    openLightbox(index);
+                });
+            });
+        });
     </script>
 </body>
 </html>
