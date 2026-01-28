@@ -18,6 +18,7 @@
     <meta name="twitter:image" content="https://aijunny0604-alt.github.io/move-auto/images/og-image.jpg">
 
     <title data-i18n="page_title">무브 오토모티브 - D1 LIGHTS 스폰서십</title>
+    <link rel="icon" type="image/png" id="favicon" href="">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
     <script>
@@ -5714,6 +5715,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const enterLogo = document.querySelector('.enter-logo img');
     if (enterLogo && loadingLogo) {
         loadingLogo.src = enterLogo.src;
+    }
+
+    // 파비콘 설정 (로고 사용)
+    if (enterLogo) {
+        const favicon = document.getElementById('favicon');
+        if (favicon) {
+            favicon.href = enterLogo.src;
+        }
     }
 
     // 비디오 재생 시작되면 로딩 숨기기
