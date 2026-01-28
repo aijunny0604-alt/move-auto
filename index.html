@@ -278,6 +278,30 @@
             width: 0%;
             transition: width 0.1s linear;
         }
+        /* 비디오 로딩 오버레이 */
+        .video-loading {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: opacity 0.5s ease;
+        }
+        .video-loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .video-loading-logo {
+            width: 120px;
+            height: auto;
+            animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes logoPulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1); }
+        }
         body.intro-active {
             overflow: hidden;
         }
@@ -4380,6 +4404,10 @@
 
     <!-- Video Intro -->
     <div class="video-intro" id="videoIntro">
+        <!-- 비디오 로딩 오버레이 -->
+        <div class="video-loading" id="videoLoading">
+            <img class="video-loading-logo" id="loadingLogo" src="" alt="Loading...">
+        </div>
         <video id="introVideo" playsinline>
             <source src="intro.mp4" type="video/mp4">
         </video>
@@ -5670,6 +5698,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const introVideo = document.getElementById('introVideo');
     const skipBtn = document.getElementById('skipIntro');
     const introProgress = document.getElementById('introProgress');
+    const videoLoading = document.getElementById('videoLoading');
+    const loadingLogo = document.getElementById('loadingLogo');
+
+    // 로딩 로고에 enter-screen 로고 복사
+    const enterLogo = document.querySelector('.enter-logo img');
+    if (enterLogo && loadingLogo) {
+        loadingLogo.src = enterLogo.src;
+    }
+
+    // 비디오 재생 시작되면 로딩 숨기기
+    if (introVideo && videoLoading) {
+        introVideo.addEventListener('playing', function() {
+            videoLoading.classList.add('hidden');
+        });
+        // 비디오 로드 완료 시에도 숨기기
+        introVideo.addEventListener('canplaythrough', function() {
+            videoLoading.classList.add('hidden');
+        });
+    }
 
     // 갤러리에서 돌아온 경우 플래그
     let cameFromGallery = false;
@@ -5866,6 +5913,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (videoIntro) {
                 videoIntro.classList.remove('hidden');
                 videoIntro.classList.add('active');
+            }
+
+            // 로딩 오버레이 표시 (비디오 버퍼링 중)
+            if (videoLoading) {
+                videoLoading.classList.remove('hidden');
             }
 
             // 영상 재생 (소리 포함)
