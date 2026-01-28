@@ -5671,10 +5671,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const skipBtn = document.getElementById('skipIntro');
     const introProgress = document.getElementById('introProgress');
 
+    // 갤러리에서 돌아온 경우 플래그
+    let cameFromGallery = false;
+
     // 갤러리에서 돌아온 경우 - 모든 인트로 건너뛰고 해당 섹션으로 이동
     const isSkipAllIntro = sessionStorage.getItem('skipAllIntro') === 'true';
+    const scrollTargetId = sessionStorage.getItem('scrollTarget') || (localStorage.getItem('scrollToGallery') === 'true' ? 'gallery-section' : null);
+    console.log('[DEBUG] isSkipAllIntro:', isSkipAllIntro);
+    console.log('[DEBUG] scrollTargetId:', scrollTargetId);
+    // localStorage 정리
+    localStorage.removeItem('scrollToGallery');
+
     if (isSkipAllIntro) {
         sessionStorage.removeItem('skipAllIntro');
+        sessionStorage.removeItem('scrollTarget');
+        cameFromGallery = true;
+        console.log('[DEBUG] 갤러리에서 돌아옴 - cameFromGallery = true');
+
+        // 브라우저 스크롤 복원 비활성화
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
 
         // 인트로 화면 숨기기
         if (enterScreen) {
@@ -5687,18 +5704,33 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.remove('intro-active');
         document.body.classList.add('main-visible');
 
-        // 해시 위치로 스크롤
-        if (window.location.hash) {
-            setTimeout(function() {
-                const target = document.querySelector(window.location.hash);
-                if (target) {
-                    const navHeight = document.querySelector('nav')?.offsetHeight || 80;
-                    // gallery-section은 화면 중앙에 오도록 추가 오프셋
-                    const extraOffset = window.location.hash === '#gallery-section' ? (window.innerHeight * 0.25) : 0;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - extraOffset;
-                    window.scrollTo({ top: targetPosition, behavior: 'auto' });
+        // sessionStorage에서 스크롤 타겟으로 이동
+        if (scrollTargetId) {
+            const target = document.getElementById(scrollTargetId);
+            console.log('[DEBUG] target element:', target);
+            if (target) {
+                // scroll-reveal 요소 즉시 표시
+                target.classList.add('revealed');
+
+                // Lenis 중지 (무한루프 방지)
+                if (window.lenis) {
+                    window.lenis.stop();
                 }
-            }, 100);
+
+                // 스크롤 실행
+                setTimeout(function() {
+                    const navHeight = 80;
+                    const rect = target.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset + rect.top - navHeight;
+                    window.scrollTo(0, scrollTop);
+                    console.log('[DEBUG] 스크롤 완료, scrollTop:', scrollTop);
+
+                    // Lenis 다시 시작
+                    setTimeout(function() {
+                        if (window.lenis) window.lenis.start();
+                    }, 500);
+                }, 100);
+            }
         }
     }
 
@@ -5744,6 +5776,11 @@ document.addEventListener('DOMContentLoaded', function() {
             videoIntro.classList.remove('fade-out');
             document.body.classList.remove('intro-active');
             document.body.classList.add('main-visible');
+
+            // 인트로 후 맨 위로 스크롤 (갤러리에서 온 경우 제외)
+            if (!cameFromGallery) {
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            }
         }, 800);
     }
 
