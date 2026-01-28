@@ -294,9 +294,18 @@
             pointer-events: none;
         }
         .video-loading-logo {
-            width: 120px;
+            width: 25vw;
+            max-width: 300px;
+            min-width: 150px;
             height: auto;
             animation: logoPulse 1.5s ease-in-out infinite;
+        }
+        @media (max-width: 768px) {
+            .video-loading-logo {
+                width: 40vw;
+                max-width: 200px;
+                min-width: 120px;
+            }
         }
         @keyframes logoPulse {
             0%, 100% { opacity: 0.3; transform: scale(0.95); }
