@@ -562,10 +562,10 @@
         .comp-header-text h3 { font-size: 1.5rem; margin-bottom: 0.25rem; }
         .comp-header-text p { color: #71717a; font-size: 0.9rem; }
         .comp-desc { color: #a1a1aa; line-height: 1.8; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .comp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .comp-stat { background: rgba(0, 0, 0, 0.3); border-radius: 0.75rem; padding: 1.25rem; text-align: center; }
-        .comp-stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 700; color: #60a5fa; }
-        .comp-stat-label { font-size: 0.75rem; color: #71717a; margin-top: 0.25rem; }
+        .comp-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+        .comp-stat { background: rgba(0, 0, 0, 0.3); border-radius: 0.75rem; padding: 1rem 0.5rem; text-align: center; }
+        .comp-stat-value { font-family: 'Orbitron', sans-serif; font-size: 1.4rem; font-weight: 700; color: #60a5fa; }
+        .comp-stat-label { font-size: 0.7rem; color: #71717a; margin-top: 0.25rem; white-space: nowrap; }
         .comp-sponsors { margin-top: 2rem; text-align: center; }
         .comp-sponsors p { font-size: 0.75rem; color: #52525b; }
         
@@ -4028,7 +4028,8 @@
             .contact-wrapper { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
             .first-highlights { gap: 2rem; }
-            .comp-stats { grid-template-columns: 1fr; }
+            .comp-stats { grid-template-columns: repeat(2, 1fr); }
+            .comp-stats .comp-stat:last-child { grid-column: span 2; }
             .career-list { font-size: 0.75rem; }
             .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(3, 150px); }
             .gallery-item.large { grid-column: span 2; grid-row: span 1; }
@@ -4608,6 +4609,10 @@ const translations = {
         comp_stat2_label: "라운드 / 시즌",
         comp_stat3_value: "13만+",
         comp_stat3_label: "유튜브 구독자",
+        comp_stat4_value: "5,000+",
+        comp_stat4_label: "관객 수",
+        comp_stat5_value: "50+",
+        comp_stat5_label: "참가 대수",
         comp_sponsors: "주요 스폰서: TOYO TIRES · WORK · RAYS · HKS 등",
 
         // 일정표
@@ -4840,6 +4845,10 @@ const translations = {
         comp_stat2_label: "Rounds/Season",
         comp_stat3_value: "130K+",
         comp_stat3_label: "YouTube Subs",
+        comp_stat4_value: "5,000+",
+        comp_stat4_label: "Spectators",
+        comp_stat5_value: "50+",
+        comp_stat5_label: "Entries",
         comp_sponsors: "Major Sponsors: TOYO TIRES · WORK · RAYS · HKS etc.",
 
         // Schedule table
@@ -5095,6 +5104,10 @@ const translations = {
         comp_stat2_label: "ラウンド/シーズン",
         comp_stat3_value: "13万+",
         comp_stat3_label: "YouTube登録者",
+        comp_stat4_value: "5,000+",
+        comp_stat4_label: "観客数",
+        comp_stat5_value: "50+",
+        comp_stat5_label: "参加台数",
         comp_sponsors: "主要スポンサー: TOYO TIRES · WORK · RAYS · HKS など",
 
         // スケジュール表
@@ -5327,6 +5340,10 @@ const translations = {
         comp_stat2_label: "轮次/赛季",
         comp_stat3_value: "13万+",
         comp_stat3_label: "YouTube订阅者",
+        comp_stat4_value: "5,000+",
+        comp_stat4_label: "观众数",
+        comp_stat5_value: "50+",
+        comp_stat5_label: "参赛车辆",
         comp_sponsors: "主要赞助商: TOYO TIRES · WORK · RAYS · HKS 等",
 
         // 日程表
@@ -6633,12 +6650,15 @@ body {
                 <p class="comp-desc">
                     D1 Grand Prix는 2001년 일본에서 시작된 세계 최초의 프로 드리프트 대회입니다.
                     D1 LIGHTS는 그 등용문으로, 이곳에서 실력을 쌓아야 메인 무대에 설 수 있습니다.
+                    매 라운드 일본 각 지역별로 개최지가 변경되어, 일본 전국을 다니며 시합을 진행합니다.
                     진태욱 드라이버는 한국인 최초로 이 무대에 도전하고 있습니다.
                 </p>
                 <div class="comp-stats">
                     <div class="comp-stat"><div class="comp-stat-value" data-i18n="comp_stat1_value">20년+</div><div class="comp-stat-label" data-i18n="comp_stat1_label">역사</div></div>
                     <div class="comp-stat"><div class="comp-stat-value" data-i18n="comp_stat2_value">11</div><div class="comp-stat-label" data-i18n="comp_stat2_label">라운드 / 시즌</div></div>
                     <div class="comp-stat"><div class="comp-stat-value" data-i18n="comp_stat3_value">13만+</div><div class="comp-stat-label" data-i18n="comp_stat3_label">유튜브 구독자</div></div>
+                    <div class="comp-stat"><div class="comp-stat-value" data-i18n="comp_stat4_value">5,000+</div><div class="comp-stat-label" data-i18n="comp_stat4_label">관객 수</div></div>
+                    <div class="comp-stat"><div class="comp-stat-value" data-i18n="comp_stat5_value">50+</div><div class="comp-stat-label" data-i18n="comp_stat5_label">참가 대수</div></div>
                 </div>
                 <div class="comp-sponsors">
                     <p data-i18n="comp_sponsors">주요 스폰서: TOYO TIRES · WORK · RAYS · HKS 등</p>
