@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="D1 LIGHTS 드리프트 레이싱팀 무브 오토모티브의 공식 스폰서십 안내. 한국인 최초 D1 Grand Prix LIGHTS 도전, 진태욱 드라이버.">
+    <link rel="canonical" href="https://aijunny0604-alt.github.io/move-auto/">
 
     <!-- Open Graph / 카카오톡, 페이스북 미리보기 -->
     <meta property="og:type" content="website">
@@ -20,16 +22,22 @@
     <title data-i18n="page_title">무브 오토모티브 - D1 LIGHTS 스폰서십</title>
     <link rel="icon" type="image/png" id="favicon" href="">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="js/lenis.min.js"></script>
     <script>
         // 갤러리에서 돌아온 경우 - 모든 인트로 즉시 숨김
-        if (sessionStorage.getItem('skipAllIntro') === 'true') {
-            document.write('<style>.enter-screen,.video-intro{display:none!important;}</style>');
-        }
-        // PC 언어 변경 후 reload 시 - 인트로 내용만 숨기고 배경은 유지 (부드러운 전환)
-        else if (sessionStorage.getItem('skipIntro') === 'true') {
-            document.write('<style>.enter-screen .enter-logo,.enter-screen .enter-btn,.enter-screen .enter-lang-selector,.enter-screen .enter-welcome{display:none!important;}</style>');
-        }
+        (function() {
+            var style = document.createElement('style');
+            if (sessionStorage.getItem('skipAllIntro') === 'true') {
+                style.textContent = '.enter-screen,.video-intro{display:none!important;}';
+            }
+            // PC 언어 변경 후 reload 시 - 인트로 내용만 숨기고 배경은 유지 (부드러운 전환)
+            else if (sessionStorage.getItem('skipIntro') === 'true') {
+                style.textContent = '.enter-screen .enter-logo,.enter-screen .enter-btn,.enter-screen .enter-lang-selector,.enter-screen .enter-welcome{display:none!important;}';
+            }
+            if (style.textContent) {
+                document.head.appendChild(style);
+            }
+        })();
     </script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -6507,7 +6515,7 @@ body {
                     <iframe width="100%" height="100%" src="https://www.youtube.com/embed/0eZT4HywTiY" title="무브모터스 드리프트" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 1rem;"></iframe>
                 </div>
                 <div class="youtube-side">
-                    <a href="https://youtu.be/WC1naxyLf2o" target="_blank" class="youtube-thumb">
+                    <a href="https://youtu.be/WC1naxyLf2o" target="_blank" rel="noopener noreferrer" class="youtube-thumb">
                         <div class="youtube-thumb-img">
                             <img src="https://img.youtube.com/vi/WC1naxyLf2o/maxresdefault.jpg" alt="D1 LIGHTS 브이로그" loading="lazy">
                             <div class="play-btn small">▶</div>
@@ -6517,7 +6525,7 @@ body {
                             <div class="thumb-views" data-i18n="video1_desc">세계 무대 도전기</div>
                         </div>
                     </a>
-                    <a href="https://youtu.be/73SfSDcNlFU" target="_blank" class="youtube-thumb">
+                    <a href="https://youtu.be/73SfSDcNlFU" target="_blank" rel="noopener noreferrer" class="youtube-thumb">
                         <div class="youtube-thumb-img">
                             <img src="https://img.youtube.com/vi/73SfSDcNlFU/maxresdefault.jpg" alt="KDGP 브이로그" loading="lazy">
                             <div class="play-btn small">▶</div>
@@ -6527,7 +6535,7 @@ body {
                             <div class="thumb-views" data-i18n="video2_desc">국내 대회 현장</div>
                         </div>
                     </a>
-                    <a href="https://youtu.be/M6o7Bwq9pn8" target="_blank" class="youtube-thumb">
+                    <a href="https://youtu.be/M6o7Bwq9pn8" target="_blank" rel="noopener noreferrer" class="youtube-thumb">
                         <div class="youtube-thumb-img">
                             <img src="https://img.youtube.com/vi/M6o7Bwq9pn8/maxresdefault.jpg" alt="파격적인 행보" loading="lazy">
                             <div class="play-btn small">▶</div>
@@ -6539,7 +6547,7 @@ body {
                     </a>
                 </div>
             </div>
-            <a href="https://www.youtube.com/@IMOVEAutomotive" target="_blank" class="youtube-channel-btn">
+            <a href="https://www.youtube.com/@IMOVEAutomotive" target="_blank" rel="noopener noreferrer" class="youtube-channel-btn">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 무브모터스 유튜브 채널
             </a>
@@ -6553,7 +6561,7 @@ body {
                 <iframe width="100%" height="100%" src="https://www.youtube.com/embed/8StenWF8ixY" title="D1 LIGHTS 第9戦 茂原ツインサーキット" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 1rem;"></iframe>
             </div>
             <p class="d1-official-note">2025 D1 LIGHTS SERIES ROUND9 MOBARA - 茂原ツインサーキット</p>
-            <a href="https://www.youtube.com/@VIDEOOPTION" target="_blank" class="youtube-channel-btn d1-btn">
+            <a href="https://www.youtube.com/@VIDEOOPTION" target="_blank" rel="noopener noreferrer" class="youtube-channel-btn d1-btn">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                 D1 공식 채널 (VIDEO OPTION)
             </a>
@@ -6720,7 +6728,7 @@ body {
                 </table>
             </div>
             <p class="schedule-note" data-i18n="schedule_note">※ 일정은 변경될 수 있습니다</p>
-            <a href="https://d1gp.co.jp/category/lights/2026-d1-lights/" target="_blank" class="d1-official-link">
+            <a href="https://d1gp.co.jp/category/lights/2026-d1-lights/" target="_blank" rel="noopener noreferrer" class="d1-official-link">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
                 D1 LIGHTS 공식 홈페이지
             </a>
@@ -6831,7 +6839,7 @@ body {
 
         <!-- Trackday Video Section -->
         <div class="trackday-video-section scroll-reveal">
-            <a href="https://www.youtube.com/shorts/sedxvGiKV94" target="_blank" class="trackday-video-card">
+            <a href="https://www.youtube.com/shorts/sedxvGiKV94" target="_blank" rel="noopener noreferrer" class="trackday-video-card">
                 <div class="trackday-video-thumb">
                     <img src="https://img.youtube.com/vi/sedxvGiKV94/maxresdefault.jpg" alt="스폰서 상품 증정 영상" loading="lazy">
                     <div class="trackday-video-play">
@@ -7478,19 +7486,19 @@ body {
             <div class="social-section-new scroll-reveal">
                 <h4 data-i18n="social_media_title">소셜 미디어</h4>
                 <div class="social-links-new">
-                    <a href="https://www.youtube.com/@IMOVEAutomotive" target="_blank" class="social-link-new youtube" title="YouTube">
+                    <a href="https://www.youtube.com/@IMOVEAutomotive" target="_blank" rel="noopener noreferrer" class="social-link-new youtube" title="YouTube">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
                         <span>YouTube</span>
                     </a>
-                    <a href="https://www.instagram.com/move_automotive" target="_blank" class="social-link-new instagram" title="Instagram">
+                    <a href="https://www.instagram.com/move_automotive" target="_blank" rel="noopener noreferrer" class="social-link-new instagram" title="Instagram">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                         <span>Instagram</span>
                     </a>
-                    <a href="https://www.facebook.com/moveam/" target="_blank" class="social-link-new facebook" title="Facebook">
+                    <a href="https://www.facebook.com/moveam/" target="_blank" rel="noopener noreferrer" class="social-link-new facebook" title="Facebook">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         <span>Facebook</span>
                     </a>
-                    <a href="https://blog.naver.com/move_am" target="_blank" class="social-link-new naver" title="Naver Blog">
+                    <a href="https://blog.naver.com/move_am" target="_blank" rel="noopener noreferrer" class="social-link-new naver" title="Naver Blog">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/></svg>
                         <span>Blog</span>
                     </a>
@@ -7674,7 +7682,7 @@ body {
                 window.addEventListener('scroll', () => {
                     updateGallery();
                     checkDecalSectionVisibility();
-                });
+                }, { passive: true });
             }
             updateGallery();
             // 초기 로드 시에는 딜레이 후 체크 (애니메이션이 보이도록)
@@ -7925,7 +7933,7 @@ body {
                             showCarImage(newIndex);
                         }
                     }
-                });
+                }, { passive: true });
             }
 
             // Progress dots 클릭
@@ -8093,7 +8101,7 @@ body {
                     scrollHint.style.transition = 'opacity 0.3s';
                     setTimeout(() => { scrollHint.style.display = 'none'; }, 300);
                 }
-            });
+            }, { passive: true });
         }
 
         // 스폰서 트리 노드 클릭 이벤트 - 접기/펼치기
