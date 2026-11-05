@@ -1,0 +1,18 @@
+<!doctype html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"><title>ATLAS 웹 가이드북</title><style>*{box-sizing:border-box}body{margin:0;background:#f3f6f8;color:#183041;font:16px/1.9 system-ui,-apple-system,"Malgun Gothic",sans-serif}header,section{max-width:960px;margin:24px auto;padding:32px;background:white;border-radius:16px}h1,h2{line-height:1.3}small{color:#4c837b;letter-spacing:1px}.lead{color:#557081}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:12px;border-bottom:1px solid #dce5e9;text-align:left;vertical-align:top}th{background:#143c4c;color:white}.callout{background:#e6f4ed;border-left:4px solid #218b73;padding:16px}a{color:#117862}button{padding:10px 18px;cursor:pointer}@media(max-width:600px){header,section{margin:12px;padding:18px}table{min-width:520px}}@media print{body{background:white;font-size:11pt}header,section{border-radius:0;padding:10mm;break-before:page;margin:0}header{break-before:auto}button,header>a{display:none}.tablewrap{overflow:visible}a{color:inherit}th,td{padding:6px}.callout{break-inside:avoid}}</style></head><body><header><a href="./">← 앱으로</a><h1>DRIFT SETUP ATLAS</h1><p>웹판 세팅 가이드 · 브라우저 인쇄로 PDF 저장 가능</p><button id="printGuide">인쇄 / PDF 저장</button></header><main id="guide"></main><noscript><section>가이드 내용을 표시하려면 JavaScript를 활성화하세요.</section></noscript><script id="atlas-data" type="application/json">{}</script><script src="atlas-data.js"></script><script>
+'use strict';
+const data=JSON.parse(document.getElementById('atlas-data').textContent);
+const e=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let body='';
+for(const c of data.chapters){
+ body+='<section><small>'+e(c.kicker)+'</small><h2>'+e(c.title).replace(/\n/g,'<br>')+'</h2><p class="lead">'+e(c.lead)+'</p>';
+ for(const b of c.blocks){
+  if(b.type==='table')body+='<div class="tablewrap"><table><thead><tr>'+b.headers.map(x=>'<th>'+e(x)+'</th>').join('')+'</tr></thead><tbody>'+b.rows.map(r=>'<tr>'+r.map(x=>'<td>'+e(x)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+  else if(b.type==='map')body+='<p class="callout">'+b.nodes.map(e).join(' → ')+'</p>';
+  else body+='<p class="'+(b.type==='callout'?'callout':'')+'">'+e(b.text)+'</p>';
+ }
+ body+='</section>';
+}
+body+='<section><h2>기술 참고 자료</h2>'+data.sources.map(s=>'<p><a href="'+e(s.url)+'" rel="noopener noreferrer">'+e(s.id+' · '+s.title)+'</a><br>'+e(s.note)+'</p>').join('')+'</section>';
+document.getElementById('guide').innerHTML=body;
+document.getElementById('printGuide').addEventListener('click',()=>window.print());
+</script></body></html>
